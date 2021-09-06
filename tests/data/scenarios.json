@@ -1,0 +1,13 @@
+{
+  "scenarios": [
+    {
+      "uuid": "0001",
+      "name": "dummy_scenario",
+      "display_name": "Dummy scenario",
+      "version": 1,
+      "created_on": 1598965551,
+      "status": "Succeeded",
+      "has_timeline": true
+    }    
+  ]
+}

@@ -1,0 +1,531 @@
+{
+  "dashboardWelcome": "Welcome to the MoViCI Simulation Engine",
+  "misc": {
+    "welcome": "Welcome",
+    "profile": "Profile",
+    "logout": "Log out",
+    "agreement": "I agree to MoViCI's privacy policy and terms of use.",
+    "yourUsername": "Your username is:",
+    "completeSetup": "You now just need to set your password in order to complete your account setup",
+    "activate": "Activate Account",
+    "settings": "Settings",
+    "total": "Total",
+    "allRightsReserved": "All Rights Reserved",
+    "termsOfUse": "Terms of use",
+    "tosMessage": "Please click {0} to view our general terms and conditions",
+    "here": "here",
+    "loadPrivacyPolicyFailure": "We're sorry, we could not load the privacy policy",
+    "loginTermsMessage": "By logging in you agree to our {privacy} and {terms}",
+    "privacyPolicy": "Privacy policy",
+    "version": "version",
+    "documentation": "documentation",
+    "impactIndicators": "MoViCI impact indicators",
+    "impactIndicatorText": "An explanation of the impact indicator numbers shown in the in the left panel of the visualisation.",
+    "of": "of",
+    "yes": "Yes",
+    "no": "No",
+    "properties": "Properties"
+  },
+  "units": {
+    "meter": "metre",
+    "pixel": "pixel",
+    "meters": "@:(units.meter)s",
+    "pixels": "@:(units.pixel)s"
+  },
+  "sidebar": {
+    "general": "General",
+    "visualization": "Visualisation",
+    "dashboard": "Dashboard",
+    "simulationManagement": "Simulation Management",
+    "administration": "Administration",
+    "moviciFlow": "Movici Flow"
+  },
+  "settings": {
+    "language": "Language",
+    "dataEngineVersion": "Data Engine version",
+    "selectLanguage": "@:(actions.select) a @:(settings.language)",
+    "selectDataEngineVersion": "@:(actions.select) @:(settings.dataEngineVersion)"
+  },
+  "visualizationWidget": {
+    "title": "Visualisation",
+    "content":"Visualise and export scenario results",
+    "button": "Open visualisation"
+  },
+  "flowPreviewWidget": {
+    "title": "Movici Flow",
+    "content": "Guided process to help you set up, visualise and export scenario results",
+    "button":  "Sneak preview",
+    "list": [
+      "Preview datasets within your workspace",
+      "Configure scenario parameters",
+      "Visualiser options by value: colour, point size and height, stroke size, heatmaps",
+      "Configure legend options and info modals",
+      "Configure how to view your KPIs: on the map, as widgets or time-line graphs",
+      "Filter results for export"
+    ]
+  },
+  "feedbackFormWidget": {
+    "title": "Your opinion matters",
+    "content": "Have you found a bug or do you have an idea for a new feature? Help us improve our platform!",
+    "button": "Give feedback",
+    "popupTitle": "Feedback",
+    "popupSubtitle": "Use the form below to submit your feedback. We greatly appreciate your help in improving the platform.",
+    "typeLabel": "Feedback Type",
+    "typePlaceholder": "Select a type",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write a message...",
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "success": "Thank you for taking the time to give us feedback! We love to hear how we can improve our product and tailor it to your needs. We will seriously consider your suggestions",
+    "feedbackTypes": {
+      "bug_report": "Bug report",
+      "feature_request": "Feature request",
+      "other": "Other"
+    },
+    "validation": {
+      "type": "Please choose a feedback type",
+      "message": "Please write a message",
+      "length": "The message must have at least 10 characters"
+    }
+  },
+  "resources": {
+    "organisation": "Organisation",
+    "organisations": "@:(resources.organisation)s",
+    "project": "Workspace",
+    "projects": "@:(resources.project)s",
+    "dataset": "Dataset",
+    "datasets": "@:(resources.dataset)s",
+    "dataset_generator": "Dataset Generator",
+    "dataset_generators": "@:(resources.dataset_generator)s",
+    "dataset_type": "Dataset Type",
+    "dataset_types": "@:(resources.dataset_type)s",
+    "entityGroup": "Entity group",
+    "entity_type": "Entity Type",
+    "entity_types": "@:(resources.entity_type)s",
+    "schema": "Dataset Schema",
+    "scenario": "Scenario",
+    "scenarios": "@:(resources.scenario)s",
+    "region": "Region",
+    "model": "Model",
+    "models": "Models",
+    "model_type": "Model Type",
+    "model_types": "Model Types",
+    "impactIndicator": "Impact indicator",
+    "timeline": "Timeline",
+    "profile": "Profile",
+    "property_type": "Property Type",
+    "property_types": "@:(resources.property_type)s",
+    "user": "User",
+    "users": "@:(resources.user)s",
+    "role": "Role",
+    "roles": "@:(resources.role)s",
+    "scope": "Scope",
+    "scopes": "@:(resources.scope)s",
+    "analysis": "Analysis",
+    "visualizerGroup": "Visualiser group",
+    "view": "View",
+    "views": "@:(resources.view)s"
+  },
+  "dataset": {
+    "select": "Select a @:(resources.dataset)",
+    "addNew": "@:(actions.addNew) @:(resources.dataset)",
+    "edit": "@:(actions.edit) @:(resources.dataset)",
+    "initData": "Init data",
+    "selectRequiredTypes": "Select required :@(resources.dataset) types",
+    "invalid": "Invalid @:(resources.dataset)",
+    "duration": "Processing duration (sec)",
+    "nonAvailable": "No @:(resources.datasets) available"
+  },
+  "dataset_generator": {
+    "addNew": "@:(actions.addNew) @:(resources.dataset_generator)",
+    "generate": "Generate",
+    "created_on": "Created on",
+    "last_modified": "Last modified on",
+    "nonAvailable": "No @:(resources.dataset_generator) available",
+    "config": "Config",
+    "editor": "Editor",
+    "rawConfig": "Raw config",
+    "invalid": "Invalid @:(resources.dataset_generator)",
+    "edit": "@:(resources.dataset_generator) @:(actions.edit)",
+    "map": "Map",
+    "polygon": "Area of interest",
+    "dataset_types": "Dataset types",
+    "workloads": "@:(dataset_generator.workload)s",
+    "selectWorkload": "Select @:(dataset_generator.workload)",
+    "logs": "Activity Log",
+    "general": "General",
+    "subset_only": "Subset only (no creation of datasets)",
+    "force_subset": "Force subset",
+    "generate_datasets_for": "Generate datasets for",
+    "created_and_started": "Dataset Generator successfully created and generation of datasets started",
+    "created": "Dataset Generator successfully created",
+    "status": "Status",
+    "existing_datasets": "Existing datasets (will be overwritten if selected)",
+    "workload": {
+      "created_on": "Timestamp",
+      "payload": "Settings",
+      "flags": "Settings",
+      "status": "Status",
+      "activity_log": {
+        "created_on": "Timestamp",
+        "message": "Message",
+        "verbosity_level": "Verbosity Level"
+      }
+    },
+    "uploadPolygon": "@:(actions.upload) GeoJSON"
+  },
+  "entityGroup": {
+    "select": "Select an @:(resources.entityGroup)"
+  },
+  "visualizerGroup": {
+    "select": "Select an @:(resources.visualizerGroup)"
+  },
+  "organisation": {
+    "select": "Select a organisation",
+    "edit": "@:(actions.edit) @:(resources.organisation)",
+    "addNew": "@:(actions.addNew) @:(resources.organisation)",
+    "invalid": "Invalid @:(resources.organisation)",
+    "nonAvailable": "No @:(resources.organisations) available"
+  },
+  "project": {
+    "current": "Current @:(resources.project)",
+    "select": "Select a @:(resources.project)",
+    "addNew": "@:(actions.addNew) @:(resources.project)",
+    "edit": "@:(actions.edit) @:(resources.project)",
+    "invalid": "Invalid @:(resources.project)",
+    "nonAvailable": "No @:(resources.projects) available",
+    "noneSelected": "No @:(resources.project) selected"
+  },
+  "user": {
+    "current": "Current @:(resources.users)",
+    "select": "Select a @:(resources.user)",
+    "addNew": "@:(actions.addNew) @:(resources.user) ",
+    "edit": "@:(actions.edit) @:(resources.user)",
+    "invalid": "Invalid @:(resources.user)",
+    "nonAvailable": "No @:(resources.users) available"
+  },
+  "role": {
+    "add": "@:(actions.add) @:(resources.role)",
+    "select": "@:(actions.select) a @:(resources.role)"
+  },
+  "properties": {
+    "name": "Name",
+    "firstname": "First name",
+    "middlename": "Middle name",
+    "lastname": "Last name",
+    "displayName": "Display name",
+    "internalName": "Internal name",
+    "type": "Type",
+    "actions": "Actions",
+    "description": "Description",
+    "duration": "Duration",
+    "timeScale": "Time scale",
+    "data": "Data",
+    "selected": "Selected",
+    "status": "Status",
+    "username": "Username / @:(properties.email)",
+    "email": "Email",
+    "password": "Password",
+    "passwordConfirm": "Confirm password",
+    "organisation": "Organisation",
+    "address": "Address",
+    "zip_code": "Zip code",
+    "city": "City",
+    "place": "Place",
+    "country": "Country",
+    "chamber_of_commerce": "Chamber of Commerce",
+    "contact_email": "Contact email",
+    "createdOn": "Created on",
+    "active": "Active",
+    "currentTime": "Current time",
+    "endTime": "End time",
+    "dataset_format": " @:(resources.dataset) Format",
+    "component": "Component",
+    "data_type": "Data Type",
+    "unit": "Unit",
+    "enum": "Enum"
+  },
+  "model": {
+    "selectedType": "Selected @:(resources.model) type",
+    "selectType": "@:(actions.select) @:(resources.model) type"
+  },
+  "scenario": {
+    "selectRegion": "@:(actions.select) @:(resources.region)",
+    "duration": "@:(resources.scenario) @:(properties.duration)",
+    "startMoment": "Start date and time",
+    "endMoment": "End date and time",
+    "selectDate": "@:(actions.select) date",
+    "selectTime": "@:(actions.select) time",
+    "config": "Config",
+    "editor": "Editor",
+    "rawConfig": "Raw config",
+    "addNew": "@:(actions.addNew) @:(resources.scenario)",
+    "invalid": "Invalid @:(resources.scenario)",
+    "edit": "@:(actions.edit) @:(resources.scenario)",
+    "nonAvailable": "No @:(resources.scenarios) available",
+    "logs": "Logs",
+    "overview": "Overview",
+    "liveMode": "Live Mode",
+    "externalModels": "External models",
+    "current": "Current @:(resources.scenario)",
+    "select": "Select a @:(resources.scenario)",
+    "noneSelected": "No @:(resources.scenario) selected"
+  },
+  "view": {
+    "config": "Config",
+    "nonAvailable": "No @:(resources.view)s available for this @:(resources.scenario)",
+    "addNew": "@:(actions.addNew) @:(resources.view)",
+    "edit": "@:(actions.edit) @:(resources.view)",
+    "invalid": "Invalid @:(resources.view)"
+  },
+  "timeline": {
+    "datasetName": "@:(resources.dataset) @:(properties.name)",
+    "datasetType": "@:(resources.dataset) @:(properties.type)",
+    "modelName": "@:(resources.model) @:(properties.name)",
+    "modelType": "@:(resources.model) @:(properties.type)",
+    "duration": "Processing duration (sec)",
+    "timestamp": "Timestamp",
+    "iteration": "Iteration"
+  },
+  "analysis": {
+    "advanced": "Advanced",
+    "simplified": "Simplified"
+  },
+  "model_type": {
+    "config": "Config",
+    "addNew": "@:(actions.addNew) @:(resources.model_type)",
+    "invalid": "Invalid @:(resources.model_type)",
+    "edit": "@:(actions.edit) @:(resources.model_type)",
+    "nonAvailable": "No @:(resources.model_types) available",
+    "current": "Current @:(resources.model_type)",
+    "select": "Select a @:(resources.model_type)"
+  },
+  "dataset_type": {
+    "config": "Config",
+    "addNew": "@:(actions.addNew) @:(resources.dataset_type)",
+    "invalid": "Invalid @:(resources.dataset_type)",
+    "edit": "@:(actions.edit) @:(resources.dataset_type)",
+    "nonAvailable": "No @:(resources.dataset_type) available",
+    "current": "Current @:(resources.dataset_type)",
+    "select": "Select a @:(resources.dataset_type)"
+  },
+  "property_type": {
+    "config": "Config",
+    "addNew": "@:(actions.addNew) @:(resources.property_type)",
+    "invalid": "Invalid @:(resources.property_type)",
+    "edit": "@:(actions.edit) @:(resources.property_type)",
+    "nonAvailable": "No @:(resources.property_type) available",
+    "current": "Current @:(resources.property_type)",
+    "select": "Select a @:(resources.property_type)"
+  },
+  "entity_type": {
+    "config": "Config",
+    "addNew": "@:(actions.addNew) @:(resources.entity_type)",
+    "invalid": "Invalid @:(resources.entity_type)",
+    "edit": "@:(actions.edit) @:(resources.entity_type)",
+    "nonAvailable": "No @:(resources.entity_type) available",
+    "current": "Current @:(resources.entity_type)",
+    "select": "Select a @:(resources.entity_type)"
+  },
+  "update": {
+    "count": "Update count"
+  },
+  "scope": {
+    "type": "@:(resources.scope) type",
+    "select": "@:(actions.select) a @:(resources.scope)",
+    "addNew": "@:(actions.addNew) @:(resources.scope)",
+    "nonAvailable": "No @:(resources.scopes) available"
+  },
+  "time": {
+    "days": "Days",
+    "hours": "Hours",
+    "minutes": "Minutes",
+    "seconds": "Seconds"
+  },
+  "actions": {
+    "bulk": "Bulk actions",
+    "change": "Change",
+    "duplicate": "Duplicate",
+    "export": "Export",
+    "exportCSV": "Export to CSV",
+    "delete": "Delete",
+    "apply": "Apply",
+    "add": "Add",
+    "addNew": "Add new",
+    "search": "Search",
+    "edit": "Edit",
+    "save": "Save",
+    "saveAndGenerate": "Save and generate",
+    "cancel": "Cancel",
+    "select": "Select",
+    "resetLoginCooldown": "Reset login cooldown",
+    "changePassword": "Change password",
+    "deactivateAccount": "Deactivate Account",
+    "getStarted": "Get started!",
+    "back": "Back",
+    "submit": "Submit",
+    "refresh": "Refresh",
+    "reset": "Reset",
+    "selectAll": "Select all",
+    "deselectAll": "Deselect all",
+    "download": "Download",
+    "generate": "Generate",
+    "upload": "Upload",
+    "leave": "Leave"
+  },
+  "account": {
+    "login": "Login",
+    "backToLogin": "Back to login",
+    "accountActivation": "Account activation",
+    "forgotPassword": "Forgot password",
+    "forgotPasswordDescription": "Enter your email address below and we will send you instructions on how to reset your password.",
+    "forgotPasswordFailed": "Something went wrong while requesting forgot password.",
+    "forgotPasswordSuccess": "An activation link has been sent to your email. Please check your junk folder, if necessary.",
+    "resetPassword": "Reset password",
+    "resetPasswordDescription": "Reset your password by entering your new password.",
+    "resetPasswordFailed": "Something went wrong while resetting your password.",
+    "resetPasswordSuccess": "Congratulations, your password has been reset! Please login to continue."
+  },
+  "messages": {
+    "emailComplexity": "Invalid email address",
+    "passwordComplexity": "A password must have at least 8 characters </br>and at least one lower case letter </br>one upper case letter and a number",
+    "passwordSecure": "Your password is secure",
+    "passwordMismatch": "Your passwords do not match",
+    "viewCopiedToClipboard": "View configuration copied to clipboard"
+  },
+  "webviz": {
+    "selectProjectScenario": "@:(actions.select) @:(resources.project)/@:(resources.scenario)"
+  },
+  "flow": {
+    "mainView": {
+      "noProjectTitle": "You have not chosen a workspace yet!",
+      "noProjectText": "Choose a workspace to view your data and configure scenarios",
+      "noDatasetText": "Select a dataset to view it",
+      "noScenarioText": "Select a scenario to view it"
+    },
+    "leftMenu": {
+      "returnToDashboard": "Return to dashboard",
+      "actions": "Actions",
+      "expand": "Expand",
+      "collapse": "Collapse"
+    },
+    "projects": {
+      "label": "Workspace",
+      "selectPlaceholder": "Select a workspace...",
+      "details": {
+        "created_on": "Created on",
+        "last_updated": "Last updated",
+        "tags": "Tags",
+        "dataset_count": "@:(resources.dataset)s",
+        "scenario_count": "@:(resources.scenario)s"
+      }
+    },
+    "datasets": {
+      "label": "Datasets",
+      "searchPlaceholder": "Search datasets...",
+      "addDataset": "Add dataset",
+      "dataPreview": "Data preview",
+      "usage": "Usage",
+      "resume": "Resume",
+      "entitySummary": "Entity Groups",
+      "zeroEntities": "This dataset can't be visualised",
+      "details": {
+        "created_on": "Created on",
+        "last_modified": "Last updated on",
+        "source": "Source",
+        "tags": "Tags"
+      }
+    },
+    "scenarios": {
+      "label": "Scenario",
+      "selectPlaceholder": "Select a scenario...",
+      "usedInScenario": "Used in this configuration",
+      "widgetDashboard": "Widget Dashboard",
+      "configAssistant": "Configuration Assistant",
+      "rawConfig": "Raw config",
+      "models": "Models"
+    },
+    "visualization": {
+      "label": "Visualisation",
+      "infoLabel": "View",
+      "visualiserDisplayName": "Visualiser display name",
+      "tabs": {
+        "visualizers": "Visualisers",
+        "kpi": "KPI"
+      },
+      "dialogs": {
+        "unsavedView": "<b>You have an unsaved changes!</b> <br>Do you want to leave the Visualisation?",
+        "unsavedChanges": "<b>You have unsaved changes!</b> <br>Do you want to close the Configurator?",
+        "deleteVisualizer": "Do you really want to delete <b>{name}</b> Visualiser?",
+        "continueEditing": "Continue editing",
+        "discardChanges": "Discard changes",
+        "closeConfigurator": "Close current configurator?",
+        "confirmOverwriteView": "Are you sure to overwrite View <b>{name}</b>?",
+        "confirmDeleteView": "Are you sure you want to delete View <b>{name}</b> for everyone?",
+        "confirmResetViewWithName": "Are you sure you want to start a new View? <br>You will lose all unsaved changes in <b>{name}</b>.",
+        "confirmResetViewWithoutName": "Are you sure you want to start a new View? <br>You will lose all unsaved changes.",
+        "viewUpdateSuccess": "View successfully updated",
+        "viewCreateSuccess": "View successfully saved",
+        "viewDeleteSuccess": "View successfully deleted",
+        "noViewToDelete": "There is no current view to delete",
+        "selectView": "Select a View",
+        "loadView": "Load View",
+        "noViewsForScenario": "No saved Views for this Scenario."
+      },
+      "newVisualizer": "New visualiser",
+      "editVisualizer": "Edit visualiser",
+      "loadView": "Load View",
+      "showLegend": "Show legend",
+      "legendTitle": "Legend title",
+      "legendLabel": "Legend label",
+      "basedOn": "Based on",
+      "displayAs": "Display as",
+      "static": "Static",
+      "byValue": "By value",
+      "save": "Save",
+      "saveAndClose": "Save and close",
+      "noGeometry": "No display geometry for this Entity group",
+      "colorConfig": {
+        "color": "Colour",
+        "valueRange": "Value (range)",
+        "value": "Value",
+        "buckets": "Buckets",
+        "gradient": "Gradient",
+        "steps": "Steps",
+        "type": "Colour type",
+        "palette": "Colour palette"
+      },
+      "sizeConfig": {
+        "thickness": "Thickness",
+        "size": "Size",
+        "radius": "Radius",
+        "value": "Value",
+        "minPixels": "Min size",
+        "maxPixels": "Max size"
+      },
+      "popup": {
+        "showPopup": "Show popup",
+        "onClick": "On click",
+        "onHover": "On hover",
+        "title": "Popup title",
+        "dynamic": "Dynamic",
+        "static": "Static",
+        "position": "Position",
+        "titlePlaceholder": "My visualiser",
+        "addItem": "Add item"
+      }
+    },
+    "export": {
+      "label": "Export",
+      "modalTitle": "Export data for scenario ",
+      "resetTimestamp": "Reset timestamp to original value",
+      "format": "Export format",
+      "formatPlaceholder": "Choose a format",
+      "custom": "Custom",
+      "filterData": "Filter data"
+    },
+    "legend": {
+      "label": "Legend"
+    }
+  }
+}

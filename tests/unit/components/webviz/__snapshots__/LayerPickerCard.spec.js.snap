@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LayerPickerCard.vue renders correctly in expanded mode 1`] = `
+<div>
+  <div class="box has-text-centered" style="display: none;"><span class="icon"><i class="fas fa-project-diagram"></i></span></div>
+  <div class="box is-flex-space-between">
+    <div><span><strong>some_dataset</strong></span>
+      <!---->
+    </div>
+    <div>
+      <!----> <button class="button is-white is-small"><span class="icon has-text-primary is-medium"><i class="fas fa-eye fa-lg"></i></span></button> <span class="b-tooltip is-black is-top is-medium"><transition-stub name="fade"><div class="tooltip-content" style="display: none;">Edit</div></transition-stub><div class="tooltip-trigger"><button type="button" class="button is-borderless action-edit is-small"><!----><span><span class="icon has-text-info is-medium"><i class="fas fa-pen fa-lg"></i></span></span>
+      <!----></button>
+    </div></span><span class="b-tooltip is-black is-top is-medium"><transition-stub name="fade"><div class="tooltip-content" style="display: none;">Delete</div></transition-stub><div class="tooltip-trigger"><button type="button" class="button is-borderless action-delete is-small"><!----><span><span class="icon has-text-danger is-medium"><i class="fas fa-trash fa-lg"></i></span></span>
+    <!----></button>
+  </div></span>
+</div>
+</div>
+</div>
+`;
+
+exports[`LayerPickerCard.vue renders correctly in reduced mode 1`] = `
+<div>
+  <div class="box has-text-centered" style=""><span class="icon"><i class="fas fa-project-diagram"></i></span></div>
+  <div class="box is-flex-space-between" style="display: none;">
+    <div><span><strong>some_dataset</strong></span>
+      <!---->
+    </div>
+    <div>
+      <!----> <button class="button is-white is-small"><span class="icon has-text-primary is-medium"><i class="fas fa-eye fa-lg"></i></span></button> <span class="b-tooltip is-black is-top is-medium"><transition-stub name="fade"><div class="tooltip-content" style="display: none;">Edit</div></transition-stub><div class="tooltip-trigger"><button type="button" class="button is-borderless action-edit is-small"><!----><span><span class="icon has-text-info is-medium"><i class="fas fa-pen fa-lg"></i></span></span>
+      <!----></button>
+    </div></span><span class="b-tooltip is-black is-top is-medium"><transition-stub name="fade"><div class="tooltip-content" style="display: none;">Delete</div></transition-stub><div class="tooltip-trigger"><button type="button" class="button is-borderless action-delete is-small"><!----><span><span class="icon has-text-danger is-medium"><i class="fas fa-trash fa-lg"></i></span></span>
+    <!----></button>
+  </div></span>
+</div>
+</div>
+</div>
+`;

@@ -1,0 +1,10 @@
+nameOverride: "webconsole"
+fullnameOverride: "webconsole"
+app:
+  resources:
+    limits:
+      memory: 128Mi
+    requests:
+      memory: 128Mi
+  settings:
+    features: ['flow']

@@ -1,0 +1,143 @@
+{
+  "colors": {},
+  "rules": [
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "gas_pipe_entities"
+      },
+      "settings": {
+        "baseColor": "yellow"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "sewage_pipe_entities"
+      },
+      "settings": {
+        "baseColor": "white"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "electrical_cable_entities"
+      },
+      "settings": {
+        "baseColor": "green"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "electrical_node_entities"
+      },
+      "settings": {
+        "baseColor": "green"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "water_pipe_entities"
+      },
+      "settings": {
+        "baseColor": "blue"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "road_segment_entities"
+      },
+      "settings": {
+        "baseColor": "light_grey"
+      }
+    },
+    {
+      "priority": 10,
+      "selector": {
+        "entity_group": "track_segment_entities"
+      },
+      "settings": {
+        "baseColor": "dark_grey"
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "operation_status_properties/is_working_properly"
+      },
+      "settings": {
+        "colors": [
+          [0, "red"],
+          [1, null]
+        ]
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "maintenance.under_maintenance"
+      },
+      "settings": {
+        "colors": [
+          [0, null],
+          [1, "red"]
+        ]
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "maintenance.in_window"
+      },
+      "settings": {
+        "colors": [
+          [0, null],
+          [1, "green"]
+        ]
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "overlap.active"
+      },
+      "settings": {
+        "colors": [
+          [0, null],
+          [1, "purple"]
+        ]
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "risk_score"
+      },
+      "settings": {
+        "colors": [
+          [0, "light_grey"],
+          [1, "green"],
+          [2, "yellow"],
+          [3, "orange"],
+          [4, "red"]
+        ]
+      }
+    },
+    {
+      "priority": 20,
+      "selector": {
+        "property": "operation_status_properties/has_power"
+      },
+      "settings": {
+        "colors": [
+          [0, "red"],
+          [1, null]
+        ]
+      }
+    }
+  ]
+}

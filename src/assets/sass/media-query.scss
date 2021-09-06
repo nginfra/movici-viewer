@@ -1,0 +1,20 @@
+@media screen and (-webkit-min-device-pixel-ratio: 0) and (min-resolution: 0.001dpcm) {
+  *,
+  body {
+    &::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    scrollbar-width: thin;
+    scrollbar-color: $scrollbar-color $scrollbar-background;
+    &::-webkit-scrollbar-track {
+      background: $scrollbar-background;
+      @include border-radius;
+    }
+    &::-webkit-scrollbar-thumb {
+      background-color: $scrollbar-color;
+      @include border-radius;
+      border: 1px solid $scrollbar-background;
+    }
+  }
+}

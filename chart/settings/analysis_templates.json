@@ -1,0 +1,77 @@
+[
+  {
+    "title": "Container transport",
+    "entity_group": "area_entities",
+    "dataset_name": "impact_indicator_maasvlakte",
+    "entity_id": 0,
+    "properties": [
+      {
+        "component": "impact_properties",
+        "property": "flow_total",
+        "display_name": "Total"
+      },
+      {
+        "component": "impact_properties",
+        "property": "flow_road",
+        "display_name": "Trucks"
+      },
+
+      {
+        "component": "impact_properties",
+        "property": "flow_waterway",
+        "display_name": "Ships"
+      },
+      {
+        "component": "impact_properties",
+        "property": "flow_rail",
+        "display_name": "Trains"
+      }
+    ],
+    "time_axis": {
+      "label": "Days",
+      "unit": "days",
+      "min": 0,
+      "max": 80
+    },
+    "y_axis": {
+      "label": "Containers [TEU/day]"
+    }
+  },
+  {
+    "title": "CO2 production",
+    "entity_group": "area_entities",
+    "dataset_name": "impact_indicator_maasvlakte",
+    "entity_id": 0,
+    "properties": [
+      {
+        "component": "pollution_properties",
+        "property": "co2_day",
+        "display_name": "Total"
+      },
+      {
+        "component": "pollution_properties",
+        "property": "co2_day_road",
+        "display_name": "Trucks"
+      },
+      {
+        "component": "pollution_properties",
+        "property": "co2_day_waterway",
+        "display_name": "Ships"
+      },
+      {
+        "component": "pollution_properties",
+        "property": "co2_day_rail",
+        "display_name": "Trains"
+      }
+    ],
+    "time_axis": {
+      "label": "Days",
+      "unit": "days",
+      "min": 0,
+      "max": 80
+    },
+    "y_axis": {
+      "label": "CO2 production [kg/day]"
+    }
+  }
+]

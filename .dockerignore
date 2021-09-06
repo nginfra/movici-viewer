@@ -1,0 +1,13 @@
+*
+!chart/settings
+!etc
+!public
+!src
+!.env
+!.eslintrc.js
+!babel.config.js
+!Dockerfile
+!package.json
+!package-lock.json
+!vue.config.js
+!tsconfig.json

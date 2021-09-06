@@ -1,0 +1,70 @@
+.is-size-6-half {
+  font-size: 0.85rem !important;
+}
+
+.text-ellipsis {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: pre;
+}
+
+// .x-overflow is used alongside with FixedPosition.ts as the overflow parent
+//
+.overflow,
+.x-overflow {
+  overflow: auto;
+  padding-right: 0.5rem;
+  margin-right: -0.5rem;
+}
+
+.overflow-hidden {
+  overflow: hidden !important;
+}
+
+.overflow-hover {
+  overflow: hidden;
+  &:hover {
+    overflow: auto;
+    padding-right: 0.5rem;
+    margin-right: -0.5rem;
+  }
+}
+
+button {
+  &.is-borderless {
+    border: 0;
+  }
+  &.is-transparent {
+    background-color: transparent;
+    color: $black;
+  }
+  &.is-round {
+    border-radius: 100%;
+  }
+  &.movici {
+    background: $white;
+    color: $primary;
+    border: 2px solid $white-ter !important;
+    &:hover {
+      color: $primary;
+      background: $primary-light;
+      border-color: $grey-light;
+    }
+    &:active {
+      color: $primary;
+      border-color: $primary !important;
+    }
+  }
+}
+
+[required] {
+  label,
+  .label {
+    &::after {
+      margin-left: 2px;
+      content: '*';
+      color: $grey;
+      font-weight: bold;
+    }
+  }
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "uuid":"0001",
+    "name":"dummy_project_1",
+    "display_name":"dummy_project_1",
+    "scenario_count":0,
+    "dataset_count":0,
+    "created_on":0
+  },
+  {
+    "uuid":"0002",
+    "name":"dummy_project_1",
+    "display_name":"dummy_project_1",
+    "scenario_count":0,
+    "dataset_count":0,
+    "created_on":0
+  }
+]

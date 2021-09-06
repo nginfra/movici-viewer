@@ -1,0 +1,531 @@
+{
+  "dashboardWelcome": "Movici Dashboard",
+  "misc": {
+    "welcome": "Welkom",
+    "profile": "Profiel",
+    "logout": "Uitloggen",
+    "agreement": "Ik ga akkoord met de gebruiksvoorwaarden en privacybeleid van MoViCI.",
+    "yourUsername": "Uw gebruikersnaam is:",
+    "completeSetup": "U hoeft alleen nog uw wachtwoord in te stellen om uw accountinstellingen te voltooien",
+    "activate": "Account activeren",
+    "settings": "Instellingen",
+    "total": "Totaal",
+    "allRightsReserved": "Alle Rechten Voorbehouden",
+    "termsOfUse": "Gebruiksvoorwaarden",
+    "tosMessage": "Klik {0} om onze algemene gebruiksvoorwaarden te lezen",
+    "here": "hier",
+    "loadPrivacyPolicyFailure": "Onze excuses, we konden de privacy policy niet laden",
+    "loginTermsMessage": "Door in te loggen gaat u akkoord met ons {privacy} en onze {terms}",
+    "privacyPolicy": "Privacy beleid",
+    "version": "versie",
+    "documentation": "documentatie",
+    "impactIndicators": "MoViCI impact indicatoren",
+    "impactIndicatorText": "Uitleg over de impact indicatoren die in de visualizatie te zien zijn, aan de linkerkant van het scherm.",
+    "of": "van",
+    "yes": "Ja",
+    "no": "Nee",
+    "properties": "Eigenschappen"
+  },
+  "units": {
+    "meter": "meter",
+    "pixel": "pixel",
+    "meters": "@:(units.meter)s",
+    "pixels": "@:(units.pixel)s"
+  },
+  "sidebar": {
+    "general": "Algemeen",
+    "visualization": "Visualisatie",
+    "dashboard": "Dashboard",
+    "simulationManagement": "Simulaties",
+    "administration": "Beheer",
+    "moviciFlow": "Movici Flow"
+  },
+  "settings": {
+    "language": "Taal",
+    "dataEngineVersion": "Data Engine versie",
+    "selectLanguage": "@:(settings.language) @:(actions.select)",
+    "selectDataEngineVersion": "@:(settings.dataEngineVersion) @:(actions.select) "
+  },
+  "visualizationWidget": {
+    "title": "Visualisatie",
+    "content":"Bekijk en exporteer scenario resultaten",
+    "button": "Visualisatie openen"
+  },
+  "flowPreviewWidget": {
+    "title": "Movici Flow",
+    "content": "Een stapsgewijs proces voor het opzetten, visualizeren en exporteren van scenarioresultaten",
+    "button":  "Sneak preview",
+    "list": [
+      "Bekijk datasets in de workspaces",
+      "Configureer scenarioparameters",
+      "Visualiseer resultaten. Varieer kleur, punt- en lijndikte of laat resultaten zien als heatmaps",
+      "Configureer legendas en extra informatie",
+      "Configureer weergave van KPIs: op de kaart, als widgets of als grafiek",
+      "Filter en exporteer resultaten"
+    ]
+  },
+  "feedbackFormWidget": {
+    "title": "Jouw mening telt",
+    "content": "Heb je een probleem of een bug gevonden, of heb je een idee voor een nieuwe feature? Laat dan hier een bericht achter.",
+    "button": "Geef feedback",
+    "popupTitle": "Feedback",
+    "popupSubtitle": "Gebruik het onderstaande formulier om je feedback op te sturen. We stellen je hulp bij de verbetering van het platform zeer op prijs.",
+    "typeLabel": "Feedback Type",
+    "typePlaceholder": "Selecteer een type",
+    "messageLabel": "Bericht",
+    "messagePlaceholder": "Schrijf een bericht...",
+    "cancel": "Annuleren",
+    "submit": "Verzenden",
+    "success": "Bedankt dat je de tijd hebt genomen om ons feedback te geven! We horen graag hoe we ons product kunnen verbeter, en aan alle wensen kunnen voldoen. Alle suggesties worden meegenomen in het ontwikkelproces.",
+    "feedbackTypes": {
+      "bug_report": "Bug report",
+      "feature_request": "Feature verzoek",
+      "other": "Anders"
+    },
+    "validation": {
+      "type": "Kies een feedback type",
+      "message": "Schrijf een bericht",
+      "length": "Het bericht moet ten minste 10 tekens bevatten"
+    }
+  },
+  "resources": {
+    "organisation": "Organisatie",
+    "organisations": "@:(resources.organisation)s",
+    "project": "Workspace",
+    "projects": "@:(resources.project)s",
+    "dataset": "Dataset",
+    "datasets": "@:(resources.dataset)s",
+    "dataset_generator": "Dataset Generator",
+    "dataset_generators": "@:(resources.dataset_generator)en",
+    "dataset_type": "Dataset Type",
+    "dataset_types": "@:(resources.dataset_type)s",
+    "entityGroup": "Entiteitsgroep",
+    "entity_type": "Entity Type",
+    "entity_types": "@:(resources.entity_type)s",
+    "schema": "Dataset Schema",
+    "scenario": "Scenario",
+    "scenarios": "@:(resources.scenario)s",
+    "region": "Regio",
+    "model": "Model",
+    "models": "Modellen",
+    "model_type": "Model type",
+    "model_types": "Model types",
+    "impactIndicator": "Impact indicator",
+    "timeline": "Tijdlijn",
+    "profile": "Profiel",
+    "property_type": "Property Type",
+    "property_types": "@:(resources.property_type)s",
+    "user": "Gebruiker",
+    "users": "@:(resources.user)s",
+    "role": "Rol",
+    "roles": "@:(resources.role)len",
+    "scope": "Scope",
+    "scopes": "@:(resources.scope)s",
+    "analysis": "Analyse",
+    "visualizerGroup": "Visualizer groep",
+    "view": "View",
+    "views": "@:(resources.view)s"
+  },
+  "dataset": {
+    "select": "Selecteer een @:(resources.dataset)",
+    "addNew": "@:(resources.dataset) @:(actions.add)",
+    "edit": "@:(resources.dataset) @:(actions.edit)",
+    "initData": "Init data",
+    "selectRequiredTypes": "Selecteer benodige :@(resources.dataset) types",
+    "invalid": "Ongeldige @:(resources.dataset)",
+    "duration": "Verwerkingsduur (sec)",
+    "nonAvailable": "Geen @:(resources.datasets) beschikbaar"
+  },
+  "dataset_generator": {
+    "addNew": "@:(resources.dataset_generator) @:(actions.add)",
+    "generate": "Genereer",
+    "created_on": "Gecreëerd op",
+    "last_modified": "Laatste wijziging op",
+    "nonAvailable": "Geen @:(resources.dataset_generator) beschikbaar",
+    "config": "Config",
+    "editor": "Editor",
+    "rawConfig": "Ruwe configuratie",
+    "invalid": "Ongeldige @:(resources.dataset_generator)",
+    "edit": "@:(resources.dataset_generator) @:(actions.edit)",
+    "map": "Kaart",
+    "polygon": "Interessegebied",
+    "dataset_types": "Dataset types",
+    "workloads": "@:(dataset_generator.workload)s",
+    "selectWorkload": "Selecteer @:(dataset_generator.workload)",
+    "logs": "Activiteitenlog",
+    "general": "Algemeen",
+    "subset_only": "Alleen subsetten (geen datasets aanmaken)",
+    "force_subset": "Forceer subsetten",
+    "generate_datasets_for": "Genereer datasets voor",
+    "created_and_started": "Dataset Generator succcesvol aangemaakt and generatie van datasets gestart",
+    "created": "Dataset Generator succesvol aangemaakt",
+    "status": "Status",
+    "existing_datasets": "Bestaande datasets (worden overschreven wanneer geselecteerd)",
+    "workload": {
+      "created_on": "Tijdstip",
+      "payload": "Instellingen",
+      "flags": "Instellingen",
+      "status": "Status",
+      "activity_log": {
+        "created_on": "Tijdstip",
+        "message": "Bericht",
+        "verbosity_level": "Info level"
+      }
+    },
+    "uploadPolygon": "GeoJSON @:(actions.upload)"
+  },
+  "entityGroup": {
+    "select": "Selecteer een @:(resources.entityGroup)"
+  },
+  "visualizerGroup": {
+    "select": "Selecteer een @:(resources.visualizerGroup)"
+  },
+  "organisation": {
+    "select": "Selecteer een organisatie",
+    "edit": "@:(resources.organisation) @:(actions.edit)",
+    "addNew": "@:(resources.organisation) @:(actions.add)",
+    "invalid": "Ongeldige @:(resources.organisation)",
+    "nonAvailable": "Geen @:(resources.organisations) beschikbaar"
+  },
+  "project": {
+    "current": "Huidig @:(resources.project)",
+    "select": "Selecteer een @:(resources.project)",
+    "addNew": "@:(resources.project) @:(actions.add)",
+    "edit": "@:(resources.project) @:(actions.edit)",
+    "invalid": "Ongeldige @:(resources.project)",
+    "nonAvailable": "Geen @:(resources.projects) beschikbaar",
+    "noneSelected": "Geen @:(resources.project) geselecteerd"
+  },
+  "user": {
+    "current": "Huidige @:(resources.users)",
+    "select": "Selecteer een @:(resources.user)",
+    "addNew": "@:(resources.user) @:(actions.add)",
+    "edit": "@:(resources.user) @:(actions.edit)",
+    "invalid": "Ongeldige @:(resources.user)",
+    "nonAvailable": "Geen @:(resources.users) beschikbaar"
+  },
+  "role": {
+    "add": "@:(resources.role) @:(actions.add)",
+    "select": "@:(resources.role) @:(actions.select)"
+  },
+  "properties": {
+    "name": "Naam",
+    "firstname": "Voornaam",
+    "middlename": "Tussenvoegsel",
+    "lastname": "Achternaam",
+    "displayName": "Weergavenaam",
+    "internalName": "Interne naam",
+    "type": "Type",
+    "actions": "Acties",
+    "description": "Beschrijving",
+    "duration": "Duur",
+    "timeScale": "Tijdschaal",
+    "data": "Data",
+    "selected": "Geselecteerd",
+    "status": "Status",
+    "username": "Gebruikersnaam / @:(properties.email)",
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "passwordConfirm": "Herhaal wachtwoord",
+    "organisation": "Organisatie",
+    "address": "Adres",
+    "zip_code": "Postcode",
+    "city": "Stad",
+    "place": "Plaats",
+    "country": "Land",
+    "chamber_of_commerce": "KVK",
+    "contact_email": "Contact e-mail",
+    "createdOn": "Aangemaakt Op",
+    "active": "Actief",
+    "currentTime": "Huidige tijd",
+    "endTime": "Eindtijd",
+    "dataset_format": " @:(resources.dataset) Formaat",
+    "component": "Component",
+    "data_type": "Data Type",
+    "unit": "Eenheid",
+    "enum": "Enum"
+  },
+  "model": {
+    "selectedType": "Geselecteerd @:(resources.model) type",
+    "selectType": "@:(actions.select) @:(resources.model) type"
+  },
+  "scenario": {
+    "selectRegion": "Selecteer een @:(resources.region)",
+    "duration": "@:(resources.scenario) @:(properties.duration)",
+    "startMoment": "Startdatum en -tijd",
+    "endMoment": "Einddatum en -tijd",
+    "selectDate": "Selecteer datum",
+    "selectTime": "Selecteer tijd",
+    "config": "Config",
+    "editor": "Editor",
+    "rawConfig": "Ruwe configuratie",
+    "addNew": "@:(resources.scenario) @:(actions.add)",
+    "invalid": "Ongeldig @:(resources.scenario)",
+    "edit": "@:(resources.scenario) @:(actions.edit)",
+    "nonAvailable": "Geen @:(resources.scenarios) beschikbaar",
+    "logs": "Logs",
+    "overview": "Overzicht",
+    "liveMode": "Live Modus",
+    "externalModels": "Externe modellen",
+    "current": "Huidig @:(resources.scenario)",
+    "select": "Selecteer een @:(resources.scenario)",
+    "noneSelected": "Geen @:(resources.scenario) geselecteerd"
+  },
+  "view": {
+    "config": "Config",
+    "nonAvailable": "Er zijn geen @:(resources.view)s bechikbaar voor dit @:(resources.scenario)",
+    "addNew": "@:(resources.view) @:(actions.addNew)",
+    "edit": "@:(resources.view) @:(actions.edit)",
+    "invalid": "Ongeldige @:(resources.view)"
+  },
+  "timeline": {
+    "datasetName": "@:(resources.dataset) @:(properties.name)",
+    "datasetType": "@:(resources.dataset) @:(properties.type)",
+    "modelName": "@:(resources.model) @:(properties.name)",
+    "modelType": "@:(resources.model) @:(properties.type)",
+    "duration": "Verwerkingsduur (sec)",
+    "timestamp": "Timestamp",
+    "iteration": "Iteratie"
+  },
+  "analysis": {
+    "advanced": "Geavanceerd",
+    "simplified": "Eenvoudig"
+  },
+  "model_type": {
+    "config": "Config",
+    "addNew": "@:(resources.model_type) @:(actions.add)",
+    "invalid": "Ongeldig @:(resources.model_type)",
+    "edit": "@:(actions.edit) @:(resources.model_type)",
+    "nonAvailable": "Geen @:(resources.model_types) beschikbaar",
+    "current": "Huidige @:(resources.model_type)",
+    "select": "Kies een @:(resources.model_type)"
+  },
+  "dataset_type": {
+    "config": "Config",
+    "addNew": "@:(resources.dataset_type) @:(actions.add)",
+    "invalid": "Ongeldig @:(resources.dataset_type)",
+    "edit": "@:(actions.edit) @:(resources.dataset_type)",
+    "nonAvailable": "Geen @:(resources.dataset_type) beschikbaar",
+    "current": "Huidige @:(resources.dataset_type)",
+    "select": "Kies een @:(resources.dataset_type)"
+  },
+  "property_type": {
+    "config": "Config",
+    "addNew": "@:(resources.property_type) @:(actions.add)",
+    "invalid": "Ongeldig @:(resources.property_type)",
+    "edit": "@:(actions.edit) @:(resources.property_type)",
+    "nonAvailable": "Geen @:(resources.property_type) beschikbaar",
+    "current": "Huidige @:(resources.property_type)",
+    "select": "Kies een @:(resources.property_type)"
+  },
+  "entity_type": {
+    "config": "Config",
+    "addNew": "@:(resources.entity_type) @:(actions.add)",
+    "invalid": "Ongeldig @:(resources.entity_type)",
+    "edit": "@:(actions.edit) @:(resources.entity_type)",
+    "nonAvailable": "Geen @:(resources.entity_type) beschikbaar",
+    "current": "Huidige @:(resources.entity_type)",
+    "select": "Kies een @:(resources.entity_type)"
+  },
+  "update": {
+    "count": "Aantal updates"
+  },
+  "scope": {
+    "type": "@:(resources.scope) type",
+    "select": "@:(resources.scope) @:(actions.select)",
+    "addNew": "@:(resources.scope) @:(actions.add)",
+    "nonAvailable": "Geen @:(resources.scopes) beschikbaar"
+  },
+  "time": {
+    "days": "Dagen",
+    "hours": "Uren",
+    "minutes": "Minuten",
+    "seconds": "Secondes"
+  },
+  "actions": {
+    "bulk": "Bulk acties",
+    "change": "Veranderen",
+    "duplicate": "Dupliceren",
+    "export": "Exporteren",
+    "exportCSV": "Exporteren naar CSV",
+    "delete": "Verwijderen",
+    "apply": "Toepassen",
+    "add": "Toevoegen",
+    "addNew": "Voeg nieuw toe",
+    "search": "Zoeken",
+    "edit": "Bewerken",
+    "save": "Opslaan",
+    "saveAndGenerate": "Opslaan en genereren",
+    "cancel": "Annuleren",
+    "select": "Selecteren",
+    "resetLoginCooldown": "Login cooldown terugzetten",
+    "changePassword": "Wachtwoord veranderen",
+    "deactivateAccount": "Account deactiveren",
+    "getStarted": "Voltooien!",
+    "back": "Terug",
+    "submit": "Verzenden",
+    "refresh": "Verversen",
+    "reset": "Reset",
+    "selectAll": "Selecteer alles",
+    "deselectAll": "Deselecteer alles",
+    "download": "Downloaden",
+    "generate": "Genereren",
+    "upload": "Uploaden",
+    "leave": "Leave"
+  },
+  "account": {
+    "login": "Inloggen",
+    "backToLogin": "Terug naar inloggen",
+    "accountActivation": "Account activeren",
+    "forgotPassword": "Wachtwoord vergeten",
+    "forgotPasswordDescription": "Als u uw wachtwoord opnieuw wilt instellen, geeft u het e-mailadres op dat u gebruikt om in te loggen.",
+    "forgotPasswordFailed": "Er ging iets mis tijdens uw verzoek voor vergeten wachtwoord.",
+    "forgotPasswordSuccess": "Een activatie link is verstuurd naar uw e-mail. Als dit te lang duurt controleer dan uw spam folder.",
+    "resetPassword": "Reset wachtwoord",
+    "resetPasswordDescription": "Reset uw wachtwoord door een nieuw wachtwoord in te voeren. Zorg ervoor dat u een sterk wachtwoord kiest.",
+    "resetPasswordFailed": "Er ging iets mis tijdens het resetten van uw wachtwoord.",
+    "resetPasswordSuccess": "Uw wachtwoord is succesvol gereset. Log opnieuw in."
+  },
+  "messages": {
+    "emailComplexity": "Onjuist e-mailadres",
+    "passwordComplexity": "Een wachtwoord moet ten minste 8 tekens bevatten </br>ten minste bestaan uit kleine letters, hoofdletters, en cijfers",
+    "passwordSecure": "Uw wachtwoord is veilig",
+    "passwordMismatch": "Wachtwoorden komen niet overeen",
+    "viewCopiedToClipboard": "Weergave-configuratie naar klembord gekopieerd"
+  },
+  "webviz": {
+    "selectProjectScenario": "@:(resources.project)/@:(resources.scenario) @:(actions.select) "
+  },
+  "flow": {
+    "mainView": {
+      "noProjectTitle": "U heeft nog geen @:(resources.project) gekozen!",
+      "noProjectText": "Kies een @:(resources.project) om uw data te bekijken en scenarios te configureren",
+      "noDatasetText": "Selecteer een dataset om te bekijken",
+      "noScenarioText": "Selecteer een scenario om te bekijken"
+    },
+    "leftMenu": {
+      "returnToDashboard": "Terugkeren naar het dashboard",
+      "actions": "Acties",
+      "expand": "Uitklappen",
+      "collapse": "Inklappen"
+    },
+    "projects": {
+      "label": "@:(resources.project)",
+      "selectPlaceholder": "@:(project.select)",
+      "details": {
+        "created_on": "Gemaakt op",
+        "last_updated": "Laatst gewijzigd op",
+        "tags": "Tags",
+        "dataset_count": "@:(resources.dataset)s",
+        "scenario_count": "@:(resources.scenario)s"
+      }
+    },
+    "datasets": {
+      "label": "@:(resources.dataset)s",
+      "selectPlaceholder": "@:(dataset.select)",
+      "addDataset": "@:(dataset.addNew)",
+      "dataPreview": "Data preview",
+      "usage": "Gebruik",
+      "resume": "Samenvatting",
+      "entitySummary": "Entiteitensamenvatting",
+      "zeroEntities": "Deze dataset kan niet worden weergegeven :(",
+      "details": {
+        "created_on": "Gemaakt op",
+        "last_updated": "Laatst gewijzigd op",
+        "source": "Bron",
+        "tags": "Tags"
+      }
+    },
+    "scenarios": {
+      "label": "@:(resources.scenario)s",
+      "selectPlaceholder": "@:(scenario.select)",
+      "usedInScenario": "Gebruikt in scenario",
+      "widgetDashboard": "Widget Dashboard",
+      "configAssistant": "Configuratie-assistant",
+      "rawConfig": "Ruwe config",
+      "models": "Modellen"
+    },
+    "visualization": {
+      "label": "Visualisatie",
+      "infoLabel": "View",
+      "visualiserDisplayName": "Visualiser weergavenaam",
+      "tabs": {
+        "visualizers": "Visualisers",
+        "kpi": "KPI"
+      },
+      "dialogs": {
+        "unsavedView": "<b>Wijzigingen zijn niet opgeslagen!</b> <br>Weet je zeker dat je de Visualisatie wilt verlaten?",
+        "unsavedChanges": "<b>Wijzigingen zijn niet opgeslagen!</b> <br>Weet je zeker dat je de Configurator wilt sluiten?",
+        "deleteVisualizer": "Weet je zeker dat je Visualiser <b>{name}</b> wilt verwijderen?",
+        "continueEditing": "Doorgaan met bewerken",
+        "discardChanges": "Wijzigingen ongedaan maken",
+        "closeConfigurator": "Huidige configurator sluiten?",
+        "confirmOverwriteView": "Wil je de huidige View <b>{name}</b> overschrijven?",
+        "confirmDeleteView": "Weet je zeker dat je View <b>{name}</b> wilt verwijderen voor iedereen?",
+        "confirmResetViewWithName": "Weet je zeker dat je een nieuwe View wilt starten? Alle niet-opgeslagen wijzigingen in <b>{name}</b> zullen verloren gaan",  
+        "confirmResetViewWithoutName": "Weet je zeker dat je een nieuwe View wilt starten? Alle niet-opgeslagen wijzigingen zullen verloren gaan",
+        "viewUpdateSuccess": "View succesvol ge-updatet",
+        "viewCreateSuccess": "View succesvol opgeslagen",
+        "viewDeleteSuccess": "View succesvol verwijderd",
+        "noViewToDelete": "Er is geen View om te verwijderen",
+        "selectView": "View selecteren",
+        "loadView": "View laden",
+        "noViewsForScenario": "Er zijn geen opgeslagen Views voor dit Scenario"
+      },
+      "newVisualizer": "Nieuwe Visualiser",
+      "editVisualizer": "Bewerk Visualizer",
+      "loadView": "View laden",
+      "showLegend": "Legenda weergeven",
+      "legendTitle": "Legenda titel",
+      "legendLabel": "Legenda label",
+      "basedOn": "Gebaseerd op",
+      "displayAs": "Weergeven in",
+      "static": "Statisch",
+      "byValue": "Vanuit waardes",
+      "save": "Opslaan",
+      "saveAndClose": "Opslaan en sluiten",
+      "noGeometry": "Deze Entiteitgroep heeft geen geometrie",
+      "colorConfig": {
+        "color": "Kleur",
+        "valueRange": "Waarde (bereik)",
+        "value": "Waarde",
+        "buckets": "Kleurvakken",
+        "gradient": "Gradient",
+        "steps": "Stappen",
+        "type": "palet-type",
+        "palette": "kleurenpalet"
+      },
+      "sizeConfig": {
+        "thickness": "Dikte",
+        "radius": "Radius",
+        "sizes": "Grootte",
+        "value": "Waarde",
+        "minPixels": "Min grootte",
+        "maxPixels": "Max grootte"
+      },
+      "popup": {
+        "showPopup": "Popup weergeven",
+        "onClick": "Bij klikken",
+        "onHover": "Bij bewegen",
+        "title": "Popup titel",
+        "dynamic": "Dynamisch",
+        "static": "Statisch",
+        "position": "Positie",
+        "titlePlaceholder": "Mijn Visualiser",
+        "addItem": "Add item"
+      }
+    },
+    "export": {
+      "label": "Export",
+      "modalTitle": "Export data for scenario ",
+      "resetTimestamp": "Reset timestamp to original value",
+      "format": "Export format",
+      "formatPlaceholder": "Choose a format",
+      "custom": "Custom",
+      "filterData": "Filter data"
+    },
+    "legend": {
+      "label": "Legenda"
+    }
+  }
+}

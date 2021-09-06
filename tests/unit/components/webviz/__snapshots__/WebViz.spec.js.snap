@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`WebViz.vue renders correctly 1`] = `
+<div>
+  <exportmodal-stub
+    timestamp="0"
+  />
+   
+  <vizsidebar-stub />
+   
+  <mapvis-stub
+    buildings="true"
+    layerinfos=""
+    timestamp="0"
+    viewstate="[object Object]"
+  />
+</div>
+`;
