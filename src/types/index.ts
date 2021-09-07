@@ -1,7 +1,6 @@
 export * from './account';
 export * from './api';
 export * from './colors';
-export * from './datasetGenerators';
 export * from './datasets';
 export * from './dashboard';
 export * from './flow';
@@ -12,7 +11,6 @@ export * from './general';
 export * from './geocode';
 export * from './geometry';
 export * from './models';
-export * from './organisation';
 export * from './project';
 export * from './scenarios';
 export * from './schema';
