@@ -3,7 +3,6 @@ import store from '@/store/store';
 import {
   CameraOptions,
   ColorRuleSet,
-  Project,
   Scenario,
   SimulationMode,
   TimeOrientedSimulationInfo,
@@ -27,6 +26,8 @@ import SummaryStore from '@/store/modules/SummaryStore';
 import { determineEntityGeometry } from '@/visualizers/geometry';
 import { getEntitySummary } from '@/utils';
 import { VisualizerInfo } from '@/visualizers';
+import GeneralStore from './GeneralStore';
+import ProjectStore from './ProjectStore';
 
 @Module({
   name: 'webviz',
@@ -55,7 +56,7 @@ class WebvizStore extends VuexModule {
   async useSettings(settings: VisualizationSettings) {
     await this.context.dispatch('setActiveProjectName', settings.project.name, { root: true });
 
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     if (settings.mode === VisualizationMode.SCENARIO && settings.scenario) {
       this.setScenario(await api.request(new GetScenario(settings.scenario.uuid)));
       SummaryStore.setCurrentScenario({ scenarioUUID: settings.scenario.uuid });
@@ -75,9 +76,10 @@ class WebvizStore extends VuexModule {
     settings: VisualizationSettings;
     timestamp: number;
   }> {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     await this.context.dispatch('getAllProjects', null, { root: true });
-    const project: Project | null = this.context.rootGetters.getProjectByName(view.project_name);
+    const project = ProjectStore.getProjectByName(view.project_name);
+
     if (!project) {
       throw new Error('Project does not exist or user not authorized');
     }
@@ -95,10 +97,12 @@ class WebvizStore extends VuexModule {
     if (!scenarioUUID) {
       throw new Error('Scenario does not exist in project or user not authorized');
     }
+
     const scenario = await api.request(new GetScenario(scenarioUUID));
     if (!scenario) {
       throw new Error('Error when fetching scenario');
     }
+
     const datasetMap: Record<string, UUID> = {};
     for (const dataset of scenario.datasets) {
       datasetMap[dataset.name] = dataset.uuid;
@@ -121,10 +125,10 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true })
   async getDatasets() {
-    const getters = this.context.rootGetters;
-    const api: Client = getters.api;
-    const allDatasets =
-      (await api.request(new GetDatasets(getters['projects/activeProjectUUID']))) || [];
+    const api: Client = GeneralStore.api,
+      activeProjectUUID = ProjectStore.activeProjectUUID,
+      allDatasets = (await api.request(new GetDatasets(activeProjectUUID))) ?? [];
+
     if (this.scenario) {
       const scenarioDatasets = new Set(this.scenario.datasets.map(d => d.uuid));
       return allDatasets.filter(d => scenarioDatasets.has(d.uuid));
@@ -134,7 +138,7 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true })
   async getDatasetSummary(datasetUUID: string) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     if (this.mode && this.mode === VisualizationMode.SCENARIO && this.settings?.scenario) {
       return await api.request(new GetScenarioSummary(this.settings.scenario.uuid, datasetUUID));
     }
@@ -143,8 +147,7 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true, commit: 'setColorRuleSet' })
   async getColorRuleSet() {
-    const getters = this.context.rootGetters;
-    const api: Client = getters.api;
+    const api: Client = GeneralStore.api;
 
     return await api.request(new GetGlobalColorRuleSet());
   }

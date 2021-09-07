@@ -12,6 +12,7 @@ import {
   UpdateProfile
 } from '@/api/requests';
 import Client from '@/api/client';
+import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'currentUser',
@@ -58,7 +59,7 @@ class CurrentUserStore extends VuexModule {
     if (!token) {
       return;
     }
-    const resp = await this.context.rootGetters.api.request(new CheckToken(token), {
+    const resp = await GeneralStore.api.request(new CheckToken(token), {
       401: () => {
         this.context.commit('CLEAR_LOGIN_STATUS');
         this.context.commit('SET_LOGOUT_MESSAGE', {
@@ -120,23 +121,23 @@ class CurrentUserStore extends VuexModule {
   }
   @Action({ rawError: true })
   async doForgotPassword(payload: { username: string }) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     return await api.request(new ForgotPassword(payload));
   }
   @Action({ rawError: true })
   async doResetPassword(payload: SetAccountPasswordPayload) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     return await api.request(new ResetPassword(payload));
   }
   @Action({ rawError: true })
   async doActivateAccount(payload: SetAccountPasswordPayload) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     return await api.request(new ActivateAccount(payload));
   }
   @Action({ rawError: true })
   async getCurrentUser() {
     const { commit } = this.context;
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     const profile = await api.request(new GetProfile());
     if (profile) {
       commit('SET_CURRENT_USER', profile);
@@ -144,7 +145,7 @@ class CurrentUserStore extends VuexModule {
   }
   @Action({ rawError: true })
   async updateProfile(payload: ProfileUpdate) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     return await api.request(new UpdateProfile(payload));
   }
 

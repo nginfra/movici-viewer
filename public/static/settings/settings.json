@@ -1,4 +1,7 @@
 {
-  "ApiAddress": "https://staging.movici.nl",
-  "features": ["flow"]
+  "ApiAddress": "http://localhost",
+  "localhost": true,
+  "features": [
+    "flow"
+  ]
 }

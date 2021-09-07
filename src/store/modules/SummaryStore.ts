@@ -3,6 +3,7 @@ import store from '@/store/store';
 import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
 import { DatasetSummary, UUID } from '@/types';
 import Client from '@/api/client';
+import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'summary',
@@ -55,7 +56,7 @@ class SummaryStore extends VuexModule {
     datasetUUID: string;
     scenarioUUID?: string | null;
   }): Promise<DatasetSummary | null> {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     const datasetUUID = params.datasetUUID;
     const scenarioUUID =
       params.scenarioUUID === undefined ? this.currentScenarioUUID : params.scenarioUUID;

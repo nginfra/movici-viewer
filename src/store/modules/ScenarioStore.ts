@@ -21,6 +21,7 @@ import {
 import Client from '@/api/client';
 import { getStatusFromScenarioAndSimulation } from '@/utils';
 import ProjectStore from './ProjectStore';
+import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'scenarios', // TODO: rename to 'scenario' once everything is converted to ts
@@ -65,7 +66,7 @@ class ScenarioStore extends VuexModule {
     projectUUID ??= ProjectStore.activeProjectUUID;
 
     if (projectUUID) {
-      const api: Client = this.context.rootGetters.api,
+      const api: Client = GeneralStore.api,
         [scenarios, simulations] = await Promise.all([
           api.request(new GetScenarios(projectUUID)),
           api.request(new GetSimulations(projectUUID))
@@ -94,7 +95,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async getScenario(uuid: string) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
 
     this.SET_CURRENT_SIMULATION(null);
 
@@ -156,7 +157,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async getSimulation(uuid: string) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
 
     const simulation = await api.request(new GetSimulation(uuid), {
       404: () => {}
@@ -172,7 +173,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   clearScenario(scenario: ShortScenario) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     const promises = [
       api.request(new DeleteTimeline(scenario.uuid), {
         404: () => {}
@@ -186,13 +187,13 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async runScenario(scenario: ShortScenario) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     return await api.request(new RunSimulation(scenario.uuid));
   }
 
   @Action({ rawError: true })
   async getLogs(scenarioUUID: string) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
 
     return await api.request(new GetSimulationLogs(scenarioUUID), {
       404: () => {}
@@ -201,7 +202,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async downloadLogs(scenario: ShortScenario) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
 
     const resp = await api.request(new GetSimulationLogs(scenario.uuid), {
       404: () => {}
@@ -214,7 +215,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async getAnalysisPlot(payload: { scenario_uuid: string; config: Record<string, unknown> }) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
 
     const resp = await api.request(new GetAnalysisPlot(payload.scenario_uuid, payload.config));
 
@@ -231,7 +232,7 @@ class ScenarioStore extends VuexModule {
 
   @Action({ rawError: true })
   async getAnalysisTemplates() {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     const templates = await api.request(new GetAnalysisTemplates());
 
     if (!templates) {

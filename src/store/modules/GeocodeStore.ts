@@ -4,6 +4,7 @@ import store from '@/store/store';
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/types';
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { reverseTransform, transform } from '@/crs';
+import GeneralStore from './GeneralStore';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
   return Object.assign({}, result, {
@@ -47,7 +48,7 @@ class GeocodeStore extends VuexModule {
 
   @Action({ rawError: true })
   async updateSuggestions(query: GeocodeSearchQuery) {
-    const api: Client = this.context.rootGetters.api;
+    const api: Client = GeneralStore.api;
     if (!query) {
       this.setSuggestions([]);
       return;
@@ -60,14 +61,14 @@ class GeocodeStore extends VuexModule {
 
   @Action({ rawError: true })
   async resolveSuggestion(suggestion: GeocodeSuggestion): Promise<GeocodeSearchResult | null> {
-    const api: Client = this.context.rootGetters.api,
+    const api: Client = GeneralStore.api,
       result = await api.request(new GetGeocodeResult(suggestion.result_uuid));
     return (result && transformResult(result)) || null;
   }
 
   @Action({ rawError: true })
   async getFirstResult(query: GeocodeSearchQuery): Promise<GeocodeSearchResult | null> {
-    const api: Client = this.context.rootGetters.api,
+    const api: Client = GeneralStore.api,
       result =
         (await api.request(new GetGeocodeResults(prepareQuery(query, this.upstreamEPSG)))) || [];
     return (result.length && transformResult(result[0])) || null;

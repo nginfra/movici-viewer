@@ -2,6 +2,7 @@ import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-dec
 import { Project, UUID } from '@/types';
 import { AddProject, DeleteProject, GetProjects, UpdateProject } from '@/api/requests';
 import store from '@/store/store';
+import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'projects',
@@ -51,24 +52,24 @@ class ProjectStore extends VuexModule {
 
   @Action({ rawError: true })
   async getAllProjects(): Promise<Project[]> {
-    const projects = await this.context.rootGetters.api.request(new GetProjects());
+    const projects = (await GeneralStore.api.request(new GetProjects())) ?? [];
     this.SET_PROJECTS(projects);
     return projects;
   }
 
   @Action({ rawError: true })
   async updateProject(project: Project) {
-    return await this.context.rootGetters.api.request(new UpdateProject(project.uuid, project));
+    return await GeneralStore.api.request(new UpdateProject(project.uuid, project));
   }
 
   @Action({ rawError: true })
   async addProject(project: Project) {
-    return await this.context.rootGetters.api.request(new AddProject(project));
+    return await GeneralStore.api.request(new AddProject(project));
   }
 
   @Action({ rawError: true })
   async deleteProject(project: Project) {
-    return await this.context.rootGetters.api.request(new DeleteProject(project.uuid));
+    return await GeneralStore.api.request(new DeleteProject(project.uuid));
   }
 
   get projects() {

@@ -20,6 +20,7 @@ import SummaryStore from '@/store/modules/SummaryStore';
 import ViewStore from '@/store/modules/ViewStore';
 import { exportFromConfig } from '@/utils/DataExporter';
 import ProjectStore from './ProjectStore';
+import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'flow',
@@ -184,7 +185,7 @@ class FlowStore extends VuexModule {
     const activeProjectUUID = this.project?.uuid || projectUUID;
 
     if (activeProjectUUID) {
-      const getters = this.context.rootGetters,
+      const getters = GeneralStore,
         api: Client = getters.api;
       return await api.request(new GetDatasets(activeProjectUUID));
     }
@@ -194,7 +195,7 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async getScenariosByProject(projectUUID?: UUID) {
     const activeProjectUUID = projectUUID ?? this.project?.uuid,
-      getters = this.context.rootGetters,
+      getters = GeneralStore,
       api: Client = getters.api,
       scenarios: ShortScenario[] = activeProjectUUID
         ? (await api.request(new GetScenarios(activeProjectUUID))) ?? []
@@ -214,7 +215,7 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async getScenario(activeScenarioUUID: UUID) {
     if (activeScenarioUUID) {
-      const getters = this.context.rootGetters,
+      const getters = GeneralStore,
         api: Client = getters.api;
       return await api.request(new GetScenario(activeScenarioUUID));
     }
@@ -234,7 +235,7 @@ class FlowStore extends VuexModule {
         obj[curr.name] = curr;
         return obj;
       }, {}),
-      api: Client = this.context.rootGetters.api;
+      api: Client = GeneralStore.api;
 
     if (datasets && this.project && this.scenario && this.timelineInfo) {
       await exportFromConfig({
