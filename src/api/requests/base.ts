@@ -16,16 +16,8 @@ export abstract class BaseRequest<Resp> {
 
 export abstract class Request<Resp> extends BaseRequest<Resp> {
   generateConfig(client: Client): AxiosRequestConfig {
-    let baseURL = client.baseURL;
-    const request = this.makeRequest();
-
-    if (
-      request.url?.includes('data-engine') &&
-      JSON.parse(localStorage.getItem('localhost') as string)
-    ) {
-      baseURL = 'http://localhost:5000';
-      request.url = request.url.replace('/data-engine/v4', '');
-    }
+    const baseURL = client.baseURL,
+      request = this.makeRequest();
 
     return {
       baseURL,

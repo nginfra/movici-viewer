@@ -40,7 +40,7 @@
 <script lang="ts">
 import { Component, Prop, Ref, Vue, Watch } from 'vue-property-decorator';
 import { CameraOptions, GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/types';
-import geocodeStore from '@/store/modules/geocode';
+import GeocodeStore from '@/store/modules/GeocodeStore';
 import mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -69,7 +69,7 @@ export default class SearchBar extends Vue {
   }
 
   get suggestions(): GeocodeSuggestion[] {
-    return geocodeStore.suggestions;
+    return GeocodeStore.suggestions;
   }
 
   expandAndFocus() {
@@ -80,7 +80,7 @@ export default class SearchBar extends Vue {
   async getFirstSearchResult() {
     this.result = null;
     if (this.query) {
-      this.result = await geocodeStore.getFirstResult(this.query);
+      this.result = await GeocodeStore.getFirstResult(this.query);
       if (this.result) {
         this.search = this.result.text;
       } else {
@@ -91,7 +91,7 @@ export default class SearchBar extends Vue {
 
   async selectLocationFromSuggestion(suggestion?: GeocodeSuggestion) {
     if (suggestion) {
-      this.result = await geocodeStore.resolveSuggestion(suggestion);
+      this.result = await GeocodeStore.resolveSuggestion(suggestion);
     }
   }
 
@@ -147,10 +147,10 @@ export default class SearchBar extends Vue {
   async updateSuggestions(query: GeocodeSearchQuery | null) {
     this.errors = '';
     if (!query) {
-      geocodeStore.setSuggestions([]);
+      GeocodeStore.setSuggestions([]);
       return;
     }
-    await geocodeStore.updateSuggestions(query);
+    await GeocodeStore.updateSuggestions(query);
     if (!this.suggestions.length) {
       this.errors = 'No nearby result found';
     }

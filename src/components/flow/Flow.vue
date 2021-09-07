@@ -56,6 +56,7 @@ import { FlowSection, FlowSectionItem, User } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import FlowStore from '@/store/modules/FlowStore';
+import GeneralStore from '@/store/modules/GeneralStore';
 import FlowExport from './FlowExport.vue';
 
 @Component({
@@ -122,8 +123,10 @@ export default class Flow extends Vue {
   }
 
   createFlowSections() {
-    FlowStore.setSections([
-      {
+    const sections: FlowSection[] = [];
+
+    if (!GeneralStore.isLocalhost) {
+      sections.push({
         name: FlowSectionItem.PROJECT,
         label: 'flow.projects.label',
         icon: 'fa-workspace',
@@ -131,7 +134,10 @@ export default class Flow extends Vue {
         enabled: true,
         to: '/flow/workspace',
         type: 'route'
-      },
+      });
+    }
+
+    sections.push(
       {
         name: FlowSectionItem.DATASETS,
         label: 'flow.datasets.label',
@@ -177,7 +183,9 @@ export default class Flow extends Vue {
           });
         }
       }
-    ]);
+    );
+
+    FlowStore.setSections(sections);
   }
 
   mounted() {

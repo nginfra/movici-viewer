@@ -2,11 +2,12 @@ import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { failMessage } from '@/snackbar';
 import Client from '@/api/client';
-import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { ApplicationSettings, ColorRuleSet } from '@/types';
 import baseColorRuleSet from '@/visualizers/baseColorRuleSet';
 import cloneDeep from 'lodash/cloneDeep';
 import { GetGlobalSettings } from '@/api/requests';
+import store from '@/store/store';
 
 const defaultSettings = {
   Language: 'en'
@@ -24,10 +25,15 @@ function getLocalSettings() {
   return localSettings;
 }
 
-@Module
-export default class GeneralStore extends VuexModule {
+@Module({
+  name: 'general',
+  namespaced: true,
+  dynamic: true,
+  store
+})
+class GeneralStore extends VuexModule {
   initialized = false;
-  settings: Partial<ApplicationSettings> = {};
+  settings!: ApplicationSettings;
 
   @Mutation
   SET_INITIALIZED() {
@@ -35,7 +41,7 @@ export default class GeneralStore extends VuexModule {
   }
 
   @Mutation
-  UPDATE_SETTINGS(payload: ApplicationSettings) {
+  UPDATE_SETTINGS(payload: Partial<ApplicationSettings>) {
     const localSettingsKeys = ['Language'];
     payload = { ...payload, ...fixedSettings };
     const localSettings = pick(payload, localSettingsKeys);
@@ -51,16 +57,14 @@ export default class GeneralStore extends VuexModule {
 
   @Action({ rawError: true })
   async initApp() {
-    const { commit, getters, dispatch } = this.context;
     try {
-      await dispatch('loadLocalSettings');
-      await dispatch('setLanguage', getters.language);
-      await dispatch('loadRemoteSettings');
+      await this.loadLocalSettings();
+      await this.setLanguage(this.language);
+      await this.loadRemoteSettings();
 
-      const wait_for_ms = 100;
       setTimeout(() => {
-        commit('SET_INITIALIZED');
-      }, wait_for_ms);
+        this.SET_INITIALIZED();
+      }, 100);
     } catch (e) {
       console.error(e);
     }
@@ -68,26 +72,29 @@ export default class GeneralStore extends VuexModule {
 
   @Action({ rawError: true })
   loadLocalSettings() {
-    const dispatch = this.context.dispatch;
     const localSettings = getLocalSettings();
-    return dispatch('updateSettings', { ...defaultSettings, ...localSettings });
+    return this.updateSettings({ ...defaultSettings, ...localSettings });
   }
 
   @Action({ rawError: true })
   setLanguage(lang: string) {
-    const dispatch = this.context.dispatch;
     i18n.locale = lang;
-    return dispatch('updateSettings', { Language: lang });
+    return this.updateSettings({ Language: lang });
   }
 
-  @Action({ rawError: true, commit: 'UPDATE_SETTINGS' })
-  updateSettings(settings: ApplicationSettings) {
-    return settings;
+  @Action({ rawError: true })
+  updateSettings(settings: Partial<ApplicationSettings>) {
+    this.UPDATE_SETTINGS(settings);
   }
 
-  @Action({ rawError: true, commit: 'UPDATE_SETTINGS' })
+  @Action({ rawError: true })
   async loadRemoteSettings() {
-    return await this.api.request(new GetGlobalSettings());
+    const settings = (await this.api.request(new GetGlobalSettings())) ?? {};
+    this.UPDATE_SETTINGS(settings);
+  }
+
+  get isLocalhost() {
+    return this.settings.localhost;
   }
 
   get apiBase() {
@@ -100,8 +107,9 @@ export default class GeneralStore extends VuexModule {
     mergedRules.rules.push(...(this.settings.colorRuleSet?.rules || []));
     return mergedRules;
   }
+
   get language() {
-    return this.settings.Language;
+    return this.settings.Language ?? '';
   }
 
   get featureToggle() {
@@ -116,6 +124,7 @@ export default class GeneralStore extends VuexModule {
       }
     };
   }
+
   get apiToken() {
     return this.context.rootGetters['currentUser/apiToken'];
   }
@@ -140,3 +149,5 @@ export default class GeneralStore extends VuexModule {
     });
   }
 }
+
+export default getModule(GeneralStore);
