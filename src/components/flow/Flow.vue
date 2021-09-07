@@ -52,7 +52,7 @@
 </template>
 
 <script lang="ts">
-import { FlowSection, FlowSectionItem, Project, User } from '@/types';
+import { FlowSection, FlowSectionItem, User } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
 import FlowStore from '@/store/modules/FlowStore';
@@ -62,16 +62,14 @@ import FlowExport from './FlowExport.vue';
   computed: {
     ...mapState({
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      currentUser: (state: any) => state.currentUser.user,
+      currentUser: (state: any) => state.currentUser?.user ?? {}
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      projects: (state: any) => state.projects.allProjects
     })
   }
 })
 export default class Flow extends Vue {
   @Prop([String]) currentProjectName!: string;
   @Prop([String]) currentScenarioName!: string;
-  projects!: Project[];
   currentUser!: User;
 
   get sectionMenu() {
@@ -87,7 +85,17 @@ export default class Flow extends Vue {
   }
 
   get userInitials(): string {
-    return this.currentUser.firstname.slice(0, 1) + this.currentUser.lastname.slice(0, 1);
+    const localUser = {
+      firstname: 'Local',
+      lastname: 'User'
+    };
+
+    let { firstname, lastname } = this.currentUser;
+
+    firstname ??= localUser.firstname;
+    lastname ??= localUser.lastname;
+
+    return firstname.slice(0, 1) + lastname.slice(0, 1);
   }
 
   buildUrl(routeBase: string) {

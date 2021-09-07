@@ -11,15 +11,6 @@ import Filters from './filters';
 
 // Force importing all dynamic vuex modules. This is necessary until
 // we only use the Store modules directly (ie no `this.$store`)
-require('@/store/modules/CurrentUserStore');
-require('@/store/modules/ProjectStore');
-require('@/store/modules/DatasetsStore');
-require('@/store/modules/DatasetGeneratorsStore');
-require('@/store/modules/DatasetSchemaStore');
-require('@/store/modules/ViewStore');
-require('@/store/modules/ScenarioStore');
-require('@/store/modules/SimulationStore');
-
 import Globals from './components/global';
 
 Vue.config.productionTip = false;

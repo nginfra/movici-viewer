@@ -56,7 +56,6 @@ export default class GeneralStore extends VuexModule {
       await dispatch('loadLocalSettings');
       await dispatch('setLanguage', getters.language);
       await dispatch('loadRemoteSettings');
-      await dispatch('currentUser/initToken');
 
       const wait_for_ms = 100;
       setTimeout(() => {
@@ -66,18 +65,21 @@ export default class GeneralStore extends VuexModule {
       console.error(e);
     }
   }
+
   @Action({ rawError: true })
   loadLocalSettings() {
     const dispatch = this.context.dispatch;
     const localSettings = getLocalSettings();
     return dispatch('updateSettings', { ...defaultSettings, ...localSettings });
   }
+
   @Action({ rawError: true })
   setLanguage(lang: string) {
     const dispatch = this.context.dispatch;
     i18n.locale = lang;
     return dispatch('updateSettings', { Language: lang });
   }
+
   @Action({ rawError: true, commit: 'UPDATE_SETTINGS' })
   updateSettings(settings: ApplicationSettings) {
     return settings;
