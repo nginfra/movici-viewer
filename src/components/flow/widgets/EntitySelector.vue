@@ -40,7 +40,7 @@ import { hexToColorTriple, MoviciColors } from '@/visualizers/maps/colorMaps';
 import { EntityGroupSummary, ScenarioDataset, VisualizationMode } from '@/types';
 
 import { isLines, isPoints, isPolygons } from '@/visualizers/geometry';
-import SummaryListing from '@/components/webviz/SummaryListing';
+import SummaryListing from '@/components/deck/SummaryListing';
 import GeometrySelector from './GeometrySelector.vue';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
 

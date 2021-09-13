@@ -3,7 +3,7 @@ import { getVisualizer, Visualizer, VisualizerInfo } from '@/visualizers/index';
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 
-import { determineChanges } from '@/components/webviz/mapVisHelpers';
+import { determineChanges } from '@/components/deck/mapVisHelpers';
 import { DatasetDownloader } from '@/api/DatasetDownloader';
 import { AnyVisualizerInfo } from '@/visualizers/VisualizerInfo';
 

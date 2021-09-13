@@ -6,7 +6,7 @@ import {
   PropertyType,
   ScenarioDataset
 } from '@/types';
-import { webvizStore, summaryStore } from '@/store/store';
+import { summaryStore, flowStore } from '@/store/store';
 
 @Component
 export default class SummaryListing extends Vue {
@@ -54,6 +54,10 @@ export default class SummaryListing extends Vue {
   }
 
   async getAvailableDatasets() {
-    this.datasets = (await webvizStore.getDatasets()) || [];
+    const projectUUID = flowStore.project?.uuid;
+
+    if (projectUUID) {
+      this.datasets = (await flowStore.getDatasets(projectUUID)) || [];
+    }
   }
 }

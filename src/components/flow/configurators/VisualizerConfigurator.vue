@@ -140,7 +140,7 @@ import {
   VisualizationMode
 } from '@/types';
 import ValidationProvider from '../../mixins/ValidationProvider';
-import SummaryListing from '../../webviz/SummaryListing';
+import SummaryListing from '../../deck/SummaryListing';
 import GeometrySelector from '../widgets/GeometrySelector.vue';
 import { VisGroup } from '@/visualizers';
 import ColorConfigurator from './color/ColorConfigurator.vue';

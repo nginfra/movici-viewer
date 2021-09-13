@@ -72,15 +72,15 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Project, CameraOptions, Nullable, FlowStoreConfig } from '@/types';
-import MapVis from '@/components/webviz/MapVis.vue';
+import MapVis from '@/components/deck/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
 import pick from 'lodash/pick';
-import defaults from '@/components/webviz/defaults';
-import SearchBar from '@/components/webviz/controls/SearchBar.vue';
-import NavigationControl from '@/components/webviz/controls/NavigationControl.vue';
-import BaseMapControl from '@/components/webviz/controls/BaseMapControl.vue';
+import defaults from '@/components/deck/defaults';
+import SearchBar from '@/components/deck/controls/SearchBar.vue';
+import NavigationControl from '@/components/deck/controls/NavigationControl.vue';
+import BaseMapControl from '@/components/deck/controls/BaseMapControl.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
-import { flowStore, generalStore, projectStore, flowUIStore } from '@/store/store';
+import { flowStore, generalStore, flowUIStore } from '@/store/store';
 
 @Component({
   components: {
@@ -149,9 +149,9 @@ export default class FlowProjects extends Vue {
   }
 
   async mounted() {
-    if (generalStore.isLocalhost) {
-      await projectStore.getAllProjects();
+    await flowStore.getProjects();
 
+    if (generalStore.isLocalhost) {
       const project = 'local_project',
         config: FlowStoreConfig = { currentProjectName: project, getProject: true };
 

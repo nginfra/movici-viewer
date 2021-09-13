@@ -5,8 +5,6 @@ import MovActionBar from './ActionBar.vue';
 import MovActionMenu from './ActionMenu.vue';
 import MovLanguagePicker from './LanguagePicker.vue';
 import MovNewPassword from './NewPassword.vue';
-import MovProjectPicker from './ProjectPicker.vue';
-import MovScenarioPicker from './ScenarioPicker.vue';
 import MovTooltipInfo from './TooltipInfo.vue';
 
 const components: Record<string, typeof Vue_> = {
@@ -15,8 +13,6 @@ const components: Record<string, typeof Vue_> = {
   MovActionMenu,
   MovLanguagePicker,
   MovNewPassword,
-  MovProjectPicker,
-  MovScenarioPicker,
   MovTooltipInfo
 };
 

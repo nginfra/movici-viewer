@@ -96,7 +96,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { colorTripleToHex } from '@/visualizers/maps/colorMaps';
 import { ColorMapping, RGBAColor } from '@/types';
-import CustomSelect from '@/components/general/CustomSelect.vue';
+import CustomSelect from '@/components/global/CustomSelect.vue';
 import FlowColorPicker from '@/components/flow/configurators/color/FlowColorPicker.vue';
 
 type modes = 'buckets' | 'gradient' | 'boolean';

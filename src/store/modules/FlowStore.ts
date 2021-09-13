@@ -11,10 +11,10 @@ import {
   View
 } from '@/types';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
-import { GetDatasets, GetScenario, GetScenarios } from '@/api/requests';
+import { GetDatasets, GetProjects, GetScenario, GetScenarios } from '@/api/requests';
 import Client from '@/api/client';
 import { exportFromConfig } from '@/utils/DataExporter';
-import { projectStore, generalStore, viewStore, summaryStore, flowUIStore } from '@/store/store';
+import { generalStore, viewStore, summaryStore, flowUIStore } from '@/store/store';
 
 @Module({
   name: 'flow',
@@ -69,12 +69,12 @@ class FlowStore extends VuexModule {
   }
 
   @Mutation
-  SET_CURRENT_FLOW_PROJECT(project: Project | null) {
+  SET_CURRENT_PROJECT(project: Project | null) {
     this.project = project;
   }
 
   @Mutation
-  SET_CURRENT_FLOW_SCENARIO(scenario: Scenario | null) {
+  SET_CURRENT_SCENARIO(scenario: Scenario | null) {
     this.scenario = scenario;
   }
 
@@ -109,8 +109,14 @@ class FlowStore extends VuexModule {
   }
 
   @Action({ rawError: true })
+  async getProjects() {
+    const projects = (await generalStore.api.request(new GetProjects())) ?? [];
+    this.SET_PROJECTS(projects);
+  }
+
+  @Action({ rawError: true })
   async setCurrentFlowProject(project: Project) {
-    this.SET_CURRENT_FLOW_PROJECT(project);
+    this.SET_CURRENT_PROJECT(project);
     flowUIStore.enableSection({
       datasets: true,
       scenario: true
@@ -122,7 +128,7 @@ class FlowStore extends VuexModule {
     flowUIStore.enableSection({ visualization: true, export: true });
     summaryStore.setCurrentScenario({ scenarioUUID: scenario.uuid });
 
-    this.SET_CURRENT_FLOW_SCENARIO(scenario);
+    this.SET_CURRENT_SCENARIO(scenario);
     flowUIStore.enableSection({ visualization: !!scenario });
     flowUIStore.enableSection({ export: !!scenario });
     if (scenario) {
@@ -203,9 +209,10 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async resetFlowStore() {
     // SummaryStore.setCurrentScenario({ scenarioUUID: null });
-    this.SET_CURRENT_FLOW_PROJECT(null);
+    this.SET_PROJECTS([]);
+    this.SET_CURRENT_PROJECT(null);
     this.SET_SCENARIOS([]);
-    this.SET_CURRENT_FLOW_SCENARIO(null);
+    this.SET_CURRENT_SCENARIO(null);
     this.setTimestamp(0);
     this.UPDATE_VISUALIZERS([]);
   }

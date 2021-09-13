@@ -132,7 +132,7 @@ import {
   PropertyType,
   RGBAColor
 } from '@/types';
-import CustomSelect from '@/components/general/CustomSelect.vue';
+import CustomSelect from '@/components/global/CustomSelect.vue';
 import ValidationProvider from '@/components/mixins/ValidationProvider';
 import ByValueColorList from '@/components/flow/configurators/color/ByValueColorList.vue';
 import ColorPalettes, { DEFAULT_COLOR_PALETTES } from './colorPalettes';

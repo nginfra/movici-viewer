@@ -75,9 +75,9 @@
 <script lang="ts">
 import { Component, Prop, Ref, Vue } from 'vue-property-decorator';
 import { CameraOptions, TimeOrientedSimulationInfo, UUID, View, VisualizationMode } from '@/types';
-import MapVis from '@/components/webviz/MapVis.vue';
+import MapVis from '@/components/deck/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
-import defaults from '@/components/webviz/defaults';
+import defaults from '@/components/deck/defaults';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
 import FlowLayerPicker from '@/components/flow/widgets/FlowLayerPicker.vue';
 import DynamicDataView from '@/components/flow/map_widgets/DynamicDataView.vue';
@@ -86,10 +86,10 @@ import StaticDataView from '@/components/flow/map_widgets/StaticDataView.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
 import ScenarioInfoBox from './info_box/ScenarioInfoBox.vue';
 import ViewInfoBox from './info_box/ViewInfoBox.vue';
-import SearchBar from '@/components/webviz/controls/SearchBar.vue';
-import NavigationControl from '@/components/webviz/controls/NavigationControl.vue';
-import BaseMapControl from '@/components/webviz/controls/BaseMapControl.vue';
-import TimeSlider from '@/components/webviz/TimeSlider.vue';
+import SearchBar from '@/components/deck/controls/SearchBar.vue';
+import NavigationControl from '@/components/deck/controls/NavigationControl.vue';
+import BaseMapControl from '@/components/deck/controls/BaseMapControl.vue';
+import TimeSlider from '@/components/deck/TimeSlider.vue';
 import { simplifiedCamera, visualizerSettingsValidator } from '@/visualizers/viewHelpers';
 import { getEntitySummary } from '@/utils';
 import isEqual from 'lodash/isEqual';

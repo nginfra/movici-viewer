@@ -81,12 +81,11 @@
 
 <script lang="ts">
 import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-import Modal from '@/components/general/Modal.vue';
+import Modal from '@/components/global/Modal.vue';
 import { Dataset, ScenarioDataset, TimeOrientedSimulationInfo } from '@/types';
-import FormValidator from '@/utils/FormValidator';
 import ValidationProvider from '@/components/mixins/ValidationProvider';
-import SummaryListing from '@/components/webviz/SummaryListing';
-import TimeSlider from '@/components/webviz/TimeSlider.vue';
+import SummaryListing from '@/components/deck/SummaryListing';
+import TimeSlider from '@/components/deck/TimeSlider.vue';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
 import { flowStore } from '@/store/store';
 
@@ -99,7 +98,6 @@ export default class ExportForm extends Mixins(SummaryListing, ValidationProvide
   @Prop({ type: Object, default: null }) readonly timelineInfo!: TimeOrientedSimulationInfo | null;
   @Prop({ type: String, default: null }) readonly scenarioUuid!: string | null;
   @Prop({ type: Number, default: 0 }) readonly timestamp!: number;
-  @Prop({ type: Object, default: null }) readonly validator!: FormValidator | null;
 
   currentTimestamp = 0;
   exportFormats = ['csv'];
