@@ -5,18 +5,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import GeneralStore from '@/store/modules/GeneralStore';
+import { generalStore } from '@/store/store';
 
 @Component({
   name: 'App'
 })
 export default class App extends Vue {
-  data() {
-    return {};
-  }
-
-  async created() {
-    await GeneralStore.initApp();
+  async mounted() {
+    await generalStore.initApp();
   }
 }
 </script>

@@ -44,7 +44,7 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import { mapGetters, mapState } from 'vuex';
 import { Project, ShortScenario, VisualizationMode, VisualizationSettings } from '@/types';
 import defaults from '@/components/webviz/defaults';
-import ScenarioStore from '@/store/modules/ScenarioStore';
+import { scenarioStore } from '@/store/store';
 
 // false positive with typescript-eslint == 4.14.0
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -135,7 +135,7 @@ export default class WebvizSettingsModal extends Vue {
 
   async getScenarios() {
     if (this.project) {
-      return await ScenarioStore.getScenariosWithSimulationInfo(this.project.uuid);
+      return await scenarioStore.getScenariosWithSimulationInfo(this.project.uuid);
     }
   }
 

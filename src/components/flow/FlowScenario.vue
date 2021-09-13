@@ -102,7 +102,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { UUID } from '@/types';
 import FlowContainer from './FlowContainer.vue';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore, flowUIStore } from '@/store/store';
 import { getClassFromStatus } from '@/utils';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
 import ScenarioInfoBox from './info_box/ScenarioInfoBox.vue';
@@ -120,19 +120,19 @@ export default class FlowScenario extends Vue {
   initialRawData!: string;
 
   get currentProject() {
-    return FlowStore.project;
+    return flowStore.project;
   }
 
   get scenarios() {
-    return FlowStore.scenarios;
+    return flowStore.scenarios;
   }
 
   get currentScenarioUUID() {
-    return FlowStore.scenario?.uuid;
+    return flowStore.scenario?.uuid;
   }
 
   get currentScenario() {
-    return FlowStore.scenario;
+    return flowStore.scenario;
   }
 
   get formattedRawData() {
@@ -148,11 +148,11 @@ export default class FlowScenario extends Vue {
    * If necessary, updates the route with its name as the scenario query parameter
    */
   async setScenarioUUID(currentScenarioUUID: UUID) {
-    FlowStore.setLoading({ value: true, msg: 'Loading scenario details...' });
-    const fullScenario = await FlowStore.getScenario(currentScenarioUUID);
+    flowUIStore.setLoading({ value: true, msg: 'Loading scenario details...' });
+    const fullScenario = await flowStore.getScenario(currentScenarioUUID);
 
     if (fullScenario) {
-      await FlowStore.setCurrentFlowScenario(fullScenario);
+      await flowStore.setCurrentFlowScenario(fullScenario);
     }
 
     // this replaces the query string with project
@@ -164,10 +164,10 @@ export default class FlowScenario extends Vue {
           scenario: this.currentScenario?.name
         }
       });
-      FlowStore.updateView(null);
+      flowStore.updateView(null);
     }
 
-    FlowStore.setLoading({ value: false });
+    flowUIStore.setLoading({ value: false });
   }
 
   statusClass(type: string) {
@@ -189,11 +189,11 @@ export default class FlowScenario extends Vue {
       getScenario: true
     };
 
-    FlowStore.setLoading({ value: true, msg: 'Loading scenarios...' });
+    flowUIStore.setLoading({ value: true, msg: 'Loading scenarios...' });
 
     try {
-      await FlowStore.setupFlowStore({ config });
-      FlowStore.setLoading({ value: false });
+      await flowStore.setupFlowStore({ config });
+      flowUIStore.setLoading({ value: false });
     } catch (error) {
       console.error(error);
       await this.$router.push({ name: 'FlowProjects' });

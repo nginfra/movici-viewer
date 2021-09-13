@@ -1,10 +1,9 @@
 import Client from '@/api/client';
 import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '@/api/requests';
-import store from '@/store/store';
+import store, { generalStore } from '@/store/store';
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/types';
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { reverseTransform, transform } from '@/crs';
-import GeneralStore from './GeneralStore';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
   return Object.assign({}, result, {
@@ -33,9 +32,7 @@ function prepareQuery(query: GeocodeSearchQuery, epsg_code: number) {
 
 @Module({
   name: 'geocode',
-  namespaced: true,
-  dynamic: true,
-  store: store
+  namespaced: true
 })
 class GeocodeStore extends VuexModule {
   suggestions: GeocodeSuggestion[] = [];
@@ -48,7 +45,7 @@ class GeocodeStore extends VuexModule {
 
   @Action({ rawError: true })
   async updateSuggestions(query: GeocodeSearchQuery) {
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
     if (!query) {
       this.setSuggestions([]);
       return;
@@ -61,18 +58,18 @@ class GeocodeStore extends VuexModule {
 
   @Action({ rawError: true })
   async resolveSuggestion(suggestion: GeocodeSuggestion): Promise<GeocodeSearchResult | null> {
-    const api: Client = GeneralStore.api,
+    const api: Client = generalStore.api,
       result = await api.request(new GetGeocodeResult(suggestion.result_uuid));
     return (result && transformResult(result)) || null;
   }
 
   @Action({ rawError: true })
   async getFirstResult(query: GeocodeSearchQuery): Promise<GeocodeSearchResult | null> {
-    const api: Client = GeneralStore.api,
+    const api: Client = generalStore.api,
       result =
         (await api.request(new GetGeocodeResults(prepareQuery(query, this.upstreamEPSG)))) || [];
     return (result.length && transformResult(result[0])) || null;
   }
 }
 
-export default getModule(GeocodeStore);
+export default GeocodeStore;

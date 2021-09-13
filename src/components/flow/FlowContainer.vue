@@ -19,7 +19,7 @@
 </template>
 
 <script lang="ts">
-import FlowStore from '@/store/modules/FlowStore';
+import { flowUIStore } from '@/store/store';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({})
@@ -28,11 +28,11 @@ export default class FlowContainer extends Vue {
   actions!: Record<string, boolean> | null;
 
   get disableCollapser() {
-    return FlowStore.disableCollapser;
+    return flowUIStore.disableCollapser;
   }
 
   get collapse() {
-    return FlowStore.collapse;
+    return flowUIStore.collapse;
   }
 
   get collapsedClass() {
@@ -44,15 +44,15 @@ export default class FlowContainer extends Vue {
   }
 
   get loading() {
-    return FlowStore.loading;
+    return flowUIStore.loading;
   }
 
   get loadingMessage() {
-    return FlowStore.loadingMessage;
+    return flowUIStore.loadingMessage;
   }
 
   mounted() {
-    FlowStore.toggleCollapse(false);
+    flowUIStore.toggleCollapse(false);
   }
 }
 </script>

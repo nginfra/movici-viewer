@@ -65,7 +65,7 @@ import TimeSlider from '@/components/webviz/TimeSlider.vue';
 import { DatasetDownloader } from '@/api/DatasetDownloader';
 import { entityGroupToCSV, objectToCSV } from '@/utils/csvUtils';
 import { downloadAsFile } from '@/store/requests';
-import WebvizStore from '@/store/modules/webviz';
+import { webvizStore } from '@/store/store';
 
 @Component({
   name: 'ExportModal',
@@ -172,19 +172,19 @@ export default class ExportModal extends Mixins(SummaryListing, ValidationProvid
     if (this.currentEntityName) {
       rv += '-' + this.currentEntityName;
     }
-    if (WebvizStore.settings?.mode == VisualizationMode.SCENARIO) {
+    if (webvizStore.settings?.mode == VisualizationMode.SCENARIO) {
       rv += '-' + this.fileNameTime;
     }
     return rv + '.csv';
   }
   generalDataHeader(): string {
     const obj: Record<string, unknown> = {
-      project: WebvizStore.settings?.project.display_name,
+      project: webvizStore.settings?.project.display_name,
       dataset: this.currentDataset?.display_name ?? this.currentDataset?.name ?? '-'
     };
-    if (WebvizStore.settings?.mode == VisualizationMode.SCENARIO) {
+    if (webvizStore.settings?.mode == VisualizationMode.SCENARIO) {
       obj.scenario =
-        WebvizStore.settings?.scenario?.display_name ?? WebvizStore.settings?.scenario?.name ?? '-';
+        webvizStore.settings?.scenario?.display_name ?? webvizStore.settings?.scenario?.name ?? '-';
       obj.timestamp = this.currentFormattedTime;
     }
     return objectToCSV(obj);

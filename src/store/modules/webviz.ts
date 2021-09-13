@@ -1,5 +1,4 @@
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import store from '@/store/store';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import {
   CameraOptions,
   ColorRuleSet,
@@ -22,18 +21,13 @@ import {
 } from '@/api/requests';
 import baseColorRuleSet from '@/visualizers/baseColorRuleSet';
 import { mergeColorRuleSets } from '@/visualizers/maps/colorMaps';
-import SummaryStore from '@/store/modules/SummaryStore';
 import { determineEntityGeometry } from '@/visualizers/geometry';
 import { getEntitySummary } from '@/utils';
 import { VisualizerInfo } from '@/visualizers';
-import GeneralStore from './GeneralStore';
-import ProjectStore from './ProjectStore';
-
+import { generalStore, projectStore, summaryStore } from '@/store/store';
 @Module({
   name: 'webviz',
-  namespaced: true,
-  dynamic: true,
-  store: store
+  namespaced: true
 })
 class WebvizStore extends VuexModule {
   settings: VisualizationSettings | null = null;
@@ -56,12 +50,12 @@ class WebvizStore extends VuexModule {
   async useSettings(settings: VisualizationSettings) {
     await this.context.dispatch('setActiveProjectName', settings.project.name, { root: true });
 
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
     if (settings.mode === VisualizationMode.SCENARIO && settings.scenario) {
       this.setScenario(await api.request(new GetScenario(settings.scenario.uuid)));
-      SummaryStore.setCurrentScenario({ scenarioUUID: settings.scenario.uuid });
+      summaryStore.setCurrentScenario({ scenarioUUID: settings.scenario.uuid });
     } else {
-      SummaryStore.setCurrentScenario({ scenarioUUID: null });
+      summaryStore.setCurrentScenario({ scenarioUUID: null });
       this.setScenario(null);
     }
     this.setSettings(settings);
@@ -76,9 +70,9 @@ class WebvizStore extends VuexModule {
     settings: VisualizationSettings;
     timestamp: number;
   }> {
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
     await this.context.dispatch('getAllProjects', null, { root: true });
-    const project = ProjectStore.getProjectByName(view.project_name);
+    const project = projectStore.getProjectByName(view.project_name);
 
     if (!project) {
       throw new Error('Project does not exist or user not authorized');
@@ -111,7 +105,7 @@ class WebvizStore extends VuexModule {
     const layerInfos: VisualizerInfo[] = [];
     for (const layer of view.data_layers) {
       const info = VisualizerInfo.fromLayerConfig(layer, scenarioUUID);
-      await finalizeLayerInfo(info, datasetMap, SummaryStore);
+      await finalizeLayerInfo(info, datasetMap);
       layerInfos.push(info);
     }
     const settings = {
@@ -125,8 +119,8 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true })
   async getDatasets() {
-    const api: Client = GeneralStore.api,
-      activeProjectUUID = ProjectStore.activeProjectUUID,
+    const api: Client = generalStore.api,
+      activeProjectUUID = projectStore.activeProjectUUID,
       allDatasets = (await api.request(new GetDatasets(activeProjectUUID))) ?? [];
 
     if (this.scenario) {
@@ -138,7 +132,7 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true })
   async getDatasetSummary(datasetUUID: string) {
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
     if (this.mode && this.mode === VisualizationMode.SCENARIO && this.settings?.scenario) {
       return await api.request(new GetScenarioSummary(this.settings.scenario.uuid, datasetUUID));
     }
@@ -147,7 +141,7 @@ class WebvizStore extends VuexModule {
 
   @Action({ rawError: true, commit: 'setColorRuleSet' })
   async getColorRuleSet() {
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
 
     return await api.request(new GetGlobalColorRuleSet());
   }
@@ -163,11 +157,7 @@ class WebvizStore extends VuexModule {
   }
 }
 
-export async function finalizeLayerInfo(
-  info: VisualizerInfo,
-  datasetMap: Record<string, UUID>,
-  summaryStore: typeof SummaryStore
-) {
+export async function finalizeLayerInfo(info: VisualizerInfo, datasetMap: Record<string, UUID>) {
   info.datasetUUID = datasetMap[info.datasetName] ?? null;
   if (info.datasetUUID) {
     const summary = await summaryStore.getDatasetSummary({
@@ -186,4 +176,4 @@ export async function finalizeLayerInfo(
   info.mode = VisualizationMode.SCENARIO;
 }
 
-export default getModule(WebvizStore);
+export default WebvizStore;

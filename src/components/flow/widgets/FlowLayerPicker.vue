@@ -50,7 +50,7 @@ import VisualizerElement from './VisualizerElement.vue';
 import VisualizerConfigurator from '../configurators/VisualizerConfigurator.vue';
 import { Scenario, TimeOrientedSimulationInfo } from '@/types';
 import Draggable from 'vuedraggable';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 
 @Component({
   name: 'FlowLayerPicker',
@@ -87,7 +87,7 @@ export default class FlowLayerPicker extends Vue {
   }
 
   get timelineInfo(): TimeOrientedSimulationInfo | null {
-    return FlowStore.timelineInfo;
+    return flowStore.timelineInfo;
   }
 
   updateDraggable(event: { moved: { oldIndex: number; newIndex: number } }) {
@@ -166,7 +166,7 @@ export default class FlowLayerPicker extends Vue {
   }
 
   async exportItem(layer: ComposableVisualizerInfo) {
-    await FlowStore.exportFromConfig({
+    await flowStore.exportFromConfig({
       datasetName: layer.datasetName,
       entityGroup: layer.entityGroup
     });

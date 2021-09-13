@@ -49,7 +49,7 @@
 import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
 import { TimeOrientedSimulationInfo } from '@/types';
 import FlowContainer from './FlowContainer.vue';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 import FlowLayerPicker from '@/components/flow/widgets/FlowLayerPicker.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
 import ScenarioInfoBox from './info_box/ScenarioInfoBox.vue';
@@ -77,20 +77,20 @@ export default class FlowExport extends Mixins(ValidationProvider) {
 
   // mapVis vars
   get visualizers() {
-    return FlowStore.visualizers;
+    return flowStore.visualizers;
   }
 
   get currentScenario() {
-    return FlowStore.scenario;
+    return flowStore.scenario;
   }
 
   get timestamp() {
-    return FlowStore.timestamp;
+    return flowStore.timestamp;
   }
 
   // Map Vis getters
   get timelineInfo(): TimeOrientedSimulationInfo | null {
-    return FlowStore.timelineInfo;
+    return flowStore.timelineInfo;
   }
 
   async exportData() {
@@ -101,7 +101,7 @@ export default class FlowExport extends Mixins(ValidationProvider) {
     }
 
     if (this.exportConfig) {
-      await FlowStore.exportFromConfig(this.exportConfig);
+      await flowStore.exportFromConfig(this.exportConfig);
     }
   }
 

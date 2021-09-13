@@ -78,7 +78,6 @@ import { CameraOptions, TimeOrientedSimulationInfo, UUID, View, VisualizationMod
 import MapVis from '@/components/webviz/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
 import defaults from '@/components/webviz/defaults';
-import FlowStore from '@/store/modules/FlowStore';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
 import FlowLayerPicker from '@/components/flow/widgets/FlowLayerPicker.vue';
 import DynamicDataView from '@/components/flow/map_widgets/DynamicDataView.vue';
@@ -95,10 +94,9 @@ import { simplifiedCamera, visualizerSettingsValidator } from '@/visualizers/vie
 import { getEntitySummary } from '@/utils';
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
-import SummaryStore from '@/store/modules/SummaryStore';
-import ViewStore from '@/store/modules/ViewStore';
 import { successMessage } from '@/snackbar';
 import FlowLegend from './map_widgets/FlowLegend.vue';
+import { flowStore, viewStore, summaryStore, flowUIStore } from '@/store/store';
 
 @Component({
   components: {
@@ -146,45 +144,45 @@ export default class FlowVisualization extends Vue {
   viewState: CameraOptions = defaults.viewState();
 
   get view(): View | null {
-    return FlowStore.view;
+    return flowStore.view;
   }
 
   set view(view: View | null) {
-    FlowStore.updateView(view);
+    flowStore.updateView(view);
   }
 
   get visualizers() {
-    return FlowStore.visualizers;
+    return flowStore.visualizers;
   }
 
   set visualizers(updatedCVIs: ComposableVisualizerInfo[]) {
-    FlowStore.updateVisualizers(updatedCVIs);
+    flowStore.updateVisualizers(updatedCVIs);
   }
 
   get currentProject() {
-    return FlowStore.project;
+    return flowStore.project;
   }
 
   get currentScenario() {
-    return FlowStore.scenario;
+    return flowStore.scenario;
   }
 
   // Map Vis getters
   get timelineInfo(): TimeOrientedSimulationInfo | null {
-    return FlowStore.timelineInfo;
+    return flowStore.timelineInfo;
   }
 
   get timestamp() {
-    return FlowStore.timestamp;
+    return flowStore.timestamp;
   }
 
   set timestamp(val: number) {
-    FlowStore.setTimestamp(val);
+    flowStore.setTimestamp(val);
   }
 
   get popupBorderPadding() {
     return {
-      left: FlowStore.collapse ? 0 : 300
+      left: flowUIStore.collapse ? 0 : 300
     };
   }
 
@@ -307,14 +305,14 @@ export default class FlowVisualization extends Vue {
   }
 
   async updateView({ view, viewUUID }: { view: View; viewUUID: UUID }) {
-    const resp = await ViewStore.updateView({ viewUUID, view });
+    const resp = await viewStore.updateView({ viewUUID, view });
     if (resp) {
       successMessage(this.$t('flow.visualization.dialogs.viewUpdateSuccess') as string);
     }
   }
 
   async deleteView({ viewUUID }: { viewUUID: UUID }) {
-    const resp = await ViewStore.deleteView(viewUUID);
+    const resp = await viewStore.deleteView(viewUUID);
     if (resp) {
       successMessage(this.$t('flow.visualization.dialogs.viewDeleteSuccess') as string);
     }
@@ -323,7 +321,7 @@ export default class FlowVisualization extends Vue {
 
   async createView({ view }: { view: View }) {
     if (this.currentScenario?.uuid) {
-      const resp = await ViewStore.createView({
+      const resp = await viewStore.createView({
         scenarioUUID: this.currentScenario.uuid,
         view
       });
@@ -348,7 +346,7 @@ export default class FlowVisualization extends Vue {
         );
       }
 
-      const datasetSummary = await SummaryStore.getDatasetSummary({
+      const datasetSummary = await summaryStore.getDatasetSummary({
         datasetUUID: info.datasetUUID,
         scenarioUUID: info.scenarioUUID
       });
@@ -441,14 +439,14 @@ export default class FlowVisualization extends Vue {
       getScenario: true
     };
 
-    FlowStore.setLoading({ value: true, msg: 'Loading visualization...' });
+    flowUIStore.setLoading({ value: true, msg: 'Loading visualization...' });
 
     try {
-      await FlowStore.setupFlowStore({ config, reset: false });
+      await flowStore.setupFlowStore({ config, reset: false });
 
-      let view = FlowStore.view;
+      let view = flowStore.view;
       if (!view && this.currentViewUUID && this.currentScenario) {
-        const views = await ViewStore.getViews(this.currentScenario.uuid);
+        const views = await viewStore.getViews(this.currentScenario.uuid);
         view = views.find(v => v.uuid === this.currentViewUUID) ?? null;
       }
 
@@ -456,13 +454,13 @@ export default class FlowVisualization extends Vue {
         await this.loadView(view);
       }
 
-      FlowStore.setLoading({ value: false });
+      flowUIStore.setLoading({ value: false });
       this.updateTabHeight();
     } catch (error) {
       console.error(error);
 
       await this.$router.push({ name: 'FlowProjects' });
-      FlowStore.setLoading({ value: false });
+      flowUIStore.setLoading({ value: false });
     }
   }
 }

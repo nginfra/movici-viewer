@@ -101,7 +101,6 @@ import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
 import Modal from '@/components/general/Modal.vue';
 import ColorPicker from '@/components/webviz/ColorPicker.vue';
 import LayerConfiguratorListing from '@/components/webviz/LayerConfiguratorListing';
-import WebvizStore from '@/store/modules/webviz';
 import { hexToColorTriple } from '@/visualizers/maps/colorMaps';
 import PropertySelector from '@/components/webviz/PropertySelector.vue';
 import GeometrySelector from '@/components/webviz/GeometrySelector.vue';
@@ -111,6 +110,7 @@ import { cleanVisualizerSettings } from '@/visualizers/visualizerHelpers';
 import FormValidator from '@/utils/FormValidator';
 import ValidationProvider from '@/components/mixins/ValidationProvider';
 import { VisualizerInfo } from '@/visualizers';
+import { webvizStore } from '@/store/store';
 
 function defaultLayerSettings(): VisualizerConfigurationSettings {
   return { kind: LayerKind.UNKNOWN };
@@ -169,7 +169,7 @@ export default class EditLayerModal extends Mixins(LayerConfiguratorListing, Val
       datasetName: this.currentDatasetName as string,
       datasetUUID: currentDataset?.uuid,
       name: this.local.name || currentDataset?.display_name || '',
-      scenarioUUID: WebvizStore.settings?.scenario?.uuid,
+      scenarioUUID: webvizStore.settings?.scenario?.uuid,
       entityGroup: this.currentEntityName as string,
       geometry: this.geometry,
       mode: this.mode,

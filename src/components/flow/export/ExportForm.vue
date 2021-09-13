@@ -88,7 +88,7 @@ import ValidationProvider from '@/components/mixins/ValidationProvider';
 import SummaryListing from '@/components/webviz/SummaryListing';
 import TimeSlider from '@/components/webviz/TimeSlider.vue';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 
 @Component({
   name: 'ExportForm',
@@ -106,11 +106,11 @@ export default class ExportForm extends Mixins(SummaryListing, ValidationProvide
   selectedFormat = 'csv';
 
   get currentProject() {
-    return FlowStore.project;
+    return flowStore.project;
   }
 
   get currentScenario() {
-    return FlowStore.scenario;
+    return flowStore.scenario;
   }
 
   @Watch('validator', { immediate: true })
@@ -151,7 +151,7 @@ export default class ExportForm extends Mixins(SummaryListing, ValidationProvide
 
   async getDatasets() {
     if (this.currentProject)
-      this.datasets = (await FlowStore.getDatasets(this.currentProject?.uuid)) || [];
+      this.datasets = (await flowStore.getDatasets(this.currentProject?.uuid)) || [];
   }
 
   @Watch('datasetName')

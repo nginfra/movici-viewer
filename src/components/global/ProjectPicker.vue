@@ -22,7 +22,7 @@
 <script lang="ts">
 import { Project } from '@/types';
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
-import ProjectStore from '@/store/modules/ProjectStore';
+import { projectStore } from '@/store/store';
 
 // TODO: after making a generic picker, use this as a handler to the store and generic picker as UI
 @Component({
@@ -34,16 +34,16 @@ export default class ProjectPicker extends Vue {
   @Prop({ type: String, default: '' }) uuid!: string;
 
   get projects(): Project[] {
-    return ProjectStore.projects;
+    return projectStore.projects;
   }
 
   get activeProject(): Project | null {
-    return ProjectStore.activeProject;
+    return projectStore.activeProject;
   }
 
   set activeProject(newValue: Project | null) {
     if (newValue) {
-      ProjectStore.setActiveProjectId(newValue.uuid);
+      projectStore.setActiveProjectId(newValue.uuid);
     }
   }
 

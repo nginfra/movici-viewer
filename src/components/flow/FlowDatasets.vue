@@ -141,7 +141,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator';
 import pick from 'lodash/pick';
 import { CameraOptions, Dataset, Nullable } from '@/types';
 import FlowContainer from './FlowContainer.vue';
-import FlowStore from '@/store/modules/FlowStore';
 import MapVis from '@/components/webviz/MapVis.vue';
 import defaults from '@/components/webviz/defaults';
 import EntitySelector from './widgets/EntitySelector.vue';
@@ -152,6 +151,7 @@ import BaseMapControl from '@/components/webviz/controls/BaseMapControl.vue';
 import DataViewContent from '@/components/flow/map_widgets/DataViewContent.vue';
 import StaticDataView from '@/components/flow/map_widgets/StaticDataView.vue';
 import { ComposableVisualizerInfo } from '@/visualizers/VisualizerInfo';
+import { flowStore, flowUIStore } from '@/store/store';
 
 @Component({
   components: {
@@ -228,16 +228,16 @@ export default class FlowDatasets extends Vue {
       getScenario: true,
       disableCollapser: true
     };
-    FlowStore.setLoading({ value: true, msg: 'Loading datasets...' });
+    flowUIStore.setLoading({ value: true, msg: 'Loading datasets...' });
 
     try {
-      await FlowStore.setupFlowStore({ config });
+      await flowStore.setupFlowStore({ config });
 
-      const currentProject = FlowStore.project;
+      const currentProject = flowStore.project;
 
       if (currentProject) {
-        this.datasets = (await FlowStore.getDatasets(currentProject.uuid)) || [];
-        FlowStore.setLoading({ value: false });
+        this.datasets = (await flowStore.getDatasets(currentProject.uuid)) || [];
+        flowUIStore.setLoading({ value: false });
       } else {
         await this.$router.push({ name: 'FlowProjects' });
       }

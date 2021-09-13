@@ -23,7 +23,7 @@ import {
   hexToColorTriple,
   MoviciColors
 } from '@/visualizers/maps/colorMaps';
-import WebvizStore from '@/store/modules/webviz';
+import { webvizStore } from '@/store/store';
 import {
   RGBAColor,
   ColorMapColorSettings,
@@ -58,7 +58,6 @@ export default class ColorMapConfigurator extends Mixins(ValidationProvider) {
   readonly kind!: string;
 
   @Prop([Object]) readonly info!: VisualizerInfo;
-
   @Prop({
     type: Array,
     default(): PropertyType[] {
@@ -68,7 +67,6 @@ export default class ColorMapConfigurator extends Mixins(ValidationProvider) {
   readonly properties!: PropertyType[];
 
   @Prop({ type: Object, default: null }) readonly validator!: FormValidator | null;
-
   baseColor: RGBAColor = DEFAULT_COLOR;
 
   get property(): PropertyType | null {
@@ -100,7 +98,7 @@ export default class ColorMapConfigurator extends Mixins(ValidationProvider) {
   }
 
   get colorRuleSet() {
-    return WebvizStore.colorRuleSet;
+    return webvizStore.colorRuleSet;
   }
 
   get colorSettings() {
@@ -137,7 +135,7 @@ export default class ColorMapConfigurator extends Mixins(ValidationProvider) {
       this.baseColor = this.value.baseColorOverride;
     }
 
-    WebvizStore.getColorRuleSet().then(() => {});
+    webvizStore.getColorRuleSet().then(() => {});
   }
 
   beforeDestroy() {

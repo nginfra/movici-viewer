@@ -55,8 +55,7 @@
 import { FlowSection, FlowSectionItem, User } from '@/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapState } from 'vuex';
-import FlowStore from '@/store/modules/FlowStore';
-import GeneralStore from '@/store/modules/GeneralStore';
+import { flowStore, flowUIStore, generalStore } from '@/store/store';
 import FlowExport from './FlowExport.vue';
 
 @Component({
@@ -74,15 +73,15 @@ export default class Flow extends Vue {
   currentUser!: User;
 
   get sectionMenu() {
-    return FlowStore.flowSections ?? [];
+    return flowUIStore.flowSections ?? [];
   }
 
   get collapse() {
-    return FlowStore.collapse;
+    return flowUIStore.collapse;
   }
 
   get disableCollapser() {
-    return FlowStore.disableCollapser;
+    return flowUIStore.disableCollapser;
   }
 
   get userInitials(): string {
@@ -100,7 +99,7 @@ export default class Flow extends Vue {
   }
 
   buildUrl(routeBase: string) {
-    return FlowStore.queryString ? routeBase + '?' + FlowStore.queryString : routeBase;
+    return flowStore.queryString ? routeBase + '?' + flowStore.queryString : routeBase;
   }
 
   click(section: FlowSection) {
@@ -119,13 +118,13 @@ export default class Flow extends Vue {
   }
 
   toggleCollapse(value?: boolean) {
-    FlowStore.toggleCollapse(value);
+    flowUIStore.toggleCollapse(value);
   }
 
   createFlowSections() {
     const sections: FlowSection[] = [];
 
-    if (!GeneralStore.isLocalhost) {
+    if (!generalStore.isLocalhost) {
       sections.push({
         name: FlowSectionItem.PROJECT,
         label: 'flow.projects.label',
@@ -185,12 +184,14 @@ export default class Flow extends Vue {
       }
     );
 
-    FlowStore.setSections(sections);
+    flowUIStore.setSections(sections);
   }
 
-  mounted() {
+  async mounted() {
     this.createFlowSections();
   }
+
+  created() {}
 }
 </script>
 

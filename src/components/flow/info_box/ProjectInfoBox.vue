@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 import { ActionMenuItem } from '../../global/ActionMenu.vue';
 
 @Component({
@@ -50,11 +50,11 @@ export default class ProjectInfoBox extends Vue {
   actions: ActionMenuItem[] = [];
 
   get currentProject() {
-    return FlowStore.project;
+    return flowStore.project;
   }
 
   get projects() {
-    return FlowStore.projects;
+    return flowStore.projects;
   }
 }
 </script>

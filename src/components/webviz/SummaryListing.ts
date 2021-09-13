@@ -6,8 +6,7 @@ import {
   PropertyType,
   ScenarioDataset
 } from '@/types';
-import WebvizStore from '@/store/modules/webviz';
-import SummaryStore from '@/store/modules/SummaryStore';
+import { webvizStore, summaryStore } from '@/store/store';
 
 @Component
 export default class SummaryListing extends Vue {
@@ -45,7 +44,7 @@ export default class SummaryListing extends Vue {
     this.currentDatasetUUID = this.datasets.find(d => d.name === currentDatasetName)?.uuid ?? null;
 
     if (this.currentDatasetUUID) {
-      this.summary = await SummaryStore.getDatasetSummary({ datasetUUID: this.currentDatasetUUID });
+      this.summary = await summaryStore.getDatasetSummary({ datasetUUID: this.currentDatasetUUID });
     }
 
     if (!this.summary || !this.summary.entity_groups.find(e => e.name === this.currentEntityName)) {
@@ -55,6 +54,6 @@ export default class SummaryListing extends Vue {
   }
 
   async getAvailableDatasets() {
-    this.datasets = (await WebvizStore.getDatasets()) || [];
+    this.datasets = (await webvizStore.getDatasets()) || [];
   }
 }

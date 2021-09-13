@@ -1,14 +1,12 @@
 import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import store from '@/store/store';
+import { generalStore } from '@/store/store';
 import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
 import { DatasetSummary, UUID } from '@/types';
 import Client from '@/api/client';
-import GeneralStore from './GeneralStore';
 
 @Module({
   name: 'summary',
-  store,
-  dynamic: true
+  namespaced: true
 })
 class SummaryStore extends VuexModule {
   datasetSummaries: Record<UUID, DatasetSummary> = {};
@@ -30,12 +28,12 @@ class SummaryStore extends VuexModule {
   }
 
   @Mutation
-  doClearSummaries() {
+  CLEAR_SUMMARIES() {
     this.datasetSummaries = {};
     this.scenarioSummaries = {};
   }
   @Mutation
-  doSetScenario(payload: { scenarioUUID: string | null }) {
+  SET_SCENARIO(payload: { scenarioUUID: string | null }) {
     this.currentScenarioUUID = payload.scenarioUUID;
   }
 
@@ -56,7 +54,7 @@ class SummaryStore extends VuexModule {
     datasetUUID: string;
     scenarioUUID?: string | null;
   }): Promise<DatasetSummary | null> {
-    const api: Client = GeneralStore.api;
+    const api: Client = generalStore.api;
     const datasetUUID = params.datasetUUID;
     const scenarioUUID =
       params.scenarioUUID === undefined ? this.currentScenarioUUID : params.scenarioUUID;
@@ -84,12 +82,12 @@ class SummaryStore extends VuexModule {
 
   @Action({ rawError: true })
   setCurrentScenario(payload: { scenarioUUID: string | null }) {
-    this.doSetScenario(payload);
+    this.SET_SCENARIO(payload);
   }
 
   @Action({ rawError: true })
   clearSummaries() {
-    this.context.commit('doClearSummaries');
+    this.CLEAR_SUMMARIES();
   }
 }
-export default getModule(SummaryStore);
+export default SummaryStore;

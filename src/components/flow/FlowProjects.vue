@@ -74,15 +74,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Project, CameraOptions, Nullable, FlowStoreConfig } from '@/types';
 import MapVis from '@/components/webviz/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
-import FlowStore from '@/store/modules/FlowStore';
 import pick from 'lodash/pick';
 import defaults from '@/components/webviz/defaults';
 import SearchBar from '@/components/webviz/controls/SearchBar.vue';
 import NavigationControl from '@/components/webviz/controls/NavigationControl.vue';
 import BaseMapControl from '@/components/webviz/controls/BaseMapControl.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
-import GeneralStore from '@/store/modules/GeneralStore';
-import ProjectStore from '@/store/modules/ProjectStore';
+import { flowStore, generalStore, projectStore, flowUIStore } from '@/store/store';
 
 @Component({
   components: {
@@ -101,11 +99,11 @@ export default class FlowProjects extends Vue {
   viewState: Nullable<CameraOptions> = defaults.viewState();
 
   get projects() {
-    return FlowStore.projects;
+    return flowStore.projects;
   }
 
   get currentProject() {
-    return FlowStore.project;
+    return flowStore.project;
   }
 
   get details() {
@@ -130,7 +128,7 @@ export default class FlowProjects extends Vue {
   }
 
   get queryString() {
-    return FlowStore.queryString;
+    return flowStore.queryString;
   }
 
   /**
@@ -138,7 +136,7 @@ export default class FlowProjects extends Vue {
    * If necessary, updates the route with its name as the project query parameter
    */
   async setProject(project: Project) {
-    await FlowStore.setCurrentFlowProject(project);
+    await flowStore.setCurrentFlowProject(project);
 
     // this replaces the query string with project
     if (this.currentProjectName !== project.name) {
@@ -146,18 +144,18 @@ export default class FlowProjects extends Vue {
         name: 'FlowProjects',
         query: { project: project?.name }
       });
-      FlowStore.updateView(null);
+      flowStore.updateView(null);
     }
   }
 
   async mounted() {
-    if (GeneralStore.isLocalhost) {
-      await ProjectStore.getAllProjects();
+    if (generalStore.isLocalhost) {
+      await projectStore.getAllProjects();
 
       const project = 'local_project',
         config: FlowStoreConfig = { currentProjectName: project, getProject: true };
 
-      await FlowStore.setupFlowStore({ config });
+      await flowStore.setupFlowStore({ config });
 
       await this.$router.push({
         name: 'FlowDatasets',
@@ -166,17 +164,19 @@ export default class FlowProjects extends Vue {
     } else {
       const config = { currentProjectName: this.currentProjectName };
 
-      FlowStore.setLoading({ value: true, msg: 'Loading workspaces...' });
+      flowUIStore.setLoading({ value: true, msg: 'Loading workspaces...' });
 
       try {
-        await FlowStore.setupFlowStore({ config });
-        FlowStore.setLoading({ value: false });
+        await flowStore.setupFlowStore({ config });
+        flowUIStore.setLoading({ value: false });
       } catch (error) {
         console.error(error);
-        FlowStore.setLoading({ value: false });
+        flowUIStore.setLoading({ value: false });
       }
     }
   }
+
+  async created() {}
 }
 </script>
 

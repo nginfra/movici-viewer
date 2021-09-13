@@ -6,20 +6,17 @@
   </div>
 </template>
 <script lang="ts">
+import { generalStore } from '@/store/store';
 import { Vue, Component } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 
-@Component({
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      initialized: (state: any) => state.general.initialized
-    })
-  }
-})
+@Component({})
 export default class Main extends Vue {
   loading = true;
-  initialized!: boolean;
+
+  get initialized() {
+    return generalStore.initialized;
+  }
+
   userLoggedIn!: boolean;
 
   get initializedAndLoggedIn(): boolean {

@@ -84,7 +84,6 @@ import {
   VisualizationMode,
   VisualizationSettings
 } from '@/types';
-import WebvizStore from '@/store/modules/webviz';
 import {
   datasetValidator,
   entityGroupValidator,
@@ -100,7 +99,7 @@ import isError from 'lodash/isError';
 
 import { VisualizerInfo } from '@/visualizers';
 import ExportModal from '@/components/webviz/ExportModal.vue';
-import ProjectStore from '@/store/modules/ProjectStore';
+import { projectStore, webvizStore } from '@/store/store';
 
 @Component({
   name: 'WebViz',
@@ -129,15 +128,15 @@ export default class WebViz extends Vue {
   showExportModal = false;
 
   get mode() {
-    return WebvizStore.mode;
+    return webvizStore.mode;
   }
 
   get timelineInfo(): TimeOrientedSimulationInfo | null {
-    return WebvizStore.timelineInfo;
+    return webvizStore.timelineInfo;
   }
 
   get project(): Project | null {
-    return ProjectStore.activeProject;
+    return projectStore.activeProject;
   }
 
   get currentScenarioUUID(): string | null {
@@ -185,13 +184,14 @@ export default class WebViz extends Vue {
       }
     }
     if (this.settings) {
-      WebvizStore.useSettings(this.settings).then(() => {});
+      webvizStore.useSettings(this.settings).then(() => {});
     }
   }
 
   @Watch('viewConfig')
   parseViewConfig(value: ViewConfig) {
-    WebvizStore.parseViewConfig(value)
+    webvizStore
+      .parseViewConfig(value)
       .then(result => {
         this.determineContentErrors(result.layerInfos);
         this.determineDuplicateErrors(result.layerInfos);
@@ -210,7 +210,7 @@ export default class WebViz extends Vue {
       info.unsetError('content');
       try {
         datasetValidator()(info);
-        const datasetSummary = await WebvizStore.getDatasetSummary(info.datasetUUID as UUID);
+        const datasetSummary = await webvizStore.getDatasetSummary(info.datasetUUID as UUID);
         if (!datasetSummary) {
           throw new Error('Error contacting server');
         }

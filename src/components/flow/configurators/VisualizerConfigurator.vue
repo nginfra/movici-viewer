@@ -132,7 +132,7 @@
 
 <script lang="ts">
 import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 import {
   FlowVisualizerOptions,
   FlowVisualizerType,
@@ -449,8 +449,8 @@ export default class VisualizerConfigurator extends Mixins(SummaryListing, Valid
   }
 
   async mounted() {
-    if (FlowStore.scenario) {
-      this.datasets = FlowStore.scenario.datasets;
+    if (flowStore.scenario) {
+      this.datasets = flowStore.scenario.datasets;
     }
 
     if (this.value) {

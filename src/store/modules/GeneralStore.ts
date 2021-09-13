@@ -2,12 +2,11 @@ import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { failMessage } from '@/snackbar';
 import Client from '@/api/client';
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { ApplicationSettings, ColorRuleSet } from '@/types';
 import baseColorRuleSet from '@/visualizers/baseColorRuleSet';
 import cloneDeep from 'lodash/cloneDeep';
 import { GetGlobalSettings } from '@/api/requests';
-import store from '@/store/store';
 
 const defaultSettings = {
   Language: 'en'
@@ -27,17 +26,15 @@ function getLocalSettings() {
 
 @Module({
   name: 'general',
-  namespaced: true,
-  dynamic: true,
-  store
+  namespaced: true
 })
 class GeneralStore extends VuexModule {
-  initialized = false;
-  settings!: ApplicationSettings;
+  initialized_ = false;
+  settings_!: ApplicationSettings;
 
   @Mutation
   SET_INITIALIZED() {
-    this.initialized = true;
+    this.initialized_ = true;
   }
 
   @Mutation
@@ -52,7 +49,7 @@ class GeneralStore extends VuexModule {
       ...localSettings
     });
 
-    this.settings = { ...this.settings, ...payload };
+    this.settings_ = { ...this.settings_, ...payload };
   }
 
   @Action({ rawError: true })
@@ -93,32 +90,40 @@ class GeneralStore extends VuexModule {
     this.UPDATE_SETTINGS(settings);
   }
 
+  get initialized(): boolean {
+    return this.initialized_;
+  }
+
+  get settings() {
+    return this.settings_;
+  }
+
   get isLocalhost() {
-    return this.settings.localhost;
+    return this.settings_.localhost;
   }
 
   get apiBase() {
-    return this.settings.ApiAddress ?? '/';
+    return this.settings_.ApiAddress ?? '/';
   }
 
   get colorRuleSet(): ColorRuleSet {
     const mergedRules = cloneDeep(baseColorRuleSet);
-    Object.assign(mergedRules.colors, this.settings.colorRuleSet?.colors);
-    mergedRules.rules.push(...(this.settings.colorRuleSet?.rules || []));
+    Object.assign(mergedRules.colors, this.settings_.colorRuleSet?.colors);
+    mergedRules.rules.push(...(this.settings_.colorRuleSet?.rules || []));
     return mergedRules;
   }
 
   get language() {
-    return this.settings.Language ?? '';
+    return this.settings_.Language ?? '';
   }
 
   get featureToggle() {
     return (feature: string) => {
-      if (!this.settings.features) {
+      if (!this.settings_.features) {
         return false;
       }
       try {
-        return this.settings.features.indexOf(feature) > -1;
+        return this.settings_.features.indexOf(feature) > -1;
       } catch (e) {
         return false;
       }
@@ -137,9 +142,9 @@ class GeneralStore extends VuexModule {
       defaultCallbacks: {
         401: () => {
           // import locally to prevent circular dependency with dynamic store module
-          import('@/store/modules/CurrentUserStore').then(result => {
-            result.default.forceLogout();
-          });
+          // import('@/store/modules/CurrentUserStore').then(result => {
+          //   result.default.forceLogout();
+          // });
         },
         http(e) {
           failMessage(e.message);
@@ -150,4 +155,4 @@ class GeneralStore extends VuexModule {
   }
 }
 
-export default getModule(GeneralStore);
+export default GeneralStore;

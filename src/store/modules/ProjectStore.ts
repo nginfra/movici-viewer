@@ -1,14 +1,10 @@
-import { Action, getModule, Module, Mutation, VuexModule } from 'vuex-module-decorators';
+import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { Project, UUID } from '@/types';
 import { AddProject, DeleteProject, GetProjects, UpdateProject } from '@/api/requests';
-import store from '@/store/store';
-import GeneralStore from './GeneralStore';
-
+import { generalStore } from '@/store/store';
 @Module({
   name: 'projects',
-  namespaced: true,
-  dynamic: true,
-  store
+  namespaced: true
 })
 class ProjectStore extends VuexModule {
   allProjects: Project[] = [];
@@ -52,24 +48,24 @@ class ProjectStore extends VuexModule {
 
   @Action({ rawError: true })
   async getAllProjects(): Promise<Project[]> {
-    const projects = (await GeneralStore.api.request(new GetProjects())) ?? [];
+    const projects = (await generalStore.api.request(new GetProjects())) ?? [];
     this.SET_PROJECTS(projects);
     return projects;
   }
 
   @Action({ rawError: true })
   async updateProject(project: Project) {
-    return await GeneralStore.api.request(new UpdateProject(project.uuid, project));
+    return await generalStore.api.request(new UpdateProject(project.uuid, project));
   }
 
   @Action({ rawError: true })
   async addProject(project: Project) {
-    return await GeneralStore.api.request(new AddProject(project));
+    return await generalStore.api.request(new AddProject(project));
   }
 
   @Action({ rawError: true })
   async deleteProject(project: Project) {
-    return await GeneralStore.api.request(new DeleteProject(project.uuid));
+    return await generalStore.api.request(new DeleteProject(project.uuid));
   }
 
   get projects() {
@@ -93,4 +89,4 @@ class ProjectStore extends VuexModule {
   }
 }
 
-export default getModule(ProjectStore);
+export default ProjectStore;

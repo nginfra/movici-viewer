@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import FlowStore from '@/store/modules/FlowStore';
+import { flowStore } from '@/store/store';
 import { ActionMenuItem } from '../../global/ActionMenu.vue';
 import { getClassFromStatus } from '@/utils';
 
@@ -53,11 +53,11 @@ export default class ScenarioInfoBox extends Vue {
   }
 
   get currentScenario() {
-    return FlowStore.scenario;
+    return flowStore.scenario;
   }
 
   get scenarios() {
-    return FlowStore.scenarios;
+    return flowStore.scenarios;
   }
 
   get to() {
