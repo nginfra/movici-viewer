@@ -5,7 +5,7 @@ import {
   TimelineCrudResponse,
   TimelineInfo,
   UUID
-} from '@/types';
+} from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import uri, { dataEngineBase } from '@/api/uri';
 import { Request } from '@/api/requests/base';

@@ -1,4 +1,4 @@
-import { ComponentProperty, TimelineFilter, Update, UpdateWithData, UUID } from '@/types';
+import { ComponentProperty, TimelineFilter, Update, UpdateWithData, UUID } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import uri, { dataEngineBase } from '@/api/uri';
 import { Request, getDatasetFilterParams } from '@/api/requests';

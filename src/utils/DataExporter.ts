@@ -1,9 +1,19 @@
 // import JSZip from 'jszip';
-import { EntityGroupData, ExportConfig, TimeOrientedSimulationInfo } from '@/types';
+import { EntityGroupData, ExportConfig, TimeOrientedSimulationInfo } from '@/flow/types';
 import { entityGroupToCSV, objectToCSV } from '@/utils/csvUtils';
 import { DatasetDownloader } from '@/api/DatasetDownloader';
 import Client from '@/api/client';
-import { downloadAsFile } from '@/store/requests';
+
+export function downloadAsFile(data: Blob, filename: string) {
+  const url = window.URL.createObjectURL(data);
+
+  const link = document.createElement('a');
+  link.href = url;
+  link.setAttribute('download', filename);
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+}
 
 export async function exportFromConfig({
   timelineInfo,

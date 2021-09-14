@@ -1,4 +1,4 @@
-import { ComponentProperty, EntityGroupData, EntityUpdate, Update } from '@/types';
+import { ComponentProperty, EntityGroupData, EntityUpdate, Update } from '@/flow/types';
 import { DatasetDownloader } from '@/api/DatasetDownloader';
 
 export class TimelineDownloader {

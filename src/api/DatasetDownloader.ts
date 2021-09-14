@@ -1,4 +1,4 @@
-import { ComponentProperty, Update, UpdateWithData } from '@/types';
+import { ComponentProperty, Update, UpdateWithData } from '@/flow/types';
 import Client from '@/api/client';
 import { GetDatasetData, GetScenarioState, GetUpdates, GetUpdateWithData } from '@/api/requests';
 

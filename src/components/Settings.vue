@@ -7,17 +7,18 @@
   </section>
 </template>
 <script lang="ts">
+import { generalStore } from '@/store/store-accessor';
 import { Vue, Component } from 'vue-property-decorator';
 @Component
 class Settings extends Vue {
   languages = ['en', 'nl'];
 
   get language(): string {
-    return this.$store.getters.language;
+    return generalStore.language;
   }
 
   set language(newValue: string) {
-    this.$store.dispatch('setLanguage', newValue);
+    generalStore.setLanguage(newValue);
   }
 }
 

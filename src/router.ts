@@ -1,7 +1,13 @@
 // @ts-nocheck
 import Vue from 'vue';
 import Router from 'vue-router';
-import Main from './components/Main';
+import Main from '@/components/Main';
+import Flow from '@/flow/components/Flow';
+import FlowProjects from '@/flow/components/FlowProjects';
+import FlowDatasets from '@/flow/components/FlowDatasets';
+import FlowScenario from '@/flow/components/FlowScenario';
+import FlowVisualization from '@/flow/components/FlowVisualization';
+import FlowExport from '@/flow/components/FlowExport';
 
 const originalPush = Router.prototype.push;
 
@@ -26,18 +32,18 @@ const router = new Router({
     {
       path: '/',
       component: Main,
-      redirect: '/flow',
+      redirect: { name: 'FlowProjects' },
       children: [
         {
           path: '/flow',
           name: 'Flow',
           redirect: { name: 'FlowProjects' },
-          component: () => import('./components/flow/Flow'),
+          component: Flow,
           children: [
             {
               path: '/flow/workspace',
               name: 'FlowProjects',
-              component: () => import('./components/flow/FlowProjects.vue'),
+              component: FlowProjects,
               props: route => {
                 const { project } = route.query;
                 return { currentProjectName: project };
@@ -46,7 +52,7 @@ const router = new Router({
             {
               path: '/flow/datasets',
               name: 'FlowDatasets',
-              component: () => import('./components/flow/FlowDatasets.vue'),
+              component: FlowDatasets,
               props: route => {
                 const { project } = route.query;
                 return { currentProjectName: project };
@@ -55,7 +61,7 @@ const router = new Router({
             {
               path: '/flow/scenario',
               name: 'FlowScenario',
-              component: () => import('./components/flow/FlowScenario.vue'),
+              component: FlowScenario,
               props: route => {
                 const { project, scenario } = route.query;
                 return { currentProjectName: project, currentScenarioName: scenario };
@@ -64,7 +70,7 @@ const router = new Router({
             {
               path: '/flow/visualization',
               name: 'FlowVisualization',
-              component: () => import('./components/flow/FlowVisualization.vue'),
+              component: FlowVisualization,
               props: route => {
                 const { project, scenario, view } = route.query;
                 return {
@@ -77,7 +83,7 @@ const router = new Router({
             {
               path: '/flow/export',
               name: 'FlowExport',
-              component: () => import('./components/flow/FlowExport.vue'),
+              component: FlowExport,
               props: route => {
                 const { project, scenario, view } = route.query;
                 return {

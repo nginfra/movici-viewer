@@ -1,6 +1,6 @@
 import { AxiosRequestConfig } from 'axios';
 import uri, { dataEngineBase } from '@/api/uri';
-import { DatasetSummary, UUID } from '@/types';
+import { DatasetSummary, UUID } from '@/flow/types';
 import { Request } from '@/api/requests/base';
 
 export class GetDatasetSummary extends Request<DatasetSummary> {

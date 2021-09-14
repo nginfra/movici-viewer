@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { LoginRequest, BaseRequest } from '@/api/requests';
+import { BaseRequest } from '@/api/requests';
 import { ConcurrencyManager } from '@/api/concurrency';
 
 interface ErrorHandlingConfig {
@@ -35,6 +35,17 @@ export default class Client {
     }
   }
 
+  downloadAsFile(data: Blob, filename: string) {
+    const url = window.URL.createObjectURL(data);
+
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
+
   async request<T>(request: BaseRequest<T>, onError?: ErrorHandlingConfig): Promise<T | null> {
     try {
       const resp = await this.http.request(request.generateConfig(this));
@@ -43,11 +54,6 @@ export default class Client {
       this.handleError(e, onError || {});
       return null;
     }
-  }
-
-  async login(username: string, password: string) {
-    const resp = await this.request(new LoginRequest(username, password));
-    this.apiToken = resp?.session || null;
   }
 
   handleError(e: Error | unknown, onError: ErrorHandlingConfig): void {

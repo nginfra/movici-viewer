@@ -5,7 +5,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
-import { generalStore } from '@/store/store';
+import { generalStore } from '@/store';
 
 @Component({
   name: 'App'

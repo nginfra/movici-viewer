@@ -1,4 +1,4 @@
-import { ApplicationSettings, ColorRuleSet } from '@/types';
+import { ApplicationSettings, ColorRuleSet } from '@/flow/types';
 import { AxiosRequestConfig } from 'axios';
 import { BaseRequest } from '@/api/requests/base';
 

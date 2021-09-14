@@ -6,7 +6,7 @@ import {
   ReverseGeocodeSearchQuery,
   ReverseGeocodeSearchResult,
   UUID
-} from '@/types';
+} from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { Request } from '@/api/requests/base';
 

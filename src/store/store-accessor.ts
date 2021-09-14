@@ -1,39 +1,28 @@
 import { Store } from 'vuex';
 import { getModule } from 'vuex-module-decorators';
-import FlowStore from '@/store/modules/FlowStore';
 import GeneralStore from '@/store/modules/GeneralStore';
-import GeocodeStore from './modules/GeocodeStore';
-import SummaryStore from './modules/SummaryStore';
-import ViewStore from './modules/ViewStore';
-import FlowUIStore from './modules/FlowUserInterfaceStore';
+import ApiStore from '@/store/modules/ApiStore';
+import FlowStore from '@/flow/stores/FlowStore';
+import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
+import GeocodeStore from '@/flow/stores/GeocodeStore';
+import SummaryStore from '@/flow/stores/SummaryStore';
 
 let flowStore: FlowStore,
   flowUIStore: FlowUIStore,
+  apiStore: ApiStore,
   generalStore: GeneralStore,
   geocodeStore: GeocodeStore,
-  summaryStore: SummaryStore,
-  viewStore: ViewStore;
+  summaryStore: SummaryStore;
 
-function initializeFlowStores(store: Store<unknown>): void {
+function initStores(store: Store<unknown>): void {
+  // local
+  apiStore = getModule(ApiStore, store);
+  generalStore = getModule(GeneralStore, store);
+  // flow
   flowStore = getModule(FlowStore, store);
   flowUIStore = getModule(FlowUIStore, store);
-  generalStore = getModule(GeneralStore, store);
   geocodeStore = getModule(GeocodeStore, store);
   summaryStore = getModule(SummaryStore, store);
-  viewStore = getModule(ViewStore, store);
 }
 
-export {
-  initializeFlowStores,
-  flowStore,
-  flowUIStore,
-  generalStore,
-  geocodeStore,
-  summaryStore,
-  viewStore,
-  FlowStore,
-  GeneralStore,
-  GeocodeStore,
-  SummaryStore,
-  ViewStore
-};
+export { initStores, generalStore, apiStore, flowStore, flowUIStore, geocodeStore, summaryStore };

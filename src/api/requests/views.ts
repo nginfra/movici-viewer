@@ -1,4 +1,4 @@
-import { UUID, View, ViewCrudResponse } from '@/types';
+import { UUID, View, ViewCrudResponse } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import uri, { dataEngineBase } from '@/api/uri';
 import { Request } from '@/api/requests/base';

@@ -1,4 +1,4 @@
-import { Project, ProjectCrudResponse, UUID } from '@/types';
+import { Project, ProjectCrudResponse, UUID } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
 import uri, { dataEngineBase } from '@/api/uri';
 import { Request } from '@/api/requests/base';

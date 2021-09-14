@@ -1,12 +1,11 @@
 import i18n from '../../i18n';
 import pick from 'lodash/pick';
-import { failMessage } from '@/snackbar';
-import Client from '@/api/client';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { ApplicationSettings, ColorRuleSet } from '@/types';
-import baseColorRuleSet from '@/visualizers/baseColorRuleSet';
+import { ApplicationSettings, ColorRuleSet } from '@/flow/types';
+import baseColorRuleSet from '@/flow/visualizers/baseColorRuleSet';
 import cloneDeep from 'lodash/cloneDeep';
 import { GetGlobalSettings } from '@/api/requests';
+import { apiStore } from '../store-accessor';
 
 const defaultSettings = {
   Language: 'en'
@@ -86,7 +85,7 @@ class GeneralStore extends VuexModule {
 
   @Action({ rawError: true })
   async loadRemoteSettings() {
-    const settings = (await this.api.request(new GetGlobalSettings())) ?? {};
+    const settings = (await apiStore.client.request(new GetGlobalSettings())) ?? {};
     this.UPDATE_SETTINGS(settings);
   }
 
@@ -128,30 +127,6 @@ class GeneralStore extends VuexModule {
         return false;
       }
     };
-  }
-
-  get apiToken() {
-    return this.context.rootGetters['currentUser/apiToken'];
-  }
-
-  get api() {
-    return new Client({
-      baseURL: this.apiBase,
-      apiToken: this.apiToken,
-      concurrency: 10,
-      defaultCallbacks: {
-        401: () => {
-          // import locally to prevent circular dependency with dynamic store module
-          // import('@/store/modules/CurrentUserStore').then(result => {
-          //   result.default.forceLogout();
-          // });
-        },
-        http(e) {
-          failMessage(e.message);
-          throw e;
-        }
-      }
-    });
   }
 }
 
