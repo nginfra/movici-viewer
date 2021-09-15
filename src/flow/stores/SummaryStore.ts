@@ -1,6 +1,6 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { apiStore } from '@/store';
-import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
+import { GetDatasetSummary, GetScenarioSummary } from '@/flow/requests';
 import { DatasetSummary, UUID } from '@/flow/types';
 import Client from '@/api/client';
 @Module({

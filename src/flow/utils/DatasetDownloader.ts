@@ -1,6 +1,6 @@
 import { ComponentProperty, Update, UpdateWithData } from '@/flow/types';
 import Client from '@/api/client';
-import { GetDatasetData, GetScenarioState, GetUpdates, GetUpdateWithData } from '@/api/requests';
+import { GetDatasetData, GetScenarioState, GetUpdates, GetUpdateWithData } from '@/flow/requests';
 
 export interface DatasetStoreConfig {
   client: Client;

@@ -23,7 +23,7 @@ export class ActivePointVisualizer extends BaseVisualizer<
 > {
   toggleData?: SinglePropertyTapefile<boolean>;
   onHoverData?: SinglePropertyTapefile<string | number>;
-  topology?: ActiveEntityLayerData<PointCoordinate>[];
+  declare topology?: ActiveEntityLayerData<PointCoordinate>[];
   get topologyGetter(): PointTopologyFromStateGetter {
     return new PointTopologyFromStateGetter(this.datasetStore, this.info.entityGroup);
   }

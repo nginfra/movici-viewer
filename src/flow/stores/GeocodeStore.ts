@@ -1,8 +1,8 @@
-import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '@/api/requests';
+import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '@/flow/requests';
 import { apiStore } from '@/store';
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/flow/types';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { reverseTransform, transform } from '@/crs';
+import { reverseTransform, transform } from '@/flow/crs';
 import Client from '@/api/client';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosInstance } from 'axios';
-import { BaseRequest } from '@/api/requests';
+import { BaseRequest } from '@/flow/requests';
 import { ConcurrencyManager } from '@/api/concurrency';
 
 interface ErrorHandlingConfig {

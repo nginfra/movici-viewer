@@ -6,7 +6,7 @@ import { User } from '@/types';
 import baseColorRuleSet from '@/flow/visualizers/baseColorRuleSet';
 import cloneDeep from 'lodash/cloneDeep';
 import { GetGlobalSettings } from '@/api/requests';
-import { apiStore } from '../store-accessor';
+import { apiStore } from '@/store/store-accessor';
 
 const defaultSettings = {
   Language: 'en'

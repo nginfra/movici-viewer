@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import upperFirst from 'lodash/upperFirst';
-import { generalStore } from '@/store/store-accessor';
+import { generalStore } from '@/store';
 
 @Component({ name: 'LanguagePicker' })
 export default class LanguagePicker extends Vue {

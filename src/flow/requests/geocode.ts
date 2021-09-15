@@ -1,4 +1,4 @@
-import uri, { geocodeBase } from '@/api/uri';
+import uri, { geocodeBase } from '@/flow/requests/uri';
 import {
   GeocodeSearchQuery,
   GeocodeSearchResult,
@@ -8,7 +8,7 @@ import {
   UUID
 } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import { Request } from '@/api/requests/base';
+import { Request } from '@/flow/requests/base';
 
 export class GetGeocodeSuggestions extends Request<GeocodeSuggestion[]> {
   query: GeocodeSearchQuery;

@@ -21,7 +21,7 @@ import {
   GetView,
   GetViews,
   UpdateView
-} from '@/api/requests';
+} from '@/flow/requests';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
 import { summaryStore, flowUIStore } from '@/store';
 import Client from '@/api/client'; // might need a interface class inside flow for this?

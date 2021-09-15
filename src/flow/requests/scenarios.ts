@@ -7,8 +7,8 @@ import {
   UUID
 } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import uri, { dataEngineBase } from '@/api/uri';
-import { Request } from '@/api/requests/base';
+import uri, { dataEngineBase } from '@/flow/requests/uri';
+import { Request } from '@/flow/requests/base';
 
 export class GetScenarios extends Request<ShortScenario[]> {
   projectUUID: UUID;

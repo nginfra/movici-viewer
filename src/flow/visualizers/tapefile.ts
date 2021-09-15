@@ -5,7 +5,7 @@ import {
   EntityUpdate,
   ITapefile
 } from '@/flow/types';
-import { TimelineDownloader } from '@/api/timeline';
+import { TimelineDownloader } from '@/flow/utils/timeline';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { VisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 

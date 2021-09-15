@@ -1,6 +1,6 @@
 import { ApplicationSettings, ColorRuleSet } from '@/flow/types';
 import { AxiosRequestConfig } from 'axios';
-import { BaseRequest } from '@/api/requests/base';
+import { BaseRequest } from '@/flow/requests/base';
 
 export class GetGlobalColorRuleSet extends BaseRequest<ColorRuleSet> {
   makeRequest(): AxiosRequestConfig {

@@ -30,10 +30,9 @@ import defaults from './defaults';
 import { Layer } from '@deck.gl/core';
 import Client from '@/api/client';
 import VisualizerManager from '@/flow/visualizers/VisualizerManager';
-
 import { Visualizer } from '@/flow/visualizers';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { apiStore } from '@/store/store-accessor';
+import { apiStore } from '@/store';
 
 @Component({
   name: 'MapVis',
@@ -69,6 +68,7 @@ export default class MapVis extends Vue {
     this.basemap = basemap;
   }
 
+  // Move this inside a store?
   get api(): Client {
     return apiStore.client;
   }
@@ -96,6 +96,7 @@ export default class MapVis extends Vue {
     }
     return this.visualizers;
   }
+
   get slotProps() {
     return {
       basemap: this.basemap,
