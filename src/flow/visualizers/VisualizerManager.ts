@@ -4,7 +4,7 @@ import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 
 import { determineChanges } from '@/flow/components/deck/mapVisHelpers';
-import { DatasetDownloader } from '@/api/DatasetDownloader';
+import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 
 type VMCallback = (params: CallbackPayload) => void;

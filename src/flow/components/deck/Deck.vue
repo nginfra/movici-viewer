@@ -30,7 +30,7 @@ import { Deck as DeckGL, Layer } from '@deck.gl/core';
 
 // noinspection TypeScriptCheckImport
 import { DeckProps, PickInfo } from '@deck.gl/core/lib/deck';
-import { hasOwnProperty } from '@/utils';
+import { hasOwnProperty } from '@/flow/utils';
 import { CameraOptions, Nullable } from '@/flow/types';
 
 const DEFAULT_VIEWSTATE = {

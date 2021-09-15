@@ -6,7 +6,7 @@ import {
   ITapefile
 } from '@/flow/types';
 import { TimelineDownloader } from '@/api/timeline';
-import { DatasetDownloader } from '@/api/DatasetDownloader';
+import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { VisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 
 interface TapefileUpdate<T> {

@@ -97,7 +97,7 @@ import NavigationControl from '@/flow/components/deck/controls/NavigationControl
 import BaseMapControl from '@/flow/components/deck/controls/BaseMapControl.vue';
 import TimeSlider from '@/flow/components/deck/TimeSlider.vue';
 import { simplifiedCamera, visualizerSettingsValidator } from '@/flow/visualizers/viewHelpers';
-import { getEntitySummary } from '@/utils';
+import { getEntitySummary } from '@/flow/utils';
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 import { successMessage } from '@/snackbar';

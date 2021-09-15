@@ -1,7 +1,7 @@
 // import JSZip from 'jszip';
 import { EntityGroupData, ExportConfig, TimeOrientedSimulationInfo } from '@/flow/types';
-import { entityGroupToCSV, objectToCSV } from '@/utils/csvUtils';
-import { DatasetDownloader } from '@/api/DatasetDownloader';
+import { entityGroupToCSV, objectToCSV } from '@/flow/utils/csvUtils';
+import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import Client from '@/api/client';
 
 export function downloadAsFile(data: Blob, filename: string) {

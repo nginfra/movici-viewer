@@ -42,10 +42,6 @@ export interface PropertyTypeCrudResponse extends CrudResponse {
   property_type_uuid: UUID;
 }
 
-export interface ModelTypeCrudResponse extends CrudResponse {
-  model_type_uuid: UUID;
-}
-
 export interface DatasetGeneratorCrudResponse extends CrudResponse {
   generator_uuid: UUID;
 }

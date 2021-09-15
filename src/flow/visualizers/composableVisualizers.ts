@@ -17,7 +17,7 @@ import {
   VisualizableDataTypes,
   VisualizerCallbacks
 } from '@/flow/types';
-import { parsePropertyString, propertyString } from '@/utils';
+import { parsePropertyString, propertyString } from '@/flow/utils';
 import { ArcLayer, PathLayer, PolygonLayer, ScatterplotLayer } from '@deck.gl/layers';
 import { BaseVisualizer, VisualizerContext } from './visualizers';
 import { LineTopologyGetter, PointTopologyGetter, PolygonTopologyGetter } from './geometry';

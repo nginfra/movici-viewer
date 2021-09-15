@@ -12,7 +12,7 @@ import {
   VisualizerViewConfig
 } from '@/flow/types';
 import { isLines, isPoints, isPolygons } from '@/flow/visualizers/geometry';
-import { getEntitySummary, hasOwnProperty, propertyString } from '@/utils';
+import { getEntitySummary, hasOwnProperty, propertyString } from '@/flow/utils';
 import {
   AnyVisualizerInfo,
   ComposableVisualizerInfo,

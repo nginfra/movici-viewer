@@ -9,8 +9,9 @@
 <script lang="ts">
 import { generalStore } from '@/store/store-accessor';
 import { Vue, Component } from 'vue-property-decorator';
-@Component
-class Settings extends Vue {
+
+@Component({})
+export default class Settings extends Vue {
   languages = ['en', 'nl'];
 
   get language(): string {
@@ -21,7 +22,5 @@ class Settings extends Vue {
     generalStore.setLanguage(newValue);
   }
 }
-
-export default Settings;
 </script>
 <style scoped></style>

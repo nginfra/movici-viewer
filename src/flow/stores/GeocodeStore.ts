@@ -3,6 +3,7 @@ import { apiStore } from '@/store';
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/flow/types';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { reverseTransform, transform } from '@/crs';
+import Client from '@/api/client';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
   return Object.assign({}, result, {
@@ -36,10 +37,25 @@ function prepareQuery(query: GeocodeSearchQuery, epsg_code: number) {
 class GeocodeStore extends VuexModule {
   suggestions: GeocodeSuggestion[] = [];
   upstreamEPSG = 28992;
+  client_: Client | null = null;
+
+  get client() {
+    return this.client_;
+  }
 
   @Mutation
   setSuggestions(suggestions: GeocodeSuggestion[]) {
     this.suggestions = suggestions;
+  }
+
+  @Mutation
+  SET_API_CLIENT(client: Client) {
+    this.client_ = client;
+  }
+
+  @Action({ rawError: true })
+  setApiClient(client: Client) {
+    this.SET_API_CLIENT(client);
   }
 
   @Action({ rawError: true })

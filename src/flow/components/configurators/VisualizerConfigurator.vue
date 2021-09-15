@@ -146,9 +146,9 @@ import { VisGroup } from '@/flow/visualizers';
 import ColorConfigurator from './color/ColorConfigurator.vue';
 import SizeConfigurator from './size/SizeConfigurator.vue';
 import PopupConfigurator from './PopupConfigurator.vue';
-import FormValidator from '@/utils/FormValidator';
+import FormValidator from '@/flow/utils/FormValidator';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { propertyString } from '@/utils';
+import { propertyString } from '@/flow/utils';
 import {
   getSingleLegendPlaceholder,
   PlaceholderType

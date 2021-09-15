@@ -22,8 +22,9 @@ import {
   GetViews,
   UpdateView
 } from '@/api/requests';
-import { exportFromConfig } from '@/utils/DataExporter';
-import { apiStore, summaryStore, flowUIStore } from '@/store';
+import { exportFromConfig } from '@/flow/utils/DataExporter';
+import { summaryStore, flowUIStore } from '@/store';
+import Client from '@/api/client'; // might need a interface class inside flow for this?
 
 @Module({
   name: 'flow',
@@ -38,6 +39,7 @@ class FlowStore extends VuexModule {
   scenarios: ShortScenario[] = [];
   scenario: Scenario | null = null;
   timestamp = 0;
+  client_: Client | null = null;
 
   get hasProject(): boolean {
     return !!this.project;
@@ -65,6 +67,10 @@ class FlowStore extends VuexModule {
       return this.scenario.simulation_info;
     }
     return null;
+  }
+
+  get client() {
+    return this.client_;
   }
 
   @Mutation
@@ -103,8 +109,13 @@ class FlowStore extends VuexModule {
   }
 
   @Mutation
-  setTimestamp(timestamp: number) {
+  SET_TIMESTAMP(timestamp: number) {
     this.timestamp = timestamp;
+  }
+
+  @Mutation
+  SET_API_CLIENT(client: Client) {
+    this.client_ = client;
   }
 
   @Action({ rawError: true })
@@ -119,7 +130,7 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async getProjects() {
-    const projects = (await apiStore.client.request(new GetProjects())) ?? [];
+    const projects = (await this.client?.request(new GetProjects())) ?? [];
     this.SET_PROJECTS(projects);
   }
 
@@ -130,6 +141,11 @@ class FlowStore extends VuexModule {
       datasets: true,
       scenario: true
     });
+  }
+
+  @Action({ rawError: true })
+  setApiClient(client: Client) {
+    this.SET_API_CLIENT(client);
   }
 
   @Action({ rawError: true })
@@ -148,20 +164,21 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async getDatasets(projectUUID: UUID): Promise<Dataset[] | null> {
-    const activeProjectUUID = this.project?.uuid || projectUUID;
+    const activeProjectUUID = this.project?.uuid || projectUUID,
+      datasets = activeProjectUUID
+        ? (await this.client?.request(new GetDatasets(activeProjectUUID))) ?? []
+        : [];
 
-    if (activeProjectUUID) {
-      return await apiStore.client.request(new GetDatasets(activeProjectUUID));
-    }
-    return [];
+    return datasets;
   }
 
   @Action({ rawError: true })
   async getScenariosByProject(projectUUID?: UUID) {
     const activeProjectUUID = projectUUID ?? this.project?.uuid,
       scenarios: ShortScenario[] = activeProjectUUID
-        ? (await apiStore.client.request(new GetScenarios(activeProjectUUID))) ?? []
+        ? (await this.client?.request(new GetScenarios(activeProjectUUID))) ?? []
         : [];
+
     this.SET_SCENARIOS(scenarios);
     return scenarios;
   }
@@ -170,7 +187,7 @@ class FlowStore extends VuexModule {
   async getViewsByScenario(scenarioUUID?: string): Promise<View[]> {
     const currentScenarioUUID = scenarioUUID ?? this.scenario?.uuid;
     if (currentScenarioUUID) {
-      const views = (await apiStore.client.request(new GetViews(currentScenarioUUID))) ?? [];
+      const views = (await this.client?.request(new GetViews(currentScenarioUUID))) ?? [];
       this.SET_VIEWS(views);
       return views;
     }
@@ -181,9 +198,14 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async getScenario(activeScenarioUUID: UUID) {
     if (activeScenarioUUID) {
-      return await apiStore.client.request(new GetScenario(activeScenarioUUID));
+      return await this.client?.request(new GetScenario(activeScenarioUUID));
     }
     return null;
+  }
+
+  @Action({ rawError: true })
+  setTimestamp(value: number) {
+    this.SET_TIMESTAMP(value);
   }
 
   @Action({ rawError: true })
@@ -193,6 +215,7 @@ class FlowStore extends VuexModule {
     timestamp?: number;
   }) {
     flowUIStore.setLoading({ value: true, msg: 'Exporting data...' });
+
     const datasets = (await this.getDatasets(this.project?.uuid ?? '<unknown project>'))?.reduce<
       Record<string, Dataset>
     >((obj, curr) => {
@@ -200,7 +223,7 @@ class FlowStore extends VuexModule {
       return obj;
     }, {});
 
-    if (datasets && this.project && this.scenario && this.timelineInfo) {
+    if (datasets && this.project && this.scenario && this.timelineInfo && this.client) {
       await exportFromConfig({
         config: {
           dataset: datasets[payload.datasetName] ?? null,
@@ -210,7 +233,7 @@ class FlowStore extends VuexModule {
           timestamp: payload.timestamp ?? this.timestamp
         },
         timelineInfo: this.timelineInfo,
-        api: apiStore.client
+        api: this.client
       });
     }
 
@@ -224,33 +247,33 @@ class FlowStore extends VuexModule {
     this.SET_CURRENT_PROJECT(null);
     this.SET_SCENARIOS([]);
     this.SET_CURRENT_SCENARIO(null);
-    this.setTimestamp(0);
+    this.SET_TIMESTAMP(0);
     this.UPDATE_VISUALIZERS([]);
   }
 
   @Action({ rawError: true })
   async createView({ scenarioUUID, view }: { scenarioUUID: UUID; view: View }) {
-    return await apiStore.client.request(new AddView(scenarioUUID, view));
+    return await this.client?.request(new AddView(scenarioUUID, view));
   }
 
   @Action({ rawError: true })
   async getViews(scenarioUUID: UUID): Promise<View[]> {
-    return (await apiStore.client.request(new GetViews(scenarioUUID))) ?? [];
+    return (await this.client?.request(new GetViews(scenarioUUID))) ?? [];
   }
 
   @Action({ rawError: true })
   async getView(viewUUID: UUID) {
-    return await apiStore.client.request(new GetView(viewUUID));
+    return await this.client?.request(new GetView(viewUUID));
   }
 
   @Action({ rawError: true })
   async updateView({ viewUUID, view }: { viewUUID: UUID; view: View }) {
-    return await apiStore.client.request(new UpdateView(viewUUID, view));
+    return await this.client?.request(new UpdateView(viewUUID, view));
   }
 
   @Action({ rawError: true })
   async deleteView(viewUUID: UUID) {
-    return await apiStore.client.request(new DeleteView(viewUUID));
+    return await this.client?.request(new DeleteView(viewUUID));
   }
 
   /**

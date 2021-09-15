@@ -14,7 +14,7 @@ import {
   TopologyLayerData
 } from '@/flow/types';
 import { EntityGeometry } from '@/flow/types/geometry';
-import { DatasetDownloader } from '@/api/DatasetDownloader';
+import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 
 /**
  * A `TopologyGetter` queries a DatasetStore for topology information of a certain entity group,

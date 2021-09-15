@@ -6,6 +6,7 @@ import FlowStore from '@/flow/stores/FlowStore';
 import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
 import GeocodeStore from '@/flow/stores/GeocodeStore';
 import SummaryStore from '@/flow/stores/SummaryStore';
+import Client from '@/api/client';
 
 let flowStore: FlowStore,
   flowUIStore: FlowUIStore,
@@ -23,6 +24,14 @@ function initStores(store: Store<unknown>): void {
   flowUIStore = getModule(FlowUIStore, store);
   geocodeStore = getModule(GeocodeStore, store);
   summaryStore = getModule(SummaryStore, store);
+
+  bindAPI(apiStore.client);
+}
+
+function bindAPI(client: Client) {
+  flowStore.setApiClient(client);
+  geocodeStore.setApiClient(client);
+  summaryStore.setApiClient(client);
 }
 
 export { initStores, generalStore, apiStore, flowStore, flowUIStore, geocodeStore, summaryStore };

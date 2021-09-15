@@ -39,7 +39,7 @@
 import { Component, Vue, Prop } from 'vue-property-decorator';
 import { flowStore } from '@/store';
 import { ActionMenuItem } from '../global/ActionMenu.vue';
-import { getClassFromStatus } from '@/utils';
+import { getClassFromStatus } from '@/flow/utils';
 
 @Component({
   name: 'ScenarioInfoBox'

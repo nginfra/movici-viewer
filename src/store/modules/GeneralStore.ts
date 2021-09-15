@@ -2,6 +2,7 @@ import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { ApplicationSettings, ColorRuleSet } from '@/flow/types';
+import { User } from '@/types';
 import baseColorRuleSet from '@/flow/visualizers/baseColorRuleSet';
 import cloneDeep from 'lodash/cloneDeep';
 import { GetGlobalSettings } from '@/api/requests';
@@ -126,6 +127,21 @@ class GeneralStore extends VuexModule {
       } catch (e) {
         return false;
       }
+    };
+  }
+
+  get localUser(): User {
+    return {
+      firstname: 'Movici',
+      middlename: null,
+      lastname: 'Local User',
+      active: true,
+      language: 'en',
+      created_on: 0,
+      organisation: '',
+      organisation_uuid: '',
+      username: 'movici_local_user',
+      roles: []
     };
   }
 }

@@ -9,7 +9,7 @@ import {
   VisualizerConfigurationSettings,
   VisualizerViewConfig
 } from '@/flow/types';
-import { hasOwnProperty, propertyString } from '@/utils';
+import { hasOwnProperty, propertyString } from '@/flow/utils';
 import { cleanVisualizerSettings } from '@/flow/visualizers/visualizerHelpers';
 
 abstract class BaseVisualizerInfo {

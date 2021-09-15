@@ -7,7 +7,7 @@ import {
   PropertyType,
   Mapper
 } from '@/flow/types';
-import { propertyString } from '@/utils';
+import { propertyString } from '@/flow/utils';
 import isEmpty from 'lodash/isEmpty';
 import cloneDeep from 'lodash/cloneDeep';
 

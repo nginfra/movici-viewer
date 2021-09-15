@@ -8,13 +8,13 @@ import {
   VisualizerConfigurationSettings
 } from '@/flow/types';
 import { TopologyGetter } from '@/flow/visualizers/geometry';
-import { DatasetDownloader } from '@/api/DatasetDownloader';
+import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import {
   AnyVisualizerInfo,
   ComposableVisualizerInfo,
   VisualizerInfo
 } from '@/flow/visualizers/VisualizerInfo';
-import { hasOwnProperty } from '@/utils';
+import { hasOwnProperty } from '@/flow/utils';
 
 export interface VisualizerContext {
   datasetStore: DatasetDownloader;
@@ -88,9 +88,11 @@ export abstract class BaseVisualizer<
       this.info.unsetError('load');
       try {
         await this.doLoad(callbacks?.onProgress);
-      } catch (err) {
-        console.error(err);
-        return this.handleError(err, callbacks?.onError);
+      } catch (err: unknown) {
+        const error = new Error(String(err));
+        console.error(error);
+
+        return this.handleError(error, callbacks?.onError);
       } finally {
         this.loaded = true;
       }

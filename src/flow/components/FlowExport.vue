@@ -56,7 +56,7 @@ import ExportForm from '@/flow/components/export/ExportForm.vue';
 import ExportLayerPicker from '@/flow/components/export/ExportLayerPicker.vue';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import ValidationProvider from '@/flow/mixins/ValidationProvider';
-import FormValidator from '@/utils/FormValidator';
+import FormValidator from '@/flow/utils/FormValidator';
 import { flowStore } from '@/store';
 
 @Component({

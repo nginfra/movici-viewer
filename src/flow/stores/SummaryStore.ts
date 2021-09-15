@@ -2,6 +2,7 @@ import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { apiStore } from '@/store';
 import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
 import { DatasetSummary, UUID } from '@/flow/types';
+import Client from '@/api/client';
 @Module({
   name: 'summary',
   namespaced: true
@@ -10,9 +11,19 @@ class SummaryStore extends VuexModule {
   datasetSummaries: Record<UUID, DatasetSummary> = {};
   scenarioSummaries: Record<UUID, Record<UUID, DatasetSummary>> = {};
   currentScenarioUUID: string | null = null;
+  client_: Client | null = null;
+
+  get client() {
+    return this.client_;
+  }
 
   @Mutation
-  addDatasetSummary(payload: {
+  SET_API_CLIENT(client: Client) {
+    this.client_ = client;
+  }
+
+  @Mutation
+  ADD_DATASET_SUMMARY(payload: {
     datasetUUID: UUID;
     scenarioUUID?: UUID | null;
     summary: DatasetSummary;
@@ -30,9 +41,15 @@ class SummaryStore extends VuexModule {
     this.datasetSummaries = {};
     this.scenarioSummaries = {};
   }
+
   @Mutation
   SET_SCENARIO(payload: { scenarioUUID: string | null }) {
     this.currentScenarioUUID = payload.scenarioUUID;
+  }
+
+  @Action({ rawError: true })
+  setApiClient(client: Client) {
+    this.SET_API_CLIENT(client);
   }
 
   /**
@@ -67,7 +84,7 @@ class SummaryStore extends VuexModule {
         ? await apiStore.client.request(new GetScenarioSummary(scenarioUUID, datasetUUID))
         : await apiStore.client.request(new GetDatasetSummary(datasetUUID));
       if (summary) {
-        this.addDatasetSummary({
+        this.ADD_DATASET_SUMMARY({
           datasetUUID,
           scenarioUUID,
           summary

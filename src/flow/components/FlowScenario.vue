@@ -103,7 +103,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import { UUID } from '@/flow/types';
 import FlowContainer from './FlowContainer.vue';
 import { flowStore, flowUIStore } from '@/store';
-import { getClassFromStatus } from '@/utils';
+import { getClassFromStatus } from '@/flow/utils';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
 import ScenarioInfoBox from './info_box/ScenarioInfoBox.vue';
 

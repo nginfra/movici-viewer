@@ -52,25 +52,20 @@
 </template>
 
 <script lang="ts">
-import { FlowSection, FlowSectionItem, User } from '@/flow/types';
+import { FlowSection, FlowSectionItem } from '@/flow/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { mapState } from 'vuex';
 import FlowExport from '@/flow/components/FlowExport.vue';
-import { flowStore, flowUIStore, generalStore } from '@/store';
+import { flowStore, flowUIStore, generalStore } from '@/store'; // create getters for other store it interacts with?
+import { User } from '@/types';
 
-@Component({
-  computed: {
-    ...mapState({
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      currentUser: (state: any) => state.currentUser?.user ?? {}
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    })
-  }
-})
+@Component({})
 export default class Flow extends Vue {
   @Prop([String]) currentProjectName!: string;
   @Prop([String]) currentScenarioName!: string;
-  currentUser!: User;
+
+  get currentUser(): User {
+    return generalStore.localUser;
+  }
 
   get sectionMenu() {
     return flowUIStore.flowSections ?? [];
@@ -85,6 +80,7 @@ export default class Flow extends Vue {
   }
 
   get userInitials(): string {
+    // WIP
     const localUser = {
       firstname: 'Local',
       lastname: 'User'
