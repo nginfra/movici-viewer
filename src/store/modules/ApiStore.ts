@@ -5,7 +5,7 @@
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import Client from '@/api/client';
-import { failMessage } from '@/snackbar';
+import { failMessage } from '@/flow/utils/snackbar';
 //  import { CheckToken, LoginRequest, LogoutRequest } from '@/api/requests';
 
 const API_CONCURRENCY = 10;
@@ -27,6 +27,17 @@ function defaultClient(baseURL: string, apiToken: string | null): Client {
   name: 'api',
   namespaced: true
 })
+// Create a backend service that will work as interface
+// Local and Remote clients inherit this interface but have different methods
+// Implement method getCapabilities that will respond if some actions are possible (projects, currentUser...)
+// FlowComponent requests data from FlowStore
+//    |--> FlowStore calls client interface (local or remote)
+//    |--> Interface calls other Store (Datasets, Projects, etc)
+
+// Local Client
+
+// Remote Client
+// Uses stores to get data, summaries and resources
 class ApiStore extends VuexModule {
   client_: Client | null = null;
   baseURL = '/';
@@ -49,28 +60,6 @@ class ApiStore extends VuexModule {
     this.baseURL = baseUrl;
   }
 
-  @Mutation
-  SET_LOGIN_STATUS(payload: { isLoggedIn: boolean; token?: string | null }) {
-    this.isLoggedIn = payload.isLoggedIn;
-    if (payload.token) {
-      this.apiToken = payload.token;
-      localStorage.apiToken = payload.token;
-    }
-  }
-
-  @Mutation
-  CLEAR_LOGIN_STATUS() {
-    this.isLoggedIn = false;
-    this.apiToken = null;
-    localStorage.removeItem('apiToken');
-  }
-
-  @Mutation
-  SET_LOGOUT_MESSAGE(payload: { type: string; message: string }) {
-    this.logoutMessage = payload.message;
-    this.logoutMessageType = payload.type || 'is-warning';
-  }
-
   @Action({ rawError: true })
   configureClient(settings: { baseURL?: string; apiToken?: string | null }) {
     this.CONFIGURE_CLIENT(
@@ -79,7 +68,6 @@ class ApiStore extends VuexModule {
         apiToken: settings.apiToken !== undefined ? settings.apiToken : this.apiToken,
         concurrency: API_CONCURRENCY,
         defaultCallbacks: {
-          //  401: () => this.forceLogout(),
           http(e) {
             failMessage(e.message);
           }
@@ -87,84 +75,5 @@ class ApiStore extends VuexModule {
       })
     );
   }
-
-  // @Action({ rawError: true })
-  // async initToken() {
-  //   const token = localStorage.apiToken;
-
-  //   if (!token) {
-  //     return;
-  //   }
-  //   let resp;
-  //   try {
-  //     resp = await this.client.request(new CheckToken(token), {
-  //       401: () => {
-  //         this.CLEAR_LOGIN_STATUS();
-  //         this.SET_LOGOUT_MESSAGE({
-  //           message: 'You have been logged out automatically.',
-  //           type: 'is-warning'
-  //         });
-  //       }
-  //     });
-  //   } catch (e) {
-  //     console.error(e);
-  //   } finally {
-  //     if (resp) {
-  //       this.SET_LOGIN_STATUS({
-  //         token: token,
-  //         isLoggedIn: true
-  //       });
-  //     }
-  //   }
-  // }
-
-  //  @Action({ rawError: true })
-  //  async login(payload: { username: string; password: string }) {
-  //    const { commit } = this.context;
-  //    let resp;
-  //    try {
-  //      resp = await this.client.request(new LoginRequest(payload.username, payload.password));
-  //    } catch (e) {
-  //      console.error(e);
-  //    } finally {
-  //      if (resp) {
-  //        this.configureClient({ apiToken: resp.session });
-  //        commit('SET_LOGIN_STATUS', {
-  //          isLoggedIn: true,
-  //          token: resp.session
-  //        });
-  //      } else {
-  //        commit('SET_LOGOUT_MESSAGE', {
-  //          message: 'Unable to log in',
-  //          type: 'is-danger'
-  //        });
-  //      }
-  //    }
-  //  }
-
-  //  @Action({ rawError: true })
-  //  async logout() {
-  //    try {
-  //      await this.client.request(new LogoutRequest());
-  //      this.configureClient({ apiToken: null });
-  //      this.context.commit('CLEAR_LOGIN_STATUS');
-  //      this.context.commit('SET_LOGOUT_MESSAGE', {
-  //        message: 'You have been successfully logged out.',
-  //        type: 'is-success'
-  //      });
-  //    } catch (e) {
-  //      console.error(e);
-  //    }
-  //  }
-
-  //  @Action({ rawError: true })
-  //  forceLogout() {
-  //    this.configureClient({ apiToken: null });
-  //    this.context.commit('SET_LOGOUT_MESSAGE', {
-  //      message: 'You have been automatically logged out for security reasons.',
-  //      type: 'is-warning'
-  //    });
-  //    this.context.commit('CLEAR_LOGIN_STATUS');
-  //  }
 }
 export default ApiStore;

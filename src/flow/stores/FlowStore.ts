@@ -11,21 +11,13 @@ import {
   View
 } from '@/flow/types';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import {
-  AddView,
-  DeleteView,
-  GetDatasets,
-  GetProjects,
-  GetScenario,
-  GetScenarios,
-  GetView,
-  GetViews,
-  UpdateView
-} from '@/flow/requests';
+import { GetDatasets, GetProjects, GetScenario, GetScenarios, GetViews } from '@/flow/requests';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
-import { summaryStore, flowUIStore } from '@/store';
-import Client from '@/api/client'; // might need a interface class inside flow for this?
+import { flowUIStore } from '@/store';
+import Backend from '@/backend/interface';
+import { User } from '@/types';
 
+const summaryStore = null;
 @Module({
   name: 'flow',
   namespaced: true
@@ -39,7 +31,8 @@ class FlowStore extends VuexModule {
   scenarios: ShortScenario[] = [];
   scenario: Scenario | null = null;
   timestamp = 0;
-  client_: Client | null = null;
+  backend_: Backend | null = null;
+  currentUser: User | null = null;
 
   get hasProject(): boolean {
     return !!this.project;
@@ -69,8 +62,8 @@ class FlowStore extends VuexModule {
     return null;
   }
 
-  get client() {
-    return this.client_;
+  get backend() {
+    return this.backend_;
   }
 
   @Mutation
@@ -114,8 +107,13 @@ class FlowStore extends VuexModule {
   }
 
   @Mutation
-  SET_API_CLIENT(client: Client) {
-    this.client_ = client;
+  SET_BACKEND(backend: Backend) {
+    this.backend_ = backend;
+  }
+
+  @Mutation
+  SET_USER(user: User) {
+    this.currentUser = user;
   }
 
   @Action({ rawError: true })
@@ -144,20 +142,20 @@ class FlowStore extends VuexModule {
   }
 
   @Action({ rawError: true })
-  setApiClient(client: Client) {
-    this.SET_API_CLIENT(client);
+  setApiClient(backend: Backend) {
+    this.SET_BACKEND(backend);
   }
 
   @Action({ rawError: true })
   async setCurrentFlowScenario(scenario: Scenario) {
     flowUIStore.enableSection({ visualization: true, export: true });
-    summaryStore.setCurrentScenario({ scenarioUUID: scenario.uuid });
+    summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
 
     this.SET_CURRENT_SCENARIO(scenario);
     flowUIStore.enableSection({ visualization: !!scenario });
     flowUIStore.enableSection({ export: !!scenario });
     if (scenario) {
-      summaryStore.setCurrentScenario({ scenarioUUID: scenario.uuid });
+      summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
       await this.getViewsByScenario(scenario.uuid);
     }
   }
@@ -253,27 +251,27 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async createView({ scenarioUUID, view }: { scenarioUUID: UUID; view: View }) {
-    return await this.client?.request(new AddView(scenarioUUID, view));
+    return await this.backend?.view.create({ scenarioUUID, view });
   }
 
   @Action({ rawError: true })
-  async getViews(scenarioUUID: UUID): Promise<View[]> {
-    return (await this.client?.request(new GetViews(scenarioUUID))) ?? [];
+  async getViews(scenarioUUID: UUID) {
+    return await this.backend?.view.list(scenarioUUID);
   }
 
   @Action({ rawError: true })
   async getView(viewUUID: UUID) {
-    return await this.client?.request(new GetView(viewUUID));
+    return await this.backend?.view.get(viewUUID);
   }
 
   @Action({ rawError: true })
   async updateView({ viewUUID, view }: { viewUUID: UUID; view: View }) {
-    return await this.client?.request(new UpdateView(viewUUID, view));
+    return await this.backend?.view.update({ viewUUID, view });
   }
 
   @Action({ rawError: true })
   async deleteView(viewUUID: UUID) {
-    return await this.client?.request(new DeleteView(viewUUID));
+    return await this.backend?.view.delete(viewUUID);
   }
 
   /**
@@ -285,6 +283,11 @@ class FlowStore extends VuexModule {
    */
   @Action({ rawError: true })
   async setupFlowStore({ config, reset = true }: { config: FlowStoreConfig; reset?: boolean }) {
+    const user = await this.backend?.getUser();
+    if (user) {
+      this.SET_USER(user);
+    }
+
     if (reset) {
       this.resetFlowStore();
     }

@@ -101,7 +101,7 @@ import { getEntitySummary } from '@/flow/utils';
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 import FlowLegend from './map_widgets/FlowLegend.vue';
-// import { successMessage } from '@/snackbar';
+import { successMessage } from '@/flow/utils/snackbar';
 import { flowStore, summaryStore, flowUIStore } from '@/store';
 
 @Component({
@@ -313,14 +313,14 @@ export default class FlowVisualization extends Vue {
   async updateView({ view, viewUUID }: { view: View; viewUUID: UUID }) {
     const resp = await flowStore.updateView({ viewUUID, view });
     if (resp) {
-      // successMessage(this.$t('flow.visualization.dialogs.viewUpdateSuccess') as string);
+      successMessage(this.$t('flow.visualization.dialogs.viewUpdateSuccess') as string);
     }
   }
 
   async deleteView({ viewUUID }: { viewUUID: UUID }) {
     const resp = await flowStore.deleteView(viewUUID);
     if (resp) {
-      // successMessage(this.$t('flow.visualization.dialogs.viewDeleteSuccess') as string);
+      successMessage(this.$t('flow.visualization.dialogs.viewDeleteSuccess') as string);
     }
     this.resetView();
   }
@@ -333,7 +333,7 @@ export default class FlowVisualization extends Vue {
       });
 
       if (resp) {
-        // successMessage(this.$t('flow.visualization.dialogs.viewCreateSuccess') as string);
+        successMessage(this.$t('flow.visualization.dialogs.viewCreateSuccess') as string);
         this.view = { ...view, uuid: resp.view_uuid };
 
         return this.view;

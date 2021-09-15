@@ -63,10 +63,6 @@ export default class Flow extends Vue {
   @Prop([String]) currentProjectName!: string;
   @Prop([String]) currentScenarioName!: string;
 
-  get currentUser(): User {
-    return generalStore.localUser;
-  }
-
   get sectionMenu() {
     return flowUIStore.flowSections ?? [];
   }
@@ -79,18 +75,13 @@ export default class Flow extends Vue {
     return flowUIStore.disableCollapser;
   }
 
+  // WIP: getCapabilities
+  get currentUser(): User | null {
+    return flowStore.currentUser;
+  }
+
   get userInitials(): string {
-    // WIP
-    const localUser = {
-      firstname: 'Local',
-      lastname: 'User'
-    };
-
-    let { firstname, lastname } = this.currentUser;
-
-    firstname ??= localUser.firstname;
-    lastname ??= localUser.lastname;
-
+    const { firstname, lastname } = this.currentUser;
     return firstname.slice(0, 1) + lastname.slice(0, 1);
   }
 

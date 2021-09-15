@@ -43,7 +43,7 @@
       </div>
     </template>
     <template #mainView>
-      <template v-if="!currentProject">
+      <template v-if="currentProject">
         <div class="no-resource">
           <b-image :src="require('@/flow/assets/no-project.png')"></b-image>
           <div class="has-text-centered mt-3">

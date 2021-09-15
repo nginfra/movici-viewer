@@ -122,6 +122,7 @@ class GeneralStore extends VuexModule {
       if (!this.settings_.features) {
         return false;
       }
+
       try {
         return this.settings_.features.indexOf(feature) > -1;
       } catch (e) {

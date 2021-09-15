@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
-import { initStores } from '@/store/store-accessor';
+import { bindAPI, initStores } from '@/store/store-accessor';
 import FlowStore from '@/flow/stores/FlowStore';
 import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
 import ApiStore from '@/store/modules/ApiStore';
 import GeocodeStore from '@/flow/stores/GeocodeStore';
 import SummaryStore from '@/flow/stores/SummaryStore';
-import GeneralStore from './modules/GeneralStore';
+import LocalBackend from '@/backend/LocalBackend';
 
 Vue.use(Vuex);
 
@@ -17,7 +17,6 @@ const store = new Store({
   modules: {
     // local
     api: ApiStore,
-    general: GeneralStore,
     // flow
     flow: FlowStore,
     flowUI: FlowUIStore,
@@ -25,5 +24,5 @@ const store = new Store({
     summary: SummaryStore
   }
 });
-
+bindAPI(new LocalBackend());
 export default store;
