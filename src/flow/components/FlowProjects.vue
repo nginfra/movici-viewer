@@ -80,7 +80,7 @@ import SearchBar from '@/flow/components/deck/controls/SearchBar.vue';
 import NavigationControl from '@/flow/components/deck/controls/NavigationControl.vue';
 import BaseMapControl from '@/flow/components/deck/controls/BaseMapControl.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
-import { flowStore, flowUIStore } from '@/store';
+import { flowStore, flowUIStore } from '@/flow/store/store-accessor';
 
 @Component({
   components: {

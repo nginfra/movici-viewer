@@ -87,7 +87,7 @@ import ValidationProvider from '@/flow/mixins/ValidationProvider';
 import SummaryListing from '@/flow/components/deck/SummaryListing';
 import TimeSlider from '@/flow/components/deck/TimeSlider.vue';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 
 @Component({
   name: 'ExportForm',

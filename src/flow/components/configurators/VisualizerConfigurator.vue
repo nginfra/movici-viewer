@@ -132,7 +132,7 @@
 
 <script lang="ts">
 import { Component, Mixins, Prop, Watch } from 'vue-property-decorator';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 import {
   FlowVisualizerOptions,
   FlowVisualizerType,

@@ -31,7 +31,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { ActionMenuItem } from '../global/ActionMenu.vue';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 import ViewLoaderModal from '@/flow/components/widgets/ViewLoaderModal.vue';
 
 @Component({

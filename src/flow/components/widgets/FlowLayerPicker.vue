@@ -50,7 +50,7 @@ import VisualizerElement from './VisualizerElement.vue';
 import VisualizerConfigurator from '../configurators/VisualizerConfigurator.vue';
 import { Scenario, TimeOrientedSimulationInfo } from '@/flow/types';
 import Draggable from 'vuedraggable';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 
 @Component({
   name: 'FlowLayerPicker',

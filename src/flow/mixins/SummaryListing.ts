@@ -6,7 +6,7 @@ import {
   PropertyType,
   ScenarioDataset
 } from '@/flow/types';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 
 @Component
 export default class SummaryListing extends Vue {

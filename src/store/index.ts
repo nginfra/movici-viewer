@@ -1,19 +1,21 @@
 import Vue from 'vue';
 import Vuex, { Store } from 'vuex';
-import { apiStore, bindAPI, initStores } from '@/store/store-accessor';
-import FlowStore from '@/flow/stores/FlowStore';
-import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
-import GeneralStore from './modules/GeneralStore';
+import GeneralStore from '@/store/modules/GeneralStore';
 import ApiStore from '@/store/modules/ApiStore';
-import GeocodeStore from '@/flow/stores/GeocodeStore';
+import { apiStore, initStores } from '@/store/store-accessor';
+import { initFlowStores, bindAPI } from '@/flow/store/store-accessor';
+import FlowStore from '@/flow/store/FlowStore';
+import FlowUIStore from '@/flow/store/FlowUserInterfaceStore';
+import GeocodeStore from '@/flow/store/GeocodeStore';
 import LocalBackend from '@/backend/LocalBackend';
 
 Vue.use(Vuex);
 
 export * from '@/store/store-accessor';
+export * from '@/flow/store/store-accessor';
 
 const store = new Store({
-  plugins: [initStores],
+  plugins: [initStores, initFlowStores],
   modules: {
     // local
     api: ApiStore,

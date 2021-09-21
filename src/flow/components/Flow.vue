@@ -55,7 +55,7 @@
 import { FlowSection, FlowSectionItem } from '@/flow/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FlowExport from '@/flow/components/FlowExport.vue';
-import { flowStore, flowUIStore } from '@/store';
+import { flowStore, flowUIStore } from '@/flow/store/store-accessor'; // create getters for other store it interacts with?
 import { User } from '@/types';
 
 @Component({})

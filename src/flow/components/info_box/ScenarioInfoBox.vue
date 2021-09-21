@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator';
-import { flowStore } from '@/store';
+import { flowStore } from '@/flow/store/store-accessor';
 import { ActionMenuItem } from '../global/ActionMenu.vue';
 import { getClassFromStatus } from '@/flow/utils';
 

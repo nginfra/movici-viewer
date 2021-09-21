@@ -13,7 +13,7 @@ import {
 } from '@/flow/types';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
-import { flowUIStore } from '@/store';
+import { flowUIStore } from '@/flow/store/store-accessor';
 import Backend from '@/flow/backend';
 import { User } from '@/types';
 

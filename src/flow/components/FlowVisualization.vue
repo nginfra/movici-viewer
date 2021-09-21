@@ -102,7 +102,7 @@ import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 import FlowLegend from './map_widgets/FlowLegend.vue';
 import { successMessage } from '@/flow/utils/snackbar';
-import { flowStore, flowUIStore } from '@/store';
+import { flowStore, flowUIStore } from '@/flow/store/store-accessor';
 
 @Component({
   components: {

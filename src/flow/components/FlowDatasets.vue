@@ -151,7 +151,7 @@ import BaseMapControl from '@/flow/components/deck/controls/BaseMapControl.vue';
 import DataViewContent from '@/flow/components/map_widgets/DataViewContent.vue';
 import StaticDataView from '@/flow/components/map_widgets/StaticDataView.vue';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { flowStore, flowUIStore } from '@/store';
+import { flowStore, flowUIStore } from '@/flow/store/store-accessor';
 
 @Component({
   components: {
