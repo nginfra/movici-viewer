@@ -5,15 +5,13 @@ import ApiStore from '@/store/modules/ApiStore';
 import FlowStore from '@/flow/stores/FlowStore';
 import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
 import GeocodeStore from '@/flow/stores/GeocodeStore';
-import SummaryStore from '@/flow/stores/SummaryStore';
 import Backend from '@/flow/backend';
 
 let flowStore: FlowStore,
   flowUIStore: FlowUIStore,
   apiStore: ApiStore,
   generalStore: GeneralStore,
-  geocodeStore: GeocodeStore,
-  summaryStore: SummaryStore;
+  geocodeStore: GeocodeStore;
 
 function initStores(store: Store<unknown>): void {
   // local
@@ -23,20 +21,10 @@ function initStores(store: Store<unknown>): void {
   flowStore = getModule(FlowStore, store);
   flowUIStore = getModule(FlowUIStore, store);
   geocodeStore = getModule(GeocodeStore, store);
-  summaryStore = getModule(SummaryStore, store);
 }
 
 function bindAPI(backend: Backend) {
   flowStore.setApiClient(backend);
 }
 
-export {
-  bindAPI,
-  initStores,
-  generalStore,
-  apiStore,
-  flowStore,
-  flowUIStore,
-  geocodeStore,
-  summaryStore
-};
+export { bindAPI, initStores, generalStore, apiStore, flowStore, flowUIStore, geocodeStore };

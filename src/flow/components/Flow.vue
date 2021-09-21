@@ -55,7 +55,7 @@
 import { FlowSection, FlowSectionItem } from '@/flow/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import FlowExport from '@/flow/components/FlowExport.vue';
-import { flowStore, flowUIStore, generalStore } from '@/store'; // create getters for other store it interacts with?
+import { flowStore, flowUIStore } from '@/store';
 import { User } from '@/types';
 
 @Component({})
@@ -111,8 +111,20 @@ export default class Flow extends Vue {
   createFlowSections() {
     const sections: FlowSection[] = [];
 
-    if (!generalStore.isLocalhost) {
-      sections.push({
+    // if (!generalStore.isLocalhost) {
+    //   sections.push({
+    //     name: FlowSectionItem.PROJECT,
+    //     label: 'flow.projects.label',
+    //     icon: 'fa-workspace',
+    //     iconPack: 'fak',
+    //     enabled: true,
+    //     to: '/flow/workspace',
+    //     type: 'route'
+    //   });
+    // }
+
+    sections.push(
+      {
         name: FlowSectionItem.PROJECT,
         label: 'flow.projects.label',
         icon: 'fa-workspace',
@@ -120,10 +132,7 @@ export default class Flow extends Vue {
         enabled: true,
         to: '/flow/workspace',
         type: 'route'
-      });
-    }
-
-    sections.push(
+      },
       {
         name: FlowSectionItem.DATASETS,
         label: 'flow.datasets.label',

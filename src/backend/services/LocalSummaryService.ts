@@ -1,6 +1,7 @@
 import Client from '@/api/client';
 import SummaryService from '@/flow/backend/summary';
-import { DatasetSummary, UUID } from '@/flow/types';
+import { GetDatasetSummary, GetScenarioSummary } from '@/flow/requests';
+import { UUID } from '@/flow/types';
 
 export default class LocalSummaryService implements SummaryService {
   client: Client;
@@ -9,7 +10,12 @@ export default class LocalSummaryService implements SummaryService {
     this.client = client;
   }
 
-  get(dataset_uuid: UUID) {
-    return new Promise<DatasetSummary | null>(resolve => resolve(null));
+  getScenario(scenario_uuid: UUID, dataset_uuid: UUID) {
+    return this.client.request(new GetScenarioSummary(scenario_uuid, dataset_uuid));
+    // return new Promise<DatasetSummary | null>(resolve => resolve(null));
+  }
+
+  getDataset(dataset_uuid: UUID) {
+    return this.client.request(new GetDatasetSummary(dataset_uuid));
   }
 }

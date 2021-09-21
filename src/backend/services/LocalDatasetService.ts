@@ -10,10 +10,11 @@ export default class LocalDatasetService implements DatasetService {
     this.client = client;
   }
 
-  list(project_uuid?: UUID) {
-    // get sample views
-    return new Promise<Dataset[]>(resolve => resolve([]));
-    // return (await client?.request(new GetViews(scenarioUUID))) ?? [];
+  async list(project_uuid: string) {
+    return new Promise<Dataset[]>(resolve => {
+      resolve([]);
+    });
+    // return (await this.client?.request(new GetDatasets(project_uuid))) ?? [];
   }
 
   async getData<T>(params: {

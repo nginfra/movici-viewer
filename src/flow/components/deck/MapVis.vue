@@ -109,7 +109,7 @@ export default class MapVis extends Vue {
 
   @Watch('layerInfos', { immediate: true })
   handleNewLayerInfos() {
-    flowUIStore.setLoading({ value: true });
+    flowUIStore.setLoading({ value: true, msg: 'Loading layers...' });
     const visualizers = this.ensureVisualizers();
 
     if (visualizers) {

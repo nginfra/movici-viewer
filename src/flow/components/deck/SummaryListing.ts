@@ -6,7 +6,7 @@ import {
   PropertyType,
   ScenarioDataset
 } from '@/flow/types';
-import { summaryStore, flowStore } from '@/store';
+import { flowStore } from '@/store';
 
 @Component
 export default class SummaryListing extends Vue {
@@ -44,7 +44,7 @@ export default class SummaryListing extends Vue {
     this.currentDatasetUUID = this.datasets.find(d => d.name === currentDatasetName)?.uuid ?? null;
 
     if (this.currentDatasetUUID) {
-      this.summary = await summaryStore.getDatasetSummary({ datasetUUID: this.currentDatasetUUID });
+      this.summary = await flowStore.getDatasetSummary({ datasetUUID: this.currentDatasetUUID });
     }
 
     if (!this.summary || !this.summary.entity_groups.find(e => e.name === this.currentEntityName)) {

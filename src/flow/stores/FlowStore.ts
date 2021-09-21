@@ -1,6 +1,7 @@
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import {
   Dataset,
+  DatasetSummary,
   FlowStoreConfig,
   Project,
   Scenario,
@@ -16,7 +17,6 @@ import { flowUIStore } from '@/store';
 import Backend from '@/flow/backend';
 import { User } from '@/types';
 
-const summaryStore = null;
 @Module({
   name: 'flow',
   namespaced: true
@@ -32,6 +32,8 @@ class FlowStore extends VuexModule {
   timestamp = 0;
   backend_: Backend | null = null;
   currentUser: User | null = null;
+  datasetSummaries: Record<UUID, DatasetSummary> = {};
+  scenarioSummaries: Record<UUID, Record<UUID, DatasetSummary>> = {};
 
   get hasProject(): boolean {
     return !!this.project;
@@ -106,13 +108,33 @@ class FlowStore extends VuexModule {
   }
 
   @Mutation
+  SET_USER(user: User) {
+    this.currentUser = user;
+  }
+
+  @Mutation
   SET_BACKEND(backend: Backend) {
     this.backend_ = backend;
   }
 
   @Mutation
-  SET_USER(user: User) {
-    this.currentUser = user;
+  ADD_DATASET_SUMMARY(payload: {
+    datasetUUID: UUID;
+    scenarioUUID?: UUID | null;
+    summary: DatasetSummary;
+  }) {
+    if (payload.scenarioUUID) {
+      this.scenarioSummaries[payload.scenarioUUID] ??= {};
+      this.scenarioSummaries[payload.scenarioUUID][payload.datasetUUID] = payload.summary;
+    } else {
+      this.datasetSummaries[payload.datasetUUID] = payload.summary;
+    }
+  }
+
+  @Mutation
+  CLEAR_SUMMARIES() {
+    this.datasetSummaries = {};
+    this.scenarioSummaries = {};
   }
 
   @Action({ rawError: true })
@@ -147,16 +169,11 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async setCurrentFlowScenario(scenario: Scenario) {
-    flowUIStore.enableSection({ visualization: true, export: true });
-    // summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
-
     this.SET_CURRENT_SCENARIO(scenario);
-    flowUIStore.enableSection({ visualization: !!scenario });
-    flowUIStore.enableSection({ export: !!scenario });
-    if (scenario) {
-      // summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
-      await this.getViewsByScenario(scenario.uuid);
-    }
+
+    flowUIStore.enableSection({ visualization: !!scenario, export: !!scenario });
+
+    await this.getViewsByScenario(scenario.uuid);
   }
 
   @Action({ rawError: true })
@@ -205,6 +222,56 @@ class FlowStore extends VuexModule {
     this.SET_TIMESTAMP(value);
   }
 
+  /**
+   * Get a Dataset Summary by `params.datasetUUUID`. When omitting `params.scenarioUUID` the summary
+   * will be either  for the init data or, if the `FlowStore` has a `currentScenarioUUID` defined,
+   * for dataset in that scenario. Supplying a `params.scenarioUUID` will request the summary for
+   * that scenario. If a `null` value is supplied for `params.scenarioUUID`, the summary is
+   * requested for the init data, regardless of whether the `SummaryStore` is configured with a
+   * `currentScenarioUUID`
+   * @param params
+   *   datasetUUID: the dataset UUID of the requested summary
+   *   scenarioUUID: Optional scenario UUID to specify what (if any) scenario to request the
+   *     dataset summary for. Omit this parameter to automatically determine the scenario (if any)
+   */
+  @Action({ rawError: true })
+  async getDatasetSummary(params: {
+    datasetUUID: string;
+    scenarioUUID?: string | null;
+  }): Promise<DatasetSummary | null> {
+    const { datasetUUID } = params;
+    let { scenarioUUID } = params;
+
+    scenarioUUID ??= this.scenario?.uuid;
+
+    let summary: DatasetSummary | null;
+    summary = scenarioUUID
+      ? this.scenarioSummaries[scenarioUUID]?.[datasetUUID]
+      : this.datasetSummaries[datasetUUID];
+
+    if (!summary) {
+      summary =
+        (scenarioUUID
+          ? await this.backend?.summary.getScenario(scenarioUUID, datasetUUID)
+          : await this.backend?.summary.getDataset(datasetUUID)) ?? null;
+
+      if (summary) {
+        this.ADD_DATASET_SUMMARY({
+          datasetUUID,
+          scenarioUUID,
+          summary
+        });
+      }
+    }
+
+    return summary;
+  }
+
+  @Action({ rawError: true })
+  clearSummaries() {
+    this.CLEAR_SUMMARIES();
+  }
+
   @Action({ rawError: true })
   async exportFromConfig(payload: {
     datasetName: string;
@@ -239,7 +306,6 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async resetFlowStore() {
-    // summaryStore.setCurrentScenario({ scenarioUUID: null });
     this.SET_PROJECTS([]);
     this.SET_CURRENT_PROJECT(null);
     this.SET_SCENARIOS([]);
@@ -289,6 +355,10 @@ class FlowStore extends VuexModule {
 
     if (reset) {
       this.resetFlowStore();
+      this.clearSummaries();
+    }
+
+    if (!this.projects || !this.projects.length) {
       await this.getProjects();
     }
 
