@@ -71,7 +71,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import { Project, CameraOptions, Nullable, FlowStoreConfig } from '@/flow/types';
+import { Project, CameraOptions, Nullable } from '@/flow/types';
 import MapVis from '@/flow/components/deck/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
 import pick from 'lodash/pick';
@@ -80,7 +80,7 @@ import SearchBar from '@/flow/components/deck/controls/SearchBar.vue';
 import NavigationControl from '@/flow/components/deck/controls/NavigationControl.vue';
 import BaseMapControl from '@/flow/components/deck/controls/BaseMapControl.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
-import { flowStore, flowUIStore, generalStore } from '@/store';
+import { flowStore, flowUIStore } from '@/store';
 
 @Component({
   components: {
@@ -149,30 +149,16 @@ export default class FlowProjects extends Vue {
   }
 
   async mounted() {
-    await flowStore.getProjects();
+    const config = { currentProjectName: this.currentProjectName };
 
-    if (generalStore.isLocalhost) {
-      const project = 'local_project',
-        config: FlowStoreConfig = { currentProjectName: project, getProject: true };
+    flowUIStore.setLoading({ value: true, msg: 'Loading workspaces...' });
 
+    try {
       await flowStore.setupFlowStore({ config });
-
-      await this.$router.push({
-        name: 'FlowDatasets',
-        query: { project }
-      });
-    } else {
-      const config = { currentProjectName: this.currentProjectName };
-
-      flowUIStore.setLoading({ value: true, msg: 'Loading workspaces...' });
-
-      try {
-        await flowStore.setupFlowStore({ config });
-        flowUIStore.setLoading({ value: false });
-      } catch (error) {
-        console.error(error);
-        flowUIStore.setLoading({ value: false });
-      }
+      flowUIStore.setLoading({ value: false });
+    } catch (error) {
+      console.error(error);
+      flowUIStore.setLoading({ value: false });
     }
   }
 

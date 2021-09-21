@@ -1,8 +1,8 @@
 // import JSZip from 'jszip';
 import { EntityGroupData, ExportConfig, TimeOrientedSimulationInfo } from '@/flow/types';
+import Backend from '@/flow/backend';
 import { entityGroupToCSV, objectToCSV } from '@/flow/utils/csvUtils';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
-import Client from '@/api/client';
 
 export function downloadAsFile(data: Blob, filename: string) {
   const url = window.URL.createObjectURL(data);
@@ -17,24 +17,24 @@ export function downloadAsFile(data: Blob, filename: string) {
 
 export async function exportFromConfig({
   timelineInfo,
-  api,
+  backend,
   config
 }: {
   timelineInfo: TimeOrientedSimulationInfo;
-  api: Client;
+  backend: Backend;
   config: ExportConfig;
 }): Promise<void> {
-  const exportModule = new DataExporter(timelineInfo, api);
+  const exportModule = new DataExporter(timelineInfo, backend);
   const res = await exportModule.config2blob(config);
   return downloadAsFile(res.blob, res.filename);
 }
 export default class DataExporter {
   timelineInfo!: TimeOrientedSimulationInfo | null;
-  api!: Client;
+  backend!: Backend;
 
-  constructor(timelineInfo: TimeOrientedSimulationInfo | null, api: Client) {
+  constructor(timelineInfo: TimeOrientedSimulationInfo | null, backend: Backend) {
     this.timelineInfo = timelineInfo;
-    this.api = api;
+    this.backend = backend;
   }
 
   // download zip file with all csv
@@ -77,7 +77,7 @@ export default class DataExporter {
   async exportData(config: ExportConfig) {
     const { dataset, scenario, entityName, timestamp } = config,
       store = new DatasetDownloader({
-        client: this.api,
+        backend: this.backend,
         datasetUUID: dataset?.uuid ?? 'unknown',
         scenarioUUID: scenario?.uuid || undefined
       }),

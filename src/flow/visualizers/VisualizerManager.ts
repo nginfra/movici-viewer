@@ -1,4 +1,3 @@
-import Client from '@/api/client';
 import { getVisualizer, Visualizer, VisualizerInfo } from '@/flow/visualizers/index';
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
@@ -6,6 +5,7 @@ import isError from 'lodash/isError';
 import { determineChanges } from '@/flow/components/deck/mapVisHelpers';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
+import Backend from '@/flow/backend';
 
 type VMCallback = (params: CallbackPayload) => void;
 
@@ -19,7 +19,7 @@ type CallbackEvent = 'success' | 'create' | 'delete' | 'error';
 /**
  * The VisualizerManager creates and maintains `Visualizers` for the `MapVis.vue` component
  * @param: config:
- *   * api: A `Client` for accessing the Simulation Engine backend
+ *   * backend: A `Client` for accessing the Simulation Engine backend
  *   * onSuccess: A callback (or array of callbacks) that is/are invoked whenever the Visualizers
  *     have been successfully updated to the state required by the given `layerInfos` in
  *     `VisualizerManager.updateVisualizers()`
@@ -29,7 +29,7 @@ type CallbackEvent = 'success' | 'create' | 'delete' | 'error';
  *     dictionary. In these cases, the `onFailure` callbacks are not invoked
  */
 export default class VisualizerManager {
-  protected api: Client;
+  protected backend: Backend;
   protected visualizers: Record<string, Visualizer>;
   private desiredInfos: AnyVisualizerInfo[];
   private currentInfos: AnyVisualizerInfo[];
@@ -37,13 +37,13 @@ export default class VisualizerManager {
   private loading: boolean;
 
   constructor(config: {
-    api: Client;
+    backend: Backend;
     onSuccess?: VMCallback | VMCallback[];
     onError?: VMCallback | VMCallback[];
     onCreate?: VMCallback | VMCallback[];
     onDelete?: VMCallback | VMCallback[];
   }) {
-    this.api = config.api;
+    this.backend = config.backend;
     this.visualizers = {};
     this.desiredInfos = [];
     this.currentInfos = [];
@@ -148,7 +148,7 @@ export default class VisualizerManager {
       );
     }
     const store = new DatasetDownloader({
-      client: this.api,
+      backend: this.backend,
       datasetUUID: layerInfo.datasetUUID,
       scenarioUUID: layerInfo.scenarioUUID || undefined
     });

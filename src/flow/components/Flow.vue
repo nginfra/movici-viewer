@@ -81,7 +81,7 @@ export default class Flow extends Vue {
   }
 
   get userInitials(): string {
-    const { firstname, lastname } = this.currentUser;
+    const { firstname, lastname } = this.currentUser || { firstname: 'Test', lastname: 'User' };
     return firstname.slice(0, 1) + lastname.slice(0, 1);
   }
 

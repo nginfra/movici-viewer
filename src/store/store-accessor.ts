@@ -6,7 +6,7 @@ import FlowStore from '@/flow/stores/FlowStore';
 import FlowUIStore from '@/flow/stores/FlowUserInterfaceStore';
 import GeocodeStore from '@/flow/stores/GeocodeStore';
 import SummaryStore from '@/flow/stores/SummaryStore';
-import Backend from '@/backend/interface';
+import Backend from '@/flow/backend';
 
 let flowStore: FlowStore,
   flowUIStore: FlowUIStore,

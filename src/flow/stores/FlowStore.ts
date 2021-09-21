@@ -11,10 +11,9 @@ import {
   View
 } from '@/flow/types';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { GetDatasets, GetProjects, GetScenario, GetScenarios, GetViews } from '@/flow/requests';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
 import { flowUIStore } from '@/store';
-import Backend from '@/backend/interface';
+import Backend from '@/flow/backend';
 import { User } from '@/types';
 
 const summaryStore = null;
@@ -128,7 +127,7 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async getProjects() {
-    const projects = (await this.client?.request(new GetProjects())) ?? [];
+    const projects = (await this.backend?.project.list()) ?? [];
     this.SET_PROJECTS(projects);
   }
 
@@ -149,13 +148,13 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async setCurrentFlowScenario(scenario: Scenario) {
     flowUIStore.enableSection({ visualization: true, export: true });
-    summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
+    // summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
 
     this.SET_CURRENT_SCENARIO(scenario);
     flowUIStore.enableSection({ visualization: !!scenario });
     flowUIStore.enableSection({ export: !!scenario });
     if (scenario) {
-      summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
+      // summaryStore?.setCurrentScenario({ scenarioUUID: scenario.uuid });
       await this.getViewsByScenario(scenario.uuid);
     }
   }
@@ -164,7 +163,7 @@ class FlowStore extends VuexModule {
   async getDatasets(projectUUID: UUID): Promise<Dataset[] | null> {
     const activeProjectUUID = this.project?.uuid || projectUUID,
       datasets = activeProjectUUID
-        ? (await this.client?.request(new GetDatasets(activeProjectUUID))) ?? []
+        ? (await this.backend?.dataset.list(activeProjectUUID)) ?? []
         : [];
 
     return datasets;
@@ -174,7 +173,7 @@ class FlowStore extends VuexModule {
   async getScenariosByProject(projectUUID?: UUID) {
     const activeProjectUUID = projectUUID ?? this.project?.uuid,
       scenarios: ShortScenario[] = activeProjectUUID
-        ? (await this.client?.request(new GetScenarios(activeProjectUUID))) ?? []
+        ? (await this.backend?.scenario.list(activeProjectUUID)) ?? []
         : [];
 
     this.SET_SCENARIOS(scenarios);
@@ -185,7 +184,7 @@ class FlowStore extends VuexModule {
   async getViewsByScenario(scenarioUUID?: string): Promise<View[]> {
     const currentScenarioUUID = scenarioUUID ?? this.scenario?.uuid;
     if (currentScenarioUUID) {
-      const views = (await this.client?.request(new GetViews(currentScenarioUUID))) ?? [];
+      const views = (await this.backend?.view.list(currentScenarioUUID)) ?? [];
       this.SET_VIEWS(views);
       return views;
     }
@@ -196,7 +195,7 @@ class FlowStore extends VuexModule {
   @Action({ rawError: true })
   async getScenario(activeScenarioUUID: UUID) {
     if (activeScenarioUUID) {
-      return await this.client?.request(new GetScenario(activeScenarioUUID));
+      return await this.backend?.scenario.get(activeScenarioUUID);
     }
     return null;
   }
@@ -221,7 +220,7 @@ class FlowStore extends VuexModule {
       return obj;
     }, {});
 
-    if (datasets && this.project && this.scenario && this.timelineInfo && this.client) {
+    if (datasets && this.project && this.scenario && this.timelineInfo && this.backend) {
       await exportFromConfig({
         config: {
           dataset: datasets[payload.datasetName] ?? null,
@@ -231,7 +230,7 @@ class FlowStore extends VuexModule {
           timestamp: payload.timestamp ?? this.timestamp
         },
         timelineInfo: this.timelineInfo,
-        api: this.client
+        backend: this.backend
       });
     }
 
@@ -240,7 +239,7 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async resetFlowStore() {
-    // SummaryStore.setCurrentScenario({ scenarioUUID: null });
+    // summaryStore.setCurrentScenario({ scenarioUUID: null });
     this.SET_PROJECTS([]);
     this.SET_CURRENT_PROJECT(null);
     this.SET_SCENARIOS([]);
@@ -283,13 +282,14 @@ class FlowStore extends VuexModule {
    */
   @Action({ rawError: true })
   async setupFlowStore({ config, reset = true }: { config: FlowStoreConfig; reset?: boolean }) {
-    const user = await this.backend?.getUser();
+    const user = await this.backend?.user.get();
     if (user) {
       this.SET_USER(user);
     }
 
     if (reset) {
       this.resetFlowStore();
+      await this.getProjects();
     }
 
     const {

@@ -17,7 +17,6 @@
         <slot name="control-bottom" v-bind="{ ...slotProps, map, onViewstateChange }" />
       </template>
     </Deck>
-    <BLoading :is-full-page="false" v-model="isLoading"></BLoading>
   </div>
 </template>
 
@@ -28,11 +27,11 @@ import Deck from './Deck.vue';
 import Buildings from './mapLayers/Buildings.vue';
 import defaults from './defaults';
 import { Layer } from '@deck.gl/core';
-import Client from '@/api/client';
 import VisualizerManager from '@/flow/visualizers/VisualizerManager';
 import { Visualizer } from '@/flow/visualizers';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import { apiStore } from '@/store';
+import { flowStore, flowUIStore } from '@/store';
+import Backend from '@/flow/backend';
 
 @Component({
   name: 'MapVis',
@@ -55,7 +54,6 @@ export default class MapVis extends Vue {
   readonly buildings!: boolean;
 
   basemap = 'mapbox://styles/mapbox/light-v10';
-  isLoading = false;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   layers: Layer<any>[] = [];
@@ -69,20 +67,20 @@ export default class MapVis extends Vue {
   }
 
   // Move this inside a store?
-  get api(): Client {
-    return apiStore.client;
+  get backend(): Backend | null {
+    return flowStore.backend;
   }
 
-  ensureVisualizers(): VisualizerManager {
-    if (!this.visualizers) {
+  ensureVisualizers() {
+    if (!this.visualizers && this.backend) {
       this.visualizers = new VisualizerManager({
-        api: this.api,
+        backend: this.backend,
         onSuccess: () => {
-          this.isLoading = false;
+          flowUIStore.setLoading({ value: false });
           this.updateLayers();
         },
         onError: () => {
-          this.isLoading = false;
+          flowUIStore.setLoading({ value: false });
         },
         onDelete: ({ info }) => {
           if (info) {
@@ -94,6 +92,7 @@ export default class MapVis extends Vue {
         }
       });
     }
+
     return this.visualizers;
   }
 
@@ -110,19 +109,23 @@ export default class MapVis extends Vue {
 
   @Watch('layerInfos', { immediate: true })
   handleNewLayerInfos() {
-    this.isLoading = true;
+    flowUIStore.setLoading({ value: true });
     const visualizers = this.ensureVisualizers();
-    visualizers.updateVisualizers(this.layerInfos).then(() => {});
+
+    if (visualizers) {
+      visualizers.updateVisualizers(this.layerInfos).then(() => {});
+    }
   }
 
   @Watch('timestamp')
   updateLayers() {
-    if (this.isLoading) {
+    if (flowUIStore.loading) {
       return;
     }
+
     const visualizers = this.ensureVisualizers();
-    this.layers = visualizers
-      .getVisualizers()
+
+    this.layers = (visualizers?.getVisualizers() ?? [])
       .sort((a, b) => (a.priority === b.priority ? a.order - b.order : a.priority - b.priority))
       .map((v, idx) => {
         // typescript for some reason can't figure out the type of `v` so we make sure to cast it to the

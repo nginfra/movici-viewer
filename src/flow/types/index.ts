@@ -11,3 +11,4 @@ export * from './project';
 export * from './scenarios';
 export * from './schema';
 export * from './visualization';
+export * from '../backend';

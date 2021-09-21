@@ -1,20 +1,19 @@
 import { ComponentProperty, Update, UpdateWithData } from '@/flow/types';
-import Client from '@/api/client';
-import { GetDatasetData, GetScenarioState, GetUpdates, GetUpdateWithData } from '@/flow/requests';
+import Backend from '@/flow/backend';
 
 export interface DatasetStoreConfig {
-  client: Client;
+  backend: Backend;
   datasetUUID: string;
   scenarioUUID?: string;
 }
 
 export class DatasetDownloader {
-  client: Client;
+  backend: Backend;
   datasetUUID: string;
   scenarioUUID: string | null;
 
   constructor(config: DatasetStoreConfig) {
-    this.client = config.client;
+    this.backend = config.backend;
     this.datasetUUID = config.datasetUUID;
     this.scenarioUUID = config.scenarioUUID ?? null;
   }
@@ -23,15 +22,18 @@ export class DatasetDownloader {
     entityGroup: string;
     properties?: ComponentProperty[];
   }): Promise<T> {
-    const resp = await this.client.request(
-      new GetDatasetData(this.datasetUUID, params.entityGroup, params.properties)
-    );
+    const resp = await this.backend.dataset.getData<T>({
+      datasetUUID: this.datasetUUID,
+      entityGroup: params.entityGroup,
+      properties: params.properties
+    });
 
     const entityData = resp?.data && resp.data[params.entityGroup];
 
     if (!entityData) {
       throw new Error(`${params.entityGroup} not found in dataset ${this.datasetUUID}`);
     }
+
     return (entityData as unknown) as T;
   }
 
@@ -43,15 +45,14 @@ export class DatasetDownloader {
     if (!this.scenarioUUID) {
       return await this.getInitialData<T>(params);
     }
-    const resp = await this.client.request(
-      new GetScenarioState(
-        this.datasetUUID,
-        this.scenarioUUID,
-        params.entityGroup,
-        params.properties,
-        params.timestamp
-      )
-    );
+
+    const resp = await this.backend.dataset.getState({
+      datasetUUID: this.datasetUUID,
+      scenarioUUID: this.scenarioUUID,
+      entityGroup: params.entityGroup,
+      properties: params.properties,
+      timestamp: params.timestamp
+    });
 
     const entityData = resp?.data && resp.data[params.entityGroup];
 
@@ -65,7 +66,7 @@ export class DatasetDownloader {
     if (!this.scenarioUUID) {
       return [];
     }
-    const allUpdates = await this.client.request(new GetUpdates(this.scenarioUUID));
+    const allUpdates = await this.backend.updates.list(this.scenarioUUID);
     if (!allUpdates) {
       throw new Error('Error when downloading updates');
     }
@@ -77,9 +78,7 @@ export class DatasetDownloader {
     entityGroup: string,
     properties: ComponentProperty[]
   ): Promise<UpdateWithData> {
-    const data = await this.client.request(
-      new GetUpdateWithData(update.uuid, entityGroup, properties)
-    );
+    const data = await this.backend.updates.get({ uuid: update.uuid, entityGroup, properties });
     if (!data) {
       throw new Error('Error when downloading updates');
     }
