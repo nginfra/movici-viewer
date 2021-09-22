@@ -67,6 +67,10 @@ class FlowStore extends VuexModule {
     return this.backend_;
   }
 
+  get capabilities() {
+    return this.backend?.getCapabilities();
+  }
+
   @Mutation
   UPDATE_VISUALIZERS(visualizers: ComposableVisualizerInfo[]) {
     this.visualizers = visualizers;

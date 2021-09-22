@@ -40,7 +40,8 @@ import { hexToColorTriple, MoviciColors } from '@/flow/visualizers/maps/colorMap
 import { EntityGroupSummary, ScenarioDataset, VisualizationMode } from '@/flow/types';
 
 import { isLines, isPoints, isPolygons } from '@/flow/visualizers/geometry';
-import SummaryListing from '@/flow/components/deck/SummaryListing';
+
+import SummaryListing from '@/flow/mixins/SummaryListing';
 import GeometrySelector from './GeometrySelector.vue';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 

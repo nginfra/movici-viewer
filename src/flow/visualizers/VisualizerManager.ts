@@ -2,7 +2,7 @@ import { getVisualizer, Visualizer, VisualizerInfo } from '@/flow/visualizers/in
 import isEqual from 'lodash/isEqual';
 import isError from 'lodash/isError';
 
-import { determineChanges } from '@/flow/components/deck/mapVisHelpers';
+import { determineChanges } from '@/flow/components/map/mapVisHelpers';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import Backend from '@/flow/backend';

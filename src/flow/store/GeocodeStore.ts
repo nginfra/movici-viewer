@@ -72,6 +72,7 @@ class GeocodeStore extends VuexModule {
     );
   }
 
+  // add to client interface
   @Action({ rawError: true })
   async resolveSuggestion(suggestion: GeocodeSuggestion): Promise<GeocodeSearchResult | null> {
     const result = await apiStore.client.request(new GetGeocodeResult(suggestion.result_uuid));

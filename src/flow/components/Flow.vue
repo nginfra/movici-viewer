@@ -23,7 +23,7 @@
           size="is-medium"
           tag="a"
         ></b-menu-item>
-        <b-menu-item class="bottom">
+        <b-menu-item v-if="hasUser" class="bottom">
           <template #label>
             <span class="is-small icon user-initials">
               {{ userInitials }}
@@ -74,7 +74,9 @@ export default class Flow extends Vue {
   get disableCollapser() {
     return flowUIStore.disableCollapser;
   }
-
+  get hasUser() {
+    return flowStore.capabilities?.indexOf('user') != -1;
+  }
   // WIP: getCapabilities
   get currentUser(): User | null {
     return flowStore.currentUser;

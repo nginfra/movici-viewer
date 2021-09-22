@@ -72,13 +72,13 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { Project, CameraOptions, Nullable } from '@/flow/types';
-import MapVis from '@/flow/components/deck/MapVis.vue';
+import MapVis from '@/flow/components/map/MapVis.vue';
 import FlowContainer from './FlowContainer.vue';
 import pick from 'lodash/pick';
-import defaults from '@/flow/components/deck/defaults';
-import SearchBar from '@/flow/components/deck/controls/SearchBar.vue';
-import NavigationControl from '@/flow/components/deck/controls/NavigationControl.vue';
-import BaseMapControl from '@/flow/components/deck/controls/BaseMapControl.vue';
+import defaults from '@/flow/components/map/defaults';
+import SearchBar from '@/flow/components/map/controls/SearchBar.vue';
+import NavigationControl from '@/flow/components/map/controls/NavigationControl.vue';
+import BaseMapControl from '@/flow/components/map/controls/BaseMapControl.vue';
 import ProjectInfoBox from './info_box/ProjectInfoBox.vue';
 import { flowStore, flowUIStore } from '@/flow/store/store-accessor';
 
