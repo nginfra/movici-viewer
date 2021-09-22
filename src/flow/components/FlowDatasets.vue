@@ -80,6 +80,7 @@
             <MapVis :layer-infos="layers" :view-state.sync="viewState">
               <template #control-left="{ map, onViewstateChange }">
                 <SearchBar
+                  v-if="hasSearch"
                   :map="map"
                   :view-state="viewState"
                   @update:view-state="onViewstateChange($event)"
@@ -186,10 +187,6 @@ export default class FlowDatasets extends Vue {
     return details;
   }
 
-  setLayerInfos(layerInfos: ComposableVisualizerInfo[]) {
-    this.layers = layerInfos;
-  }
-
   get currentDatasetUUID() {
     return this.currentDataset?.uuid || '';
   }
@@ -205,6 +202,14 @@ export default class FlowDatasets extends Vue {
       return dataset.name.toLowerCase().includes(this.search.toLowerCase());
     });
     // TODO: create reorder
+  }
+
+  get hasSearch() {
+    return flowStore.capabilities?.indexOf('search') != -1;
+  }
+
+  setLayerInfos(layerInfos: ComposableVisualizerInfo[]) {
+    this.layers = layerInfos;
   }
 
   setDataset(currentDataset: Dataset) {

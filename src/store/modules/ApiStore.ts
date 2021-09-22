@@ -4,7 +4,7 @@
  */
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import Client from '@/api/client';
+import Client from '@/flow/api/client';
 import { failMessage } from '@/flow/utils/snackbar';
 //  import { CheckToken, LoginRequest, LogoutRequest } from '@/api/requests';
 

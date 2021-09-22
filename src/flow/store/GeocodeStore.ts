@@ -1,9 +1,7 @@
-import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '@/flow/requests';
-import { apiStore } from '@/store';
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/flow/types';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { reverseTransform, transform } from '@/flow/crs';
-import Client from '@/api/client';
+import { transform } from '@/flow/crs';
+import Backend from '../api/backend';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
   return Object.assign({}, result, {
@@ -15,21 +13,6 @@ function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
   });
 }
 
-function prepareQuery(query: GeocodeSearchQuery, epsg_code: number) {
-  query = { ...query };
-  if (query.nearby_location) {
-    query.nearby_location = reverseTransform(query.nearby_location);
-  }
-  if (query.bounding_box) {
-    query.bounding_box = [
-      ...reverseTransform([query.bounding_box[0], query.bounding_box[1]]),
-      ...reverseTransform([query.bounding_box[2], query.bounding_box[3]])
-    ];
-  }
-  query.epsg_code = epsg_code;
-  return query;
-}
-
 @Module({
   name: 'geocode',
   namespaced: true
@@ -37,10 +20,10 @@ function prepareQuery(query: GeocodeSearchQuery, epsg_code: number) {
 class GeocodeStore extends VuexModule {
   suggestions: GeocodeSuggestion[] = [];
   upstreamEPSG = 28992;
-  client_: Client | null = null;
+  backend_: Backend | null = null;
 
-  get client() {
-    return this.client_;
+  get backend() {
+    return this.backend_;
   }
 
   @Mutation
@@ -49,13 +32,8 @@ class GeocodeStore extends VuexModule {
   }
 
   @Mutation
-  SET_API_CLIENT(client: Client) {
-    this.client_ = client;
-  }
-
-  @Action({ rawError: true })
-  setApiClient(client: Client) {
-    this.SET_API_CLIENT(client);
+  SET_BACKEND(backend: Backend) {
+    this.backend_ = backend;
   }
 
   @Action({ rawError: true })
@@ -66,25 +44,20 @@ class GeocodeStore extends VuexModule {
     }
 
     this.setSuggestions(
-      (await apiStore.client.request(
-        new GetGeocodeSuggestions(prepareQuery(query, this.upstreamEPSG))
-      )) || []
+      (await this.backend?.geocode.getSuggestions(query, this.upstreamEPSG)) || []
     );
   }
 
   // add to client interface
   @Action({ rawError: true })
   async resolveSuggestion(suggestion: GeocodeSuggestion): Promise<GeocodeSearchResult | null> {
-    const result = await apiStore.client.request(new GetGeocodeResult(suggestion.result_uuid));
+    const result = await this.backend?.geocode.resolveSuggestion(suggestion);
     return (result && transformResult(result)) || null;
   }
 
   @Action({ rawError: true })
   async getFirstResult(query: GeocodeSearchQuery): Promise<GeocodeSearchResult | null> {
-    const result =
-      (await apiStore.client.request(
-        new GetGeocodeResults(prepareQuery(query, this.upstreamEPSG))
-      )) || [];
+    const result = (await this.backend?.geocode.getResults(query, this.upstreamEPSG)) ?? [];
     return (result.length && transformResult(result[0])) || null;
   }
 }

@@ -1,5 +1,5 @@
-import Client from '@/api/client';
-import SummaryService from '@/flow/backend/summary';
+import Client from '@/flow/api/client';
+import SummaryService from '@/flow/api/backend/summary';
 import { GetDatasetSummary, GetScenarioSummary } from '@/flow/requests';
 import { UUID } from '@/flow/types';
 

@@ -14,7 +14,7 @@ import {
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
 import { flowUIStore } from '@/flow/store/store-accessor';
-import Backend from '@/flow/backend';
+import Backend from '@/flow/api/backend';
 import { User } from '@/types';
 
 @Module({
@@ -320,7 +320,7 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async createView({ scenarioUUID, view }: { scenarioUUID: UUID; view: View }) {
-    return await this.backend?.view.create({ scenarioUUID, view });
+    return await this.backend?.view.create(scenarioUUID, view);
   }
 
   @Action({ rawError: true })
@@ -335,7 +335,7 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async updateView({ viewUUID, view }: { viewUUID: UUID; view: View }) {
-    return await this.backend?.view.update({ viewUUID, view });
+    return await this.backend?.view.update(viewUUID, view);
   }
 
   @Action({ rawError: true })
@@ -352,9 +352,12 @@ class FlowStore extends VuexModule {
    */
   @Action({ rawError: true })
   async setupFlowStore({ config, reset = true }: { config: FlowStoreConfig; reset?: boolean }) {
-    const user = await this.backend?.user.get();
-    if (user) {
-      this.SET_USER(user);
+    if (!this.currentUser) {
+      const user = await this.backend?.user.get();
+
+      if (user) {
+        this.SET_USER(user);
+      }
     }
 
     if (reset) {

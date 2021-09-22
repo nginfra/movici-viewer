@@ -1,5 +1,5 @@
-import Client from '@/api/client';
-import ScenarioService from '@/flow/backend/scenario';
+import Client from '@/flow/api/client';
+import ScenarioService from '@/flow/api/backend/scenario';
 import { Scenario, ShortScenario, SimulationMode, UUID } from '@/flow/types';
 
 export default class LocalScenarioService implements ScenarioService {

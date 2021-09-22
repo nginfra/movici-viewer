@@ -1,6 +1,6 @@
 // import JSZip from 'jszip';
 import { EntityGroupData, ExportConfig, TimeOrientedSimulationInfo } from '@/flow/types';
-import Backend from '@/flow/backend';
+import Backend from '@/flow/api/backend';
 import { entityGroupToCSV, objectToCSV } from '@/flow/utils/csvUtils';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 

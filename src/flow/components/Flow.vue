@@ -74,9 +74,11 @@ export default class Flow extends Vue {
   get disableCollapser() {
     return flowUIStore.disableCollapser;
   }
+
   get hasUser() {
     return flowStore.capabilities?.indexOf('user') != -1;
   }
+
   // WIP: getCapabilities
   get currentUser(): User | null {
     return flowStore.currentUser;

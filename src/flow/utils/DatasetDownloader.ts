@@ -1,5 +1,5 @@
 import { ComponentProperty, Update, UpdateWithData } from '@/flow/types';
-import Backend from '@/flow/backend';
+import Backend from '@/flow/api/backend';
 
 export interface DatasetStoreConfig {
   backend: Backend;
@@ -78,10 +78,12 @@ export class DatasetDownloader {
     entityGroup: string,
     properties: ComponentProperty[]
   ): Promise<UpdateWithData> {
-    const data = await this.backend.updates.get({ uuid: update.uuid, entityGroup, properties });
+    const data = await this.backend.updates.get(update.uuid, entityGroup, properties);
+
     if (!data) {
       throw new Error('Error when downloading updates');
     }
+
     return data;
   }
 }

@@ -7,7 +7,7 @@ import { initFlowStores, bindAPI } from '@/flow/store/store-accessor';
 import FlowStore from '@/flow/store/FlowStore';
 import FlowUIStore from '@/flow/store/FlowUserInterfaceStore';
 import GeocodeStore from '@/flow/store/GeocodeStore';
-import LocalBackend from '@/backend/LocalBackend';
+import LocalBackend from '@/api/backend/LocalBackend';
 
 Vue.use(Vuex);
 

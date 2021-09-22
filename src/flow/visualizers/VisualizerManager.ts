@@ -5,7 +5,7 @@ import isError from 'lodash/isError';
 import { determineChanges } from '@/flow/components/map/mapVisHelpers';
 import { DatasetDownloader } from '@/flow/utils/DatasetDownloader';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
-import Backend from '@/flow/backend';
+import Backend from '@/flow/api/backend';
 
 type VMCallback = (params: CallbackPayload) => void;
 

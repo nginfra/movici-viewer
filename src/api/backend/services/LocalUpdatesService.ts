@@ -1,5 +1,5 @@
-import Client from '@/api/client';
-import UpdatesService from '@/flow/backend/updates';
+import Client from '@/flow/api/client';
+import UpdatesService from '@/flow/api/backend/updates';
 import { GetUpdates, GetUpdateWithData } from '@/flow/requests';
 import { ComponentProperty, UUID } from '@/flow/types';
 
@@ -10,15 +10,7 @@ export default class LocalUpdatesService implements UpdatesService {
     this.client = client;
   }
 
-  get({
-    uuid,
-    entityGroup,
-    properties
-  }: {
-    uuid: UUID;
-    entityGroup: string;
-    properties: ComponentProperty[];
-  }) {
+  get(uuid: UUID, entityGroup: string, properties: ComponentProperty[]) {
     return this.client.request(new GetUpdateWithData(uuid, entityGroup, properties));
   }
 

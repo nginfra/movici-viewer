@@ -199,6 +199,10 @@ export default class FlowVisualization extends Vue {
       : isEqual(this.serializeCurrentView(), this.view);
   }
 
+  get hasSearch() {
+    return flowStore.capabilities?.indexOf('search') != -1;
+  }
+
   async reloadWithViewUrl(viewUUID: string) {
     await this.$router.push({
       name: 'FlowVisualization',

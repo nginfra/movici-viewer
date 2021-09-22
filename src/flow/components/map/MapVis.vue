@@ -31,7 +31,7 @@ import VisualizerManager from '@/flow/visualizers/VisualizerManager';
 import { Visualizer } from '@/flow/visualizers';
 import { AnyVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import { flowStore, flowUIStore } from '@/flow/store/store-accessor';
-import Backend from '@/flow/backend';
+import Backend from '@/flow/api/backend';
 
 @Component({
   name: 'MapVis',

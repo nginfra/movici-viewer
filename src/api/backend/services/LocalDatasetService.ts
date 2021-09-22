@@ -1,5 +1,5 @@
-import Client from '@/api/client';
-import DatasetService from '@/flow/backend/dataset';
+import Client from '@/flow/api/client';
+import DatasetService from '@/flow/api/backend/dataset';
 import { GetDatasetData, GetScenarioState } from '@/flow/requests';
 import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/types';
 
@@ -34,16 +34,10 @@ export default class LocalDatasetService implements DatasetService {
     properties: ComponentProperty[];
     timestamp: number;
   }): Promise<DatasetWithData<T> | null> {
-    const response = await this.client.request(
-      new GetScenarioState(
-        params.datasetUUID,
-        params.scenarioUUID,
-        params.entityGroup,
-        params.properties,
-        params.timestamp
-      )
-    );
+    const { datasetUUID, scenarioUUID, entityGroup, properties, timestamp } = params;
 
-    return response;
+    return await this.client.request(
+      new GetScenarioState(datasetUUID, scenarioUUID, entityGroup, properties, timestamp)
+    );
   }
 }
