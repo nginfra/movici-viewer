@@ -13,11 +13,12 @@ export default class LocalProjectService implements ProjectService {
     return new Promise<Project[]>(resolve => {
       resolve([
         {
-          uuid: 'local_project',
-          name: 'local_project',
-          display_name: 'local_project',
-          scenario_count: 0,
-          dataset_count: 0
+          created_on: 1598962541,
+          dataset_count: 10,
+          display_name: 'Test Project',
+          name: 'test_project',
+          scenario_count: 2,
+          uuid: '1bf3d081-16e1-4353-966e-19f8fe47b3f3'
         }
       ]);
     });

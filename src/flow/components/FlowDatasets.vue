@@ -140,6 +140,7 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import pick from 'lodash/pick';
+import isEqual from 'lodash/isEqual';
 import { CameraOptions, Dataset, Nullable } from '@/flow/types';
 import FlowContainer from './FlowContainer.vue';
 import MapVis from '@/flow/components/map/MapVis.vue';
@@ -209,7 +210,9 @@ export default class FlowDatasets extends Vue {
   }
 
   setLayerInfos(layerInfos: ComposableVisualizerInfo[]) {
-    this.layers = layerInfos;
+    if (!isEqual(this.layers, layerInfos)) {
+      this.layers = layerInfos;
+    }
   }
 
   setDataset(currentDataset: Dataset) {

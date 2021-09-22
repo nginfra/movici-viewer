@@ -6,13 +6,13 @@
         <span class="mt-6 is-block" v-if="loadingMessage">{{ loadingMessage }}</span>
       </div>
     </b-loading>
-    <aside v-if="!loading" class="column options is-gapless is-margin-less left-panel">
+    <aside v-show="!loading" class="column options is-gapless is-margin-less left-panel">
       <div class="top-logo is-flex mb-5 mt-2 is-flex-grow-0 is-flex-shrink-1">
         <b-image :src="require('@/flow/assets/movici-flow.svg')" alt="MoViCI flow"></b-image>
       </div>
       <slot name="leftPanel"></slot>
     </aside>
-    <section v-if="!loading" class="main-view column">
+    <section v-show="!loading" class="main-view column">
       <slot name="mainView"></slot>
     </section>
   </div>

@@ -36,7 +36,7 @@ export interface EntityGroupSummary {
   name: string;
   count: number;
   properties: PropertySummary[];
-  geometry: EntityGeometry | null;
+  geometry?: EntityGeometry | null;
   type?: FlowVisualizerType | null;
 }
 export interface ComponentProperty {

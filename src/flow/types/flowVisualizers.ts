@@ -1,5 +1,5 @@
 import { RGBAColor } from '@/flow/types/colors';
-import { PropertyType } from '@/flow/types/schema';
+import { PropertySummary, PropertyType } from '@/flow/types/schema';
 import { CameraOptions, ITapefile } from '@/flow/types/visualization';
 import { PickInfo } from '@deck.gl/core/lib/deck';
 
@@ -52,7 +52,7 @@ export interface StaticColorClause {
 
 export interface ByValueColorClause {
   type: 'buckets' | 'gradient';
-  attribute: PropertyType | null;
+  attribute: PropertySummary | null; // talk with pelle
   colors: [number, RGBAColor][];
   specialColor?: RGBAColor;
   undefinedColor?: RGBAColor;
