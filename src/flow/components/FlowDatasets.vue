@@ -205,8 +205,8 @@ export default class FlowDatasets extends Vue {
     // TODO: create reorder
   }
 
-  get hasSearch() {
-    return flowStore.capabilities?.indexOf('search') != -1;
+  get hasGeocodeCapabilities() {
+    return flowStore.hasGeocodeCapabilities;
   }
 
   setLayerInfos(layerInfos: ComposableVisualizerInfo[]) {

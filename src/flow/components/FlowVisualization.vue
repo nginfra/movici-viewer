@@ -47,7 +47,7 @@
         </template>
         <template #control-left="{ map, onViewstateChange, basemap, setBasemap }">
           <SearchBar
-            v-if="hasSearch"
+            v-if="hasGeocodeCapabilities"
             :map="map"
             :view-state="viewState"
             @update:view-state="onViewstateChange($event)"
@@ -199,8 +199,8 @@ export default class FlowVisualization extends Vue {
       : isEqual(this.serializeCurrentView(), this.view);
   }
 
-  get hasSearch() {
-    return flowStore.capabilities?.indexOf('search') != -1;
+  get hasGeocodeCapabilities() {
+    return flowStore.hasGeocodeCapabilities;
   }
 
   async reloadWithViewUrl(viewUUID: string) {

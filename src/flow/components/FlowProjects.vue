@@ -56,7 +56,7 @@
         <MapVis :layer-infos="validLayers" :view-state.sync="viewState">
           <template #control-left="{ map, onViewstateChange, basemap, setBasemap }">
             <SearchBar
-              v-if="hasSearch"
+              v-if="hasGeocodeCapabilities"
               :map="map"
               :view-state="viewState"
               @update:view-state="onViewstateChange($event)"
@@ -132,8 +132,8 @@ export default class FlowProjects extends Vue {
     return flowStore.queryString;
   }
 
-  get hasSearch() {
-    return flowStore.capabilities?.indexOf('search') != -1;
+  get hasGeocodeCapabilities() {
+    return flowStore.hasGeocodeCapabilities;
   }
 
   /**

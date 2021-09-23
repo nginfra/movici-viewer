@@ -45,7 +45,8 @@ import {
   GeocodeSearchResult,
   GeocodeSuggestion
 } from '@/flow/types';
-import { generalStore, geocodeStore } from '@/store';
+import { generalStore } from '@/store';
+import { geocodeStore } from '@/flow/store/store-accessor';
 import mapboxgl from 'mapbox-gl';
 
 @Component({

@@ -1,12 +1,12 @@
 import Backend from '@/flow/api/backend';
-import LocalDatasetService from '@/api/backend/services/LocalDatasetService';
+import LocalDatasetService from '@/api/services/LocalDatasetService';
 import LocalGeocodeService from './services/LocalGeocodeService';
-import LocalProjectService from '@/api/backend/services/LocalProjectService';
-import LocalScenarioService from '@/api/backend/services/LocalScenarioService';
-import LocalSummaryService from '@/api/backend/services/LocalSummaryService';
-import LocalUpdatesService from '@/api/backend/services/LocalUpdatesService';
-import LocalUserService from '@/api/backend/services/LocalUserService';
-import LocalViewService from '@/api/backend/services/LocalViewService';
+import LocalProjectService from '@/api/services/LocalProjectService';
+import LocalScenarioService from '@/api/services/LocalScenarioService';
+import LocalSummaryService from '@/api/services/LocalSummaryService';
+import LocalUpdatesService from '@/api/services/LocalUpdatesService';
+import LocalUserService from '@/api/services/LocalUserService';
+import LocalViewService from '@/api/services/LocalViewService';
 import Client from '@/flow/api/client';
 
 export default class LocalBackend implements Backend {

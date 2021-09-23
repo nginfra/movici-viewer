@@ -1,6 +1,6 @@
 import proj4 from 'proj4';
 import { reproject } from 'reproject';
-import { ValidationError } from '@/errors';
+import { ValidationError } from '@/flow/errors';
 import {
   Coordinate3DArray,
   CoordinateArray,

@@ -1,6 +1,6 @@
 import Client from '@/flow/api/client';
-import SummaryService from '@/flow/api/backend/summary';
-import { GetDatasetSummary, GetScenarioSummary } from '@/flow/requests';
+import SummaryService from '@/flow/api/services/summary';
+import { GetDatasetSummary, GetScenarioSummary } from '@/flow/api/requests';
 import { DatasetSummary, UUID } from '@/flow/types';
 
 export default class LocalSummaryService implements SummaryService {

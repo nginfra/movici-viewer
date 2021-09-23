@@ -71,6 +71,14 @@ class FlowStore extends VuexModule {
     return this.backend?.getCapabilities();
   }
 
+  get hasGeocodeCapabilities() {
+    return this.capabilities?.indexOf('geocode') != -1;
+  }
+
+  get hasUserCapabilities() {
+    return this.capabilities?.indexOf('user') != -1;
+  }
+
   @Mutation
   UPDATE_VISUALIZERS(visualizers: ComposableVisualizerInfo[]) {
     this.visualizers = visualizers;

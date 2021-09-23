@@ -1,7 +1,7 @@
 import { ComponentProperty, TimelineFilter, Update, UpdateWithData, UUID } from '@/flow/types';
 import { AxiosRequestConfig, AxiosResponse } from 'axios';
-import uri, { dataEngineBase } from '@/flow/requests/uri';
-import { Request, getDatasetFilterParams } from '@/flow/requests';
+import uri, { dataEngineBase } from '@/flow/api/requests/uri';
+import { Request, getDatasetFilterParams } from '@/flow/api/requests';
 
 export class GetUpdates extends Request<Update[]> {
   scenarioUUID: string;
