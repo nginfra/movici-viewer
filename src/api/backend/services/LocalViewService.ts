@@ -19,7 +19,7 @@ export default class LocalViewService implements ViewService {
       resolve(([
         {
           uuid: 'dc749e4c-3e47-410f-9d96-6bcd674d12b2',
-          name: 'Untitled',
+          name: 'Local Test',
           scenario_uuid: 'b39c3fb6-86e2-4650-a582-93de2537cae8',
           config: {
             camera: {
@@ -33,18 +33,18 @@ export default class LocalViewService implements ViewService {
             timestamp: 0,
             visualizers: [
               {
-                name: 'ASD',
+                name: 'Antennas',
                 visible: true,
                 settings: {
                   size: { static: { size: 2, units: 'pixels' } },
                   type: 'points',
                   color: {
-                    legend: { title: '', labels: ['0 - 1', '1 - 1'] },
+                    legend: { title: 'Has power?', labels: ['False', 'True'] },
                     byValue: {
                       type: 'buckets',
                       colors: [
-                        [0, [0, 147, 146]],
-                        [1, [207, 89, 126]]
+                        [0, [207, 89, 126]],
+                        [1, [0, 147, 146]]
                       ],
                       maxValue: 1,
                       attribute: {
@@ -63,43 +63,6 @@ export default class LocalViewService implements ViewService {
                 },
                 dataset_name: 'antennas_test',
                 entity_group: 'antenna_entities'
-              },
-              {
-                name: 'electrical_cable_entities',
-                visible: true,
-                settings: {
-                  size: { static: { size: 2, units: 'pixels' } },
-                  type: 'lines',
-                  color: {
-                    legend: {
-                      title: '',
-                      labels: ['3990', '2640183.25', '5276376.5', '7912569.75']
-                    },
-                    byValue: {
-                      type: 'gradient',
-                      colors: [
-                        [10737840, [243, 231, 155]],
-                        [10753807.333, [248, 160, 126]],
-                        [10769774.667, [206, 102, 147]],
-                        [10785742, [92, 83, 165]]
-                      ],
-                      maxValue: 10785742,
-                      attribute: {
-                        name: 'id',
-                        unit: '',
-                        max_val: 10785742,
-                        min_val: 10737840,
-                        component: '',
-                        data_type: 'INT',
-                        description: 'Identifier of the entity'
-                      },
-                      specialColor: [255, 255, 255],
-                      undefinedColor: [0, 0, 0]
-                    }
-                  }
-                },
-                dataset_name: 'mv_network_test',
-                entity_group: 'electrical_cable_entities'
               }
             ]
           }
@@ -124,6 +87,7 @@ export default class LocalViewService implements ViewService {
     // return await client?.request(new GetView(viewUUID));
   }
 
+  // for local we can setup save files for views
   async update(viewUUID: UUID, view: View) {
     return new Promise<void>(resolve => resolve());
     // return await client?.request(new UpdateView(viewUUID, view));

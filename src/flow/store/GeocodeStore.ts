@@ -1,6 +1,6 @@
 import { GeocodeSearchQuery, GeocodeSearchResult, GeocodeSuggestion } from '@/flow/types';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { transform } from '@/flow/crs';
+import { transform, reverseTransform } from '@/flow/crs';
 import Backend from '../api/backend';
 
 function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
@@ -11,6 +11,21 @@ function transformResult(result: GeocodeSearchResult): GeocodeSearchResult {
       ...transform([result.bounding_box[2], result.bounding_box[3]])
     ]
   });
+}
+
+function prepareQuery(query: GeocodeSearchQuery, epsg_code: number) {
+  query = { ...query };
+  if (query.nearby_location) {
+    query.nearby_location = reverseTransform(query.nearby_location);
+  }
+  if (query.bounding_box) {
+    query.bounding_box = [
+      ...reverseTransform([query.bounding_box[0], query.bounding_box[1]]),
+      ...reverseTransform([query.bounding_box[2], query.bounding_box[3]])
+    ];
+  }
+  query.epsg_code = epsg_code;
+  return query;
 }
 
 @Module({
@@ -44,7 +59,7 @@ class GeocodeStore extends VuexModule {
     }
 
     this.setSuggestions(
-      (await this.backend?.geocode.getSuggestions(query, this.upstreamEPSG)) || []
+      (await this.backend?.geocode.getSuggestions(prepareQuery(query, this.upstreamEPSG))) || []
     );
   }
 
@@ -57,7 +72,8 @@ class GeocodeStore extends VuexModule {
 
   @Action({ rawError: true })
   async getFirstResult(query: GeocodeSearchQuery): Promise<GeocodeSearchResult | null> {
-    const result = (await this.backend?.geocode.getResults(query, this.upstreamEPSG)) ?? [];
+    const result =
+      (await this.backend?.geocode.getResults(prepareQuery(query, this.upstreamEPSG))) ?? [];
     return (result.length && transformResult(result[0])) || null;
   }
 }

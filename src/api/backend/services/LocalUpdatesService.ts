@@ -1,8 +1,7 @@
 import Client from '@/flow/api/client';
 import UpdatesService from '@/flow/api/backend/updates';
 import { GetUpdates, GetUpdateWithData } from '@/flow/requests';
-import { ComponentProperty, UUID } from '@/flow/types';
-
+import { ComponentProperty, Update, UUID } from '@/flow/types';
 export default class LocalUpdatesService implements UpdatesService {
   client: Client;
 
@@ -15,6 +14,7 @@ export default class LocalUpdatesService implements UpdatesService {
   }
 
   list(scenario_uuid: string) {
-    return this.client.request(new GetUpdates(scenario_uuid));
+    // return this.client.request(new GetUpdates(scenario_uuid));
+    return new Promise<Update[]>(resolve => resolve(([] as unknown) as Update[]));
   }
 }
