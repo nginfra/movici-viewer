@@ -45,8 +45,7 @@ import {
   GeocodeSearchResult,
   GeocodeSuggestion
 } from '@/flow/types';
-import { generalStore } from '@/store';
-import { geocodeStore } from '@/flow/store/store-accessor';
+import { flowUIStore, geocodeStore } from '@/flow/store/store-accessor';
 import mapboxgl from 'mapbox-gl';
 
 @Component({
@@ -69,7 +68,7 @@ export default class SearchBar extends Vue {
     if (!this.search) return null;
     return {
       query: this.search,
-      language: generalStore.language,
+      language: flowUIStore.lang,
       nearby_location: [this.viewState.longitude, this.viewState.latitude]
     };
   }

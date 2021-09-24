@@ -10,4 +10,5 @@ export * from './geometry';
 export * from './project';
 export * from './scenarios';
 export * from './schema';
+export * from './users';
 export * from './visualization';

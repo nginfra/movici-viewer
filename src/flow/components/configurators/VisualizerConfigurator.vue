@@ -434,7 +434,7 @@ export default class VisualizerConfigurator extends Mixins(SummaryListing, Valid
           if (!this.currentEntityName) {
             return 'Please select an entity group';
           }
-          if (!this.geometry) return this.$t('flow.datasets.zeroEntities') as string;
+          if (!this.geometry) return '' + this.$t('flow.datasets.zeroEntities');
         },
         displayName: () => {
           if (!this.displayName) {

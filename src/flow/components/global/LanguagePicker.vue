@@ -9,7 +9,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import upperFirst from 'lodash/upperFirst';
-import { generalStore } from '@/store';
+import { flowUIStore } from '@/flow/store/store-accessor';
 
 @Component({ name: 'LanguagePicker' })
 export default class LanguagePicker extends Vue {
@@ -17,11 +17,11 @@ export default class LanguagePicker extends Vue {
   languages = ['en', 'nl'];
 
   get language() {
-    return generalStore.language;
+    return flowUIStore.lang;
   }
 
   set language(newValue) {
-    generalStore.setLanguage(newValue);
+    flowUIStore.setLanguage(newValue);
   }
 
   get label() {

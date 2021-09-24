@@ -302,30 +302,32 @@ export default class FlowVisualization extends Vue {
 
     if (viewUUID && viewName) {
       this.$buefy.dialog.confirm({
-        message: this.$t('flow.visualization.dialogs.confirmDeleteView', {
-          name: viewName
-        }) as string,
+        message:
+          '' +
+          this.$t('flow.visualization.dialogs.confirmDeleteView', {
+            name: viewName
+          }),
         cancelText: '' + this.$t('actions.cancel'),
         confirmText: '' + this.$t('misc.yes'),
         type: 'is-danger',
         onConfirm: () => this.deleteView({ viewUUID }).then(() => {})
       });
     } else {
-      this.$buefy.dialog.alert(this.$t('flow.visualization.dialogs.noViewToDelete') as string);
+      this.$buefy.dialog.alert('' + this.$t('flow.visualization.dialogs.noViewToDelete'));
     }
   }
 
   async updateView({ view, viewUUID }: { view: View; viewUUID: UUID }) {
     const resp = await flowStore.updateView({ viewUUID, view });
     if (resp) {
-      successMessage(this.$t('flow.visualization.dialogs.viewUpdateSuccess') as string);
+      successMessage('' + this.$t('flow.visualization.dialogs.viewUpdateSuccess'));
     }
   }
 
   async deleteView({ viewUUID }: { viewUUID: UUID }) {
     const resp = await flowStore.deleteView(viewUUID);
     if (resp) {
-      successMessage(this.$t('flow.visualization.dialogs.viewDeleteSuccess') as string);
+      successMessage('' + this.$t('flow.visualization.dialogs.viewDeleteSuccess'));
     }
     this.resetView();
   }
@@ -338,7 +340,7 @@ export default class FlowVisualization extends Vue {
       });
 
       if (resp) {
-        successMessage(this.$t('flow.visualization.dialogs.viewCreateSuccess') as string);
+        successMessage('' + this.$t('flow.visualization.dialogs.viewCreateSuccess'));
         this.view = { ...view, uuid: resp.view_uuid };
 
         return this.view;

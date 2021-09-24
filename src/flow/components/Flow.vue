@@ -52,11 +52,10 @@
 </template>
 
 <script lang="ts">
-import { FlowSection, FlowSectionItem } from '@/flow/types';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { FlowSection, FlowSectionItem, User } from '@/flow/types';
 import FlowExport from '@/flow/components/FlowExport.vue';
 import { flowStore, flowUIStore } from '@/flow/store/store-accessor'; // create getters for other store it interacts with?
-import { User } from '@/types';
 
 @Component({})
 export default class Flow extends Vue {

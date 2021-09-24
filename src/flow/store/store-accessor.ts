@@ -15,6 +15,7 @@ function initFlowStores(store: Store<unknown>): void {
 
 function bindAPI(backend: Backend) {
   flowStore.setApiClient(backend);
+  flowUIStore.setLanguage('en');
 }
 
 export { bindAPI, initFlowStores, flowStore, flowUIStore, geocodeStore };

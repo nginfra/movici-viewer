@@ -11,10 +11,16 @@ class FlowUIStore extends VuexModule {
   disableCollapser = false;
   loading = false;
   loadingMessage: string | null = null;
+  lang = 'en';
 
   @Mutation
   SET_SECTIONS(payload: FlowSection[]) {
     this.flowSections = payload;
+  }
+
+  @Mutation
+  SET_LANG(lang: string) {
+    this.lang = lang;
   }
 
   @Mutation
@@ -25,6 +31,11 @@ class FlowUIStore extends VuexModule {
   @Mutation
   setDisableCollapser(value: boolean) {
     this.disableCollapser = value;
+  }
+
+  @Action({ rawError: true })
+  setLanguage(lang: string) {
+    this.SET_LANG(lang);
   }
 
   @Mutation
