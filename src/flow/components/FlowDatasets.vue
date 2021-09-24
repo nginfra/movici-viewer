@@ -80,7 +80,7 @@
             <MapVis :layer-infos="layers" :view-state.sync="viewState">
               <template #control-left="{ map, onViewstateChange }">
                 <SearchBar
-                  v-if="hasSearch"
+                  v-if="hasGeocodeCapabilities"
                   :map="map"
                   :view-state="viewState"
                   @update:view-state="onViewstateChange($event)"
