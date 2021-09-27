@@ -20,6 +20,7 @@ export default class Main extends Vue {
   userLoggedIn!: boolean;
 
   get initializedAndLoggedIn(): boolean {
+    console.log(this.$flow);
     return this.initialized;
   }
 }

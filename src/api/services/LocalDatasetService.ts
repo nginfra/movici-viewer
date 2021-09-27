@@ -1,8 +1,8 @@
-import Client from '@/flow/api/client';
-import DatasetService from '@/flow/api/services/dataset';
-import { GetDatasetData, GetScenarioState } from '@/flow/api/requests';
-import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/types';
-import { NumberSizeMap } from '@/flow/visualizers/maps/sizeMaps';
+import Client from '@/flow/src/api/client';
+import DatasetService from '@/flow/src/api/services/dataset';
+import { GetDatasetData, GetScenarioState } from '@/flow/src/api/requests';
+import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/src/types';
+import { NumberSizeMap } from '@/flow/src/visualizers/maps/sizeMaps';
 
 export default class LocalDatasetService implements DatasetService {
   client: Client;

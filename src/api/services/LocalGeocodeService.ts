@@ -1,7 +1,11 @@
-import Client from '@/flow/api/client';
-import GeocodeService from '@/flow/api/services/geocode';
-import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '@/flow/api/requests';
-import { GeocodeSearchQuery, GeocodeSuggestion } from '@/flow/types';
+import Client from '@/flow/src/api/client';
+import GeocodeService from '@/flow/src/api/services/geocode';
+import {
+  GetGeocodeResult,
+  GetGeocodeResults,
+  GetGeocodeSuggestions
+} from '@/flow/src/api/requests';
+import { GeocodeSearchQuery, GeocodeSuggestion } from '@/flow/src/types';
 
 export default class LocalGeocodeService implements GeocodeService {
   client: Client;

@@ -1,7 +1,7 @@
 import {
   RecalculateMappingValueParams,
   recalculateMappingValues
-} from '../components/configurators/helpers';
+} from '../src/components/configurators/helpers';
 
 describe('recalculateMappingValues', () => {
   it.each([

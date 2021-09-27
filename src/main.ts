@@ -8,18 +8,18 @@ import store from './store';
 import i18n from './i18n';
 import Buefy from 'buefy';
 import Filters from './filters';
+import Flow from './flow/src';
 
 // Force importing all dynamic vuex modules. This is necessary until
-// we only use the Store modules directly (ie no `this.$store`)
-import Globals from './components';
+// we only use the Store modules directly (
 
 Vue.config.productionTip = false;
 Vue.config.performance = true;
-Vue.use(Globals);
 Vue.use(Buefy, {
   defaultIconPack: 'fas'
 });
 Vue.use(Filters);
+Vue.use(Flow);
 
 new Vue({
   router,

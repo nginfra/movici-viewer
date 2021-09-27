@@ -1,9 +1,12 @@
 <template>
   <section>
-    <h1 class="title">{{ $t('misc.settings') }}</h1>
-    <div class="has-background-white is-fluid has-padding">
-      <MovLanguagePicker with-label />
-    </div>
+    <FlowContainer class="flow-projects">
+      <template #leftPanel>
+        <div class="has-background-white is-fluid has-padding">
+          <MovLanguagePicker with-label />
+        </div>
+      </template>
+    </FlowContainer>
   </section>
 </template>
 <script lang="ts">

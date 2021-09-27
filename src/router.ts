@@ -2,12 +2,15 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/components/Main';
-import Flow from '@/flow/components/Flow';
-import FlowProjects from '@/flow/components/FlowProjects';
-import FlowDatasets from '@/flow/components/FlowDatasets';
-import FlowScenario from '@/flow/components/FlowScenario';
-import FlowVisualization from '@/flow/components/FlowVisualization';
-import FlowExport from '@/flow/components/FlowExport';
+import Settings from '@/components/Settings';
+import {
+  Flow,
+  FlowProjects,
+  FlowDatasets,
+  FlowScenario,
+  FlowVisualization,
+  FlowExport
+} from '@/flow/src';
 
 const originalPush = Router.prototype.push;
 
@@ -40,6 +43,10 @@ const router = new Router({
           redirect: { name: 'FlowProjects' },
           component: Flow,
           children: [
+            {
+              path: '/flow/settings',
+              component: Settings
+            },
             {
               path: '/flow/workspace',
               name: 'FlowProjects',
