@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import GeocodeService from '@/flow/src/api/services/geocode';
+import { Client, GeocodeService } from '@/flow/src';
 import {
   GetGeocodeResult,
   GetGeocodeResults,

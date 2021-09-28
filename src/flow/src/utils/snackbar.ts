@@ -17,7 +17,7 @@ export function failMessage(message: string) {
   });
 }
 
-export function openSnackbar(message: BSnackbarConfig) {
+function openSnackbar(message: BSnackbarConfig) {
   Snackbar.open({
     type: 'is-success',
     position: 'is-top',
@@ -26,10 +26,7 @@ export function openSnackbar(message: BSnackbarConfig) {
   });
 }
 
-const MovSnackBarProgramatic = {
+export default {
   successMessage,
-  failMessage,
-  openSnackbar
+  failMessage
 };
-
-export default MovSnackBarProgramatic;

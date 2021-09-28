@@ -1,11 +1,11 @@
-import DatasetService from './services/dataset';
-import GeocodeService from './services/geocode';
-import ProjectService from './services/project';
-import ScenarioService from './services/scenario';
-import SummaryService from './services/summary';
-import UpdatesService from './services/updates';
-import UserService from './services/user';
-import ViewService from './services/view';
+import DatasetService from '../types/services/dataset';
+import GeocodeService from '../types/services/geocode';
+import ProjectService from '../types/services/project';
+import ScenarioService from '../types/services/scenario';
+import SummaryService from '../types/services/summary';
+import UpdatesService from '../types/services/updates';
+import UserService from '../types/services/user';
+import ViewService from '../types/services/view';
 
 export default interface Backend {
   getCapabilities(): string[];

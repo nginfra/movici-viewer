@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import DatasetService from '@/flow/src/api/services/dataset';
+import { Client, DatasetService } from '@/flow/src';
 import { GetDatasetData, GetScenarioState } from '@/flow/src/api/requests';
 import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/src/types';
 import { NumberSizeMap } from '@/flow/src/visualizers/maps/sizeMaps';

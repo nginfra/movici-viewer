@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import UserService from '@/flow/src/api/services/user';
+import { Client, UserService } from '@/flow/src';
 import { User } from '@/flow/src/types';
 
 export default class LocalUserService implements UserService {

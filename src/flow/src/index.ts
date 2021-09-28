@@ -1,28 +1,30 @@
+import Vue_ from 'vue';
 import * as components from './components';
 import SnackBarProgramatic from './utils/snackbar';
+import { registerComponent, registerComponentProgrammatic } from './plugins';
 
-import { use, registerComponent, registerComponentProgrammatic } from './plugins';
-
-const Flow = {
-  install(Vue, options = {}) {
+const Flow_ = {
+  install(Vue: typeof Vue_, options = {}) {
     // Options
     // setOptions(merge(config, options, true))
     // Components
     Object.values(components).forEach(component => {
-      registerComponent(component.name, component);
+      registerComponent(Vue, component);
     });
 
     registerComponentProgrammatic(Vue, 'snackbar', SnackBarProgramatic);
   }
 };
 
-use(Flow);
+export default Flow_;
 
-export default Flow;
-
-// export all components as vue plugin
+// export api client and interfaces and request classes for the api
+export * from './api';
+// export all components
 export * from './components';
-// export programmatic component
+// export all types
+export * from './types';
+// export utils and others
 export * from './utils';
 export * from './errors';
 export * from './crs';

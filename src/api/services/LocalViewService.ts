@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import ViewService from '@/flow/src/api/services/view';
+import { Client, ViewService } from '@/flow/src';
 import { UUID, View } from '@/flow/src/types';
 
 export default class LocalViewService implements ViewService {

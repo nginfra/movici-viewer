@@ -1,9 +1,7 @@
 import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { ApplicationSettings, ColorRuleSet } from '@/flow/src/types';
-import baseColorRuleSet from '@/flow/src/visualizers/baseColorRuleSet';
-import cloneDeep from 'lodash/cloneDeep';
+import { ApplicationSettings } from '@/flow/src/types';
 import { GetGlobalSettings } from '@/api/requests';
 import { apiStore } from '@/store/store-accessor';
 
@@ -103,13 +101,6 @@ class GeneralStore extends VuexModule {
 
   get apiBase() {
     return this.settings_.ApiAddress ?? '/';
-  }
-
-  get colorRuleSet(): ColorRuleSet {
-    const mergedRules = cloneDeep(baseColorRuleSet);
-    Object.assign(mergedRules.colors, this.settings_.colorRuleSet?.colors);
-    mergedRules.rules.push(...(this.settings_.colorRuleSet?.rules || []));
-    return mergedRules;
   }
 
   get language() {

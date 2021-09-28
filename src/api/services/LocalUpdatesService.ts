@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import UpdatesService from '@/flow/src/api/services/updates';
+import { Client, UpdatesService } from '@/flow/src';
 import { GetUpdates, GetUpdateWithData } from '@/flow/src/api/requests';
 import { ComponentProperty, Update, UUID } from '@/flow/src/types';
 export default class LocalUpdatesService implements UpdatesService {

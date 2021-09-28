@@ -1,5 +1,4 @@
-import Client from '@/flow/src/api/client';
-import ProjectService from '@/flow/src/api/services/project';
+import { Client, ProjectService } from '@/flow/src';
 import { Project } from '@/flow/src/types';
 
 export default class LocalProjectService implements ProjectService {
