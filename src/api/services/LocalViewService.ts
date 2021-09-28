@@ -1,6 +1,6 @@
 import { Client, ViewService } from '@/flow/src';
 import { UUID, View } from '@/flow/src/types';
-import mocks from '../mocks';
+import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalViewService implements ViewService {
   client: Client;
@@ -15,12 +15,16 @@ export default class LocalViewService implements ViewService {
 
   async list(scenarioUUID: UUID): Promise<View[]> {
     // get sample views
-    return new Promise<View[]>(resolve => resolve((mocks('./views.json') as unknown) as View[]));
+    return new Promise<View[]>(resolve => {
+      setTimeout(() => resolve((mocks('./views.json') as unknown) as View[]), MOCK_TIMEOUT);
+    });
     // return (await client?.request(new GetViews(scenarioUUID))) ?? [];
   }
 
   async get(viewUUID: UUID) {
-    return new Promise<View>(resolve => viewUUID && resolve(mocks('./views.json')[0])); // get sample view
+    return new Promise<View>(resolve => {
+      setTimeout(() => resolve(mocks('./views.json')[0]), MOCK_TIMEOUT);
+    }); // get sample view
     // return await client?.request(new GetView(viewUUID));
   }
 

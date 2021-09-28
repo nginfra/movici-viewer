@@ -2,7 +2,7 @@ import { Client, DatasetService } from '@/flow/src';
 import { GetDatasetData, GetScenarioState } from '@/flow/src/api/requests';
 import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/src/types';
 import { NumberSizeMap } from '@/flow/src/visualizers/maps/sizeMaps';
-import mocks from '../mocks';
+import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 type getDataParams = {
   datasetUUID: UUID;
@@ -28,7 +28,7 @@ export default class LocalDatasetService implements DatasetService {
     // return (await this.client?.request(new GetDatasets(project_uuid))) ?? [];
 
     return new Promise<Dataset[]>(resolve => {
-      resolve(mocks('./datasets.json'));
+      setTimeout(() => resolve(mocks('./datasets.json')), MOCK_TIMEOUT);
     });
   }
 

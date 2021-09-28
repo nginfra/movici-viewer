@@ -1,6 +1,6 @@
 import { Client, UserService } from '@/flow/src';
 import { User } from '@/flow/src/types';
-import mocks from '../mocks';
+import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalUserService implements UserService {
   client: Client;
@@ -11,7 +11,7 @@ export default class LocalUserService implements UserService {
 
   get() {
     return new Promise<User>(resolve => {
-      resolve(mocks('./user.json'));
+      setTimeout(() => resolve(mocks('./user.json')), MOCK_TIMEOUT);
     });
   }
 }

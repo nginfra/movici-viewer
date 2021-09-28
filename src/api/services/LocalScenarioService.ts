@@ -1,7 +1,7 @@
 import { Client, ScenarioService } from '@/flow/src';
 
 import { Scenario, ShortScenario, SimulationMode, UUID } from '@/flow/src/types';
-import mocks from '../mocks';
+import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalScenarioService implements ScenarioService {
   client: Client;
@@ -19,7 +19,7 @@ export default class LocalScenarioService implements ScenarioService {
 
   list(project_uuid: UUID) {
     return new Promise<ShortScenario[]>(resolve => {
-      resolve(mocks('./scenarios.json'));
+      setTimeout(() => resolve(mocks('./scenarios.json')), MOCK_TIMEOUT);
     });
     // return (await client?.request(new GetScenarios(project_uuid))) ?? []
   }
