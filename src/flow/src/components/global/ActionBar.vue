@@ -16,8 +16,8 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
-@Component({ name: 'ActionBar' })
-export default class ActionBar extends Vue {
+@Component({ name: 'MovActionBar' })
+export default class MovActionBar extends Vue {
   @Prop({ type: [String, Array] }) readonly actions!: string | string[];
   @Prop({ type: [String, Array] }) readonly disabled?: string | string[];
   @Prop({ type: [String, Array] }) readonly enabled?: string | string[];

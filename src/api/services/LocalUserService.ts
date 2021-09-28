@@ -1,5 +1,6 @@
 import { Client, UserService } from '@/flow/src';
 import { User } from '@/flow/src/types';
+import mocks from '../mocks';
 
 export default class LocalUserService implements UserService {
   client: Client;
@@ -10,18 +11,7 @@ export default class LocalUserService implements UserService {
 
   get() {
     return new Promise<User>(resolve => {
-      resolve({
-        firstname: 'Movici',
-        middlename: null,
-        lastname: 'Local User',
-        active: true,
-        language: 'en',
-        created_on: 0,
-        organisation: '',
-        organisation_uuid: '',
-        username: 'movici_local_user',
-        roles: []
-      });
+      resolve(mocks('./user.json'));
     });
   }
 }

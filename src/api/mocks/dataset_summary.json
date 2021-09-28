@@ -1,0 +1,29 @@
+{
+  "count": 1,
+  "entity_groups": [
+    {
+      "name": "area_entities",
+      "count": 1,
+      "properties": [
+        {
+          "component": "",
+          "name": "id",
+          "data_type": "INT",
+          "description": "Identifier of the entity",
+          "unit": "",
+          "min_val": 0.0,
+          "max_val": 0.0
+        },
+        {
+          "component": "shape_properties",
+          "name": "polygon",
+          "data_type": "LIST<TUPLE<DOUBLE, DOUBLE>>",
+          "description": "Polygon geometry of the flooding cell",
+          "unit": "m",
+          "min_val": 80115.2820349674,
+          "max_val": 455937.90751026076
+        }
+      ]
+    }
+  ]
+}

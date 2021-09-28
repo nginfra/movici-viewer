@@ -25,8 +25,8 @@
 import { Component, Mixins, Prop, Ref } from 'vue-property-decorator';
 import FixedPosition from '../../mixins/FixedPosition';
 
-@Component({})
-export default class TooltipInfo extends Mixins(FixedPosition) {
+@Component({ name: 'MovTooltipInfo' })
+export default class MovTooltipInfo extends Mixins(FixedPosition) {
   @Prop({ type: String, default: '' }) text!: string;
   @Prop({ type: String, default: 'info' }) icon!: string;
   @Prop({ type: String, default: 'is-bottom' }) position!: string;

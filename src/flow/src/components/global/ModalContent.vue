@@ -21,7 +21,7 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
 @Component({
-  name: 'ModalContent.vue'
+  name: 'ModalContent'
 })
 export default class ModalContent extends Vue {
   @Prop([String]) title?: string;

@@ -11,8 +11,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import upperFirst from 'lodash/upperFirst';
 import { flowUIStore } from '@/flow/src/store/store-accessor';
 
-@Component({ name: 'LanguagePicker' })
-export default class LanguagePicker extends Vue {
+@Component({ name: 'MovLanguagePicker' })
+export default class MovLanguagePicker extends Vue {
   @Prop({ type: Boolean, default: false }) withLabel!: boolean;
   languages = ['en', 'nl'];
 

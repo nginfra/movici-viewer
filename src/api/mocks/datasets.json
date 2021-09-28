@@ -1,0 +1,82 @@
+[
+  {
+    "uuid": "842512e6-b016-40d2-9b9a-87e0625a0835",
+    "name": "impact_indicator_test",
+    "type": "impact_indicator",
+    "display_name": "Impact Indicator",
+    "created_on": 1598965490,
+    "last_modified": 1598965491,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "139829a0-f8f7-4d56-8da6-f35dce15ed50",
+    "name": "people_test",
+    "type": "people_point_set",
+    "display_name": "People",
+    "created_on": 1598965493,
+    "last_modified": 1598965493,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "59270292-6dbd-4884-a400-c064bb6b2862",
+    "name": "roads_test",
+    "type": "road_line_set",
+    "display_name": "Roads",
+    "created_on": 1598965524,
+    "last_modified": 1598965525,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "5fefb50a-b132-4848-80ce-758ae7af9d06",
+    "name": "poi_test",
+    "type": "poi_point_set",
+    "display_name": "POI",
+    "created_on": 1598965525,
+    "last_modified": 1598965526,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "ed25f110-a370-488f-92ad-0674c83c0d94",
+    "name": "mv_network_test",
+    "type": "mv_network",
+    "display_name": "MV Network",
+    "created_on": 1598965526,
+    "last_modified": 1598965527,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "8366bdcd-7ec8-41f4-a3e8-b4919be968a5",
+    "name": "flooding_doorbraak_uitwateringssluis_subset",
+    "type": "flooding_grid",
+    "display_name": "Flooding",
+    "created_on": 1598965547,
+    "last_modified": 1598965548,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "e12c43eb-93e8-453a-b573-5fadaffe8a90",
+    "name": "antennas_test",
+    "type": "antenna_point_set",
+    "display_name": "Antennas",
+    "created_on": 1598965496,
+    "last_modified": 1623232097,
+    "has_data": true,
+    "status": "Done"
+  },
+  {
+    "uuid": "a0fdc09c-a172-4862-9a4f-309c79c6d16f",
+    "name": "building_height",
+    "type": "building_polygon_set",
+    "display_name": "Buildings",
+    "created_on": 1601453516,
+    "last_modified": 1601453607,
+    "has_data": true,
+    "status": "Done"
+  }
+]

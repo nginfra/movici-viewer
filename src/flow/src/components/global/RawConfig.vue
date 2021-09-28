@@ -24,9 +24,9 @@
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 
 @Component({
-  name: 'RawConfig'
+  name: 'MovRawConfig'
 })
-export default class RawConfig extends Vue {
+export default class MovRawConfig extends Vue {
   @Prop([Object]) value!: unknown;
   @Prop({ type: String }) label!: string;
   errors: string[] = [];

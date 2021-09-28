@@ -15,8 +15,8 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import upperFirst from 'lodash/upperFirst';
 
-@Component({ name: 'Action' })
-export default class Action extends Vue {
+@Component({ name: 'MovAction' })
+export default class MovAction extends Vue {
   @Prop({ type: String, default: '' }) readonly action!: string;
   @Prop({ type: String, default: '' }) readonly size!: string;
   @Prop({ type: Boolean, default: false }) readonly disabled!: boolean;

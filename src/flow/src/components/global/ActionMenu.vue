@@ -49,8 +49,8 @@ export interface ActionMenuItem {
   isDisabled?: () => boolean;
 }
 
-@Component({})
-export default class ActionMenu extends Mixins(FixedPosition) {
+@Component({ name: 'MovActionMenu' })
+export default class MovActionMenu extends Mixins(FixedPosition) {
   @Prop({ default: [] }) readonly value!: ActionMenuItem[];
   @Ref('anchorRef') declare readonly anchorRef: HTMLElement;
   @Ref('popupRef') declare readonly popupRef: HTMLElement;
