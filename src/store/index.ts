@@ -7,7 +7,8 @@ import { initFlowStores, bindAPI } from '@/flow/src/store/store-accessor';
 import FlowStore from '@/flow/src/store/FlowStore';
 import FlowUIStore from '@/flow/src/store/FlowUserInterfaceStore';
 import GeocodeStore from '@/flow/src/store/GeocodeStore';
-import LocalBackend from '@/api/LocalBackend';
+// import LocalBackend from '@/api/LocalBackend';
+import MockBackend from '@/api/MockBackend';
 
 Vue.use(Vuex);
 
@@ -27,6 +28,6 @@ const store = new Store({
   }
 });
 
-bindAPI(new LocalBackend(apiStore.client));
+bindAPI(new MockBackend(apiStore.client));
 
 export default store;

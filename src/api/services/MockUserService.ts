@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client, UserService } from '@/flow/src';
 import { User } from '@/flow/src/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';

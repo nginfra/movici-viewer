@@ -73,7 +73,10 @@ import { Component, Prop, Vue, Watch } from 'vue-property-decorator';
 import ColorStaticConfigurator from './ColorStaticConfigurator.vue';
 import ColorByValueConfigurator from './ColorByValueConfigurator.vue';
 import ColorLegendLabelsConfigurator from '@/flow/src/components/configurators/color/ColorLegendLabelsConfigurator.vue';
-import { getLegendPlaceholders, PlaceholderType } from '@/flow/src/components/configurators/helpers';
+import {
+  getLegendPlaceholders,
+  PlaceholderType
+} from '@/flow/src/components/configurators/helpers';
 
 @Component({
   components: {

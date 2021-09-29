@@ -1,7 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client, DatasetService } from '@/flow/src';
-import { GetDatasetData, GetScenarioState } from '@/flow/src/api/requests';
 import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/src/types';
-import { NumberSizeMap } from '@/flow/src/visualizers/maps/sizeMaps';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 type getDataParams = {
@@ -25,31 +24,19 @@ export default class LocalDatasetService implements DatasetService {
   }
 
   async list(project_uuid: string) {
-    // return (await this.client?.request(new GetDatasets(project_uuid))) ?? [];
-
     return new Promise<Dataset[]>(resolve => {
       setTimeout(() => resolve(mocks('./datasets.json')), MOCK_TIMEOUT);
     });
   }
 
-  async getData<T>(params: getDataParams): Promise<DatasetWithData<T> | null> {
-    // const { datasetUUID, entityGroup, properties } = params;
-    // return await this.client.request(new GetDatasetData<T>(datasetUUID, entityGroup, properties));
-
+  async getData<T>(params: getDataParams) {
     return new Promise<DatasetWithData<T>>(resolve => {
       resolve((mocks('./dataset_with_data.json') as unknown) as DatasetWithData<T>);
     });
   }
 
-  // https://staging.movici.nl/data-engine/v4/scenarios/b39c3fb6-86e2-4650-a582-93de2537cae8/summary?dataset_uuid=e12c43eb-93e8-453a-b573-5fadaffe8a90
-  async getState<T>(params: getStateParams): Promise<DatasetWithData<T> | null> {
-    // const { datasetUUID, scenarioUUID, entityGroup, properties, timestamp } = params;
-
-    // return await this.client.request(
-    //   new GetScenarioState(datasetUUID, scenarioUUID, entityGroup, properties, timestamp)
-    // );
-
-    return new Promise(resolve => {
+  async getState<T>(params: getStateParams) {
+    return new Promise<DatasetWithData<T> | null>(resolve => {
       resolve((mocks('./dataset_with_state.json') as unknown) as DatasetWithData<T>);
     });
   }

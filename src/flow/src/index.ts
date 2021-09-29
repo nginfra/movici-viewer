@@ -1,10 +1,10 @@
 import Vue_ from 'vue';
 import * as components from './components';
-import SnackBarProgramatic from './utils/snackbar';
+import MovSnackBarProgramatic from './utils/snackbar';
 import { registerComponent, registerComponentProgrammatic } from './plugins';
 
 const Flow_ = {
-  install(Vue: typeof Vue_, options = {}) {
+  install(Vue: typeof Vue_) {
     // Options
     // setOptions(merge(config, options, true))
     // Components
@@ -12,7 +12,7 @@ const Flow_ = {
       registerComponent(Vue, component);
     });
 
-    registerComponentProgrammatic(Vue, 'snackbar', SnackBarProgramatic);
+    registerComponentProgrammatic(Vue, 'snackbar', MovSnackBarProgramatic);
   }
 };
 

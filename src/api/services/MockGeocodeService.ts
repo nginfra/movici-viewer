@@ -1,9 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client, GeocodeService } from '@/flow/src';
-import {
-  GetGeocodeResult,
-  GetGeocodeResults,
-  GetGeocodeSuggestions
-} from '@/flow/src/api/requests';
 import { GeocodeSearchQuery, GeocodeSuggestion } from '@/flow/src/types';
 
 export default class MockGeocodeService implements GeocodeService {
@@ -14,17 +10,14 @@ export default class MockGeocodeService implements GeocodeService {
   }
 
   getSuggestions(query: GeocodeSearchQuery) {
-    // return new Promise<null>(resolve => resolve(null));
-    return this.client.request(new GetGeocodeSuggestions(query));
+    return new Promise<null>(resolve => resolve(null));
   }
 
   resolveSuggestion(suggestion: GeocodeSuggestion) {
-    // return new Promise<null>(resolve => resolve(null));
-    return this.client.request(new GetGeocodeResult(suggestion.result_uuid));
+    return new Promise<null>(resolve => resolve(null));
   }
 
   getResults(query: GeocodeSearchQuery) {
-    // return new Promise<null>(resolve => resolve(null));
-    return this.client.request(new GetGeocodeResults(query));
+    return new Promise<null>(resolve => resolve(null));
   }
 }
