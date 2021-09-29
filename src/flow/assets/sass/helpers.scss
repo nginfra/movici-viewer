@@ -2,6 +2,14 @@
   font-size: 0.85rem !important;
 }
 
+.is-opacity-0 {
+  opacity: 0;
+}
+
+.is-opacity-1 {
+  opacity: 1;
+}
+
 .text-ellipsis {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -55,6 +63,12 @@ button {
       border-color: $primary !important;
     }
   }
+}
+
+.icon.is-tiny {
+  font-weight: 100;
+  height: 0.75rem;
+  width: 0.75rem;
 }
 
 [required] {

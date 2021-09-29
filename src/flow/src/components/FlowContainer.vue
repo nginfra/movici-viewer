@@ -7,7 +7,7 @@
       </div>
     </b-loading>
     <aside
-      :class="!loading ? 'is-opaque' : 'is-transparent'"
+      :class="!loading ? 'is-opacity-1' : 'is-opacity-0'"
       class="column options is-gapless is-margin-less left-panel"
     >
       <div class="top-logo is-flex mb-5 mt-2 is-flex-grow-0 is-flex-shrink-1">
@@ -15,7 +15,7 @@
       </div>
       <slot name="leftPanel"></slot>
     </aside>
-    <section :class="!loading ? 'is-opaque' : 'is-transparent'" class="main-view column">
+    <section :class="!loading ? 'is-opacity-1' : 'is-opacity-0'" class="main-view column">
       <slot name="mainView"></slot>
     </section>
   </div>

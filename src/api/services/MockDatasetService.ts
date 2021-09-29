@@ -17,7 +17,7 @@ type getStateParams = {
   timestamp: number;
   properties: ComponentProperty[];
 };
-export default class MockDatasetService implements DatasetService {
+export default class LocalDatasetService implements DatasetService {
   client: Client;
 
   constructor(client: Client) {

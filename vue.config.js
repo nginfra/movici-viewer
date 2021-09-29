@@ -11,7 +11,7 @@ module.exports = {
   css: {
     loaderOptions: {
       scss: {
-        additionalData: `@import "@/assets/sass/variables.scss";`
+        additionalData: `@import "./src/flow/assets/sass/variables.scss";`
       }
     }
   },
