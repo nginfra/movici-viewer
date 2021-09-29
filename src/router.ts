@@ -3,14 +3,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/components/Main';
 import Settings from '@/components/Settings';
-import {
-  FlowMain,
-  FlowProjects,
-  FlowDatasets,
-  FlowScenario,
-  FlowVisualization,
-  FlowExport
-} from '@/flow/src';
+import { getFlowRoutes } from '@/flow/src';
 
 const originalPush = Router.prototype.push;
 
@@ -30,90 +23,24 @@ Router.prototype.push = function push(location, onResolve, onReject) {
 };
 
 Vue.use(Router);
-const router = new Router({
-  routes: [
-    {
-      path: '/',
-      component: Main,
-      redirect: { name: 'FlowProjects' },
-      children: [
-        {
-          path: '/flow',
-          name: 'FlowMain',
-          redirect: { name: 'FlowProjects' },
-          component: FlowMain,
-          children: [
-            {
-              path: '/flow/settings',
-              component: Settings
-            },
-            {
-              path: '/flow/workspace',
-              name: 'FlowProjects',
-              component: FlowProjects,
-              props: route => {
-                const { project } = route.query;
-                return { currentProjectName: project };
-              }
-            },
-            {
-              path: '/flow/datasets',
-              name: 'FlowDatasets',
-              component: FlowDatasets,
-              props: route => {
-                const { project } = route.query;
-                return { currentProjectName: project };
-              }
-            },
-            {
-              path: '/flow/scenario',
-              name: 'FlowScenario',
-              component: FlowScenario,
-              props: route => {
-                const { project, scenario } = route.query;
-                return { currentProjectName: project, currentScenarioName: scenario };
-              }
-            },
-            {
-              path: '/flow/visualization',
-              name: 'FlowVisualization',
-              component: FlowVisualization,
-              props: route => {
-                const { project, scenario, view } = route.query;
-                return {
-                  currentProjectName: project,
-                  currentScenarioName: scenario,
-                  currentViewUUID: view
-                };
-              }
-            },
-            {
-              path: '/flow/export',
-              name: 'FlowExport',
-              component: FlowExport,
-              props: route => {
-                const { project, scenario, view } = route.query;
-                return {
-                  currentProjectName: project,
-                  currentScenarioName: scenario,
-                  currentViewUUID: view
-                };
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ],
-  mode: 'history'
-});
 
-router.beforeEach((to, from, next) => {
-  if (!to.matched.length) {
-    next({ name: 'Flow' });
-  } else {
-    next();
-  }
-});
+const flowBaseRoute = 'flow',
+  router = new Router({
+    routes: [
+      {
+        path: '/',
+        component: Main,
+        redirect: flowBaseRoute,
+        children: [
+          {
+            path: '/settings',
+            component: Settings
+          },
+          ...getFlowRoutes(flowBaseRoute)
+        ]
+      }
+    ],
+    mode: 'history'
+  });
 
 export default router;

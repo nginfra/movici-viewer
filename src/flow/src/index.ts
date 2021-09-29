@@ -24,6 +24,8 @@ export * from './api';
 export * from './components';
 // export all types
 export * from './types';
+// export router
+export * from './router';
 // export utils and others
 export * from './utils';
 export * from './errors';

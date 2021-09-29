@@ -7,7 +7,7 @@
       </div>
     </b-loading>
     <aside
-      :style="{ opacity: loading ? 0 : 1 }"
+      :class="!loading ? 'is-opaque' : 'is-transparent'"
       class="column options is-gapless is-margin-less left-panel"
     >
       <div class="top-logo is-flex mb-5 mt-2 is-flex-grow-0 is-flex-shrink-1">
@@ -15,7 +15,7 @@
       </div>
       <slot name="leftPanel"></slot>
     </aside>
-    <section :style="{ opacity: loading ? 0 : 1 }" class="main-view column">
+    <section :class="!loading ? 'is-opaque' : 'is-transparent'" class="main-view column">
       <slot name="mainView"></slot>
     </section>
   </div>
@@ -65,12 +65,12 @@ export default class FlowContainer extends Vue {
   left: 50%;
   transform: translateX(-50%);
 }
-
 .flow-content {
   background-color: $white;
   height: 100%;
   margin: 0;
 
+  // map-control areas must be translated if ui is expanded or collapsed
   &.expanded {
     ::v-deep {
       .map-control-left {
