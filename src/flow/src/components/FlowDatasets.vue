@@ -86,6 +86,7 @@
                   @update:view-state="onViewstateChange($event)"
                 />
                 <NavigationControl :value="viewState" @input="onViewstateChange($event)" />
+                <BaseMapControl :value="basemap" @input="setBasemap" />
               </template>
               <template #control-right="{ popupContent, closePopup, viewState }">
                 <EntitySelector

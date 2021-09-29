@@ -4,7 +4,7 @@ import Router from 'vue-router';
 import Main from '@/components/Main';
 import Settings from '@/components/Settings';
 import {
-  Flow,
+  FlowMain,
   FlowProjects,
   FlowDatasets,
   FlowScenario,
@@ -39,9 +39,9 @@ const router = new Router({
       children: [
         {
           path: '/flow',
-          name: 'Flow',
+          name: 'FlowMain',
           redirect: { name: 'FlowProjects' },
-          component: Flow,
+          component: FlowMain,
           children: [
             {
               path: '/flow/settings',

@@ -1,18 +1,21 @@
 <template>
   <div class="is-flex flow-content" :class="collapsedClass">
-    <b-loading active v-if="loading">
+    <b-loading is-full-page :active="loading">
       <div class="loading-icon-container">
         <b-icon class="loading-icon" />
         <span class="mt-6 is-block" v-if="loadingMessage">{{ loadingMessage }}</span>
       </div>
     </b-loading>
-    <aside v-show="!loading" class="column options is-gapless is-margin-less left-panel">
+    <aside
+      :style="{ opacity: loading ? 0 : 1 }"
+      class="column options is-gapless is-margin-less left-panel"
+    >
       <div class="top-logo is-flex mb-5 mt-2 is-flex-grow-0 is-flex-shrink-1">
         <b-image :src="require('@/flow/assets/movici-flow.svg')" alt="MoViCI flow"></b-image>
       </div>
       <slot name="leftPanel"></slot>
     </aside>
-    <section v-show="!loading" class="main-view column">
+    <section :style="{ opacity: loading ? 0 : 1 }" class="main-view column">
       <slot name="mainView"></slot>
     </section>
   </div>
@@ -67,6 +70,7 @@ export default class FlowContainer extends Vue {
   background-color: $white;
   height: 100%;
   margin: 0;
+
   &.expanded {
     ::v-deep {
       .map-control-left {

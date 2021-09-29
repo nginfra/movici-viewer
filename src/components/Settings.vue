@@ -1,6 +1,6 @@
 <template>
   <section>
-    <FlowContainer class="flow-projects">
+    <FlowContainer class="flow-settings">
       <template #leftPanel>
         <div class="has-background-white is-fluid has-padding">
           <MovLanguagePicker with-label />

@@ -1,4 +1,4 @@
-import Flow from './Flow.vue';
+import FlowMain from './FlowMain.vue';
 import FlowDatasets from './FlowDatasets.vue';
 import FlowExport from './FlowExport.vue';
 import FlowProjects from './FlowProjects.vue';
@@ -13,7 +13,7 @@ import MovLanguagePicker from '@/flow/src/components/global/LanguagePicker.vue';
 import MovTooltipInfo from '@/flow/src/components/global/TooltipInfo.vue';
 
 export {
-  Flow,
+  FlowMain,
   FlowDatasets,
   FlowExport,
   FlowProjects,

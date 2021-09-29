@@ -161,17 +161,17 @@ class FlowStore extends VuexModule {
 
   @Action({ rawError: true })
   async getProjects() {
-    const projects = (await this.backend?.project.list()) ?? [];
-    this.SET_PROJECTS(projects);
+    this.SET_PROJECTS((await this.backend?.project.list()) ?? []);
   }
 
   @Action({ rawError: true })
   async setCurrentFlowProject(project: Project) {
-    this.SET_CURRENT_PROJECT(project);
     flowUIStore.enableSection({
       datasets: true,
       scenario: true
     });
+
+    this.SET_CURRENT_PROJECT(project);
   }
 
   @Action({ rawError: true })
@@ -360,17 +360,17 @@ class FlowStore extends VuexModule {
    */
   @Action({ rawError: true })
   async setupFlowStore({ config, reset = true }: { config: FlowStoreConfig; reset?: boolean }) {
+    if (reset) {
+      this.resetFlowStore();
+      this.clearSummaries();
+    }
+
     if (!this.currentUser) {
       const user = await this.backend?.user.get();
 
       if (user) {
         this.SET_USER(user);
       }
-    }
-
-    if (reset) {
-      this.resetFlowStore();
-      this.clearSummaries();
     }
 
     if (!this.projects || !this.projects.length) {

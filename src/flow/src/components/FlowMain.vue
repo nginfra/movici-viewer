@@ -2,7 +2,7 @@
   <section class="flow columns is-gapless is-margin-less">
     <b-menu class="column flow-menu" :activable="false">
       <b-menu-list aria-role="menu">
-        <b-menu-item class="home" tag="router-link" to="/">
+        <b-menu-item class="home">
           <template #label>
             <b-image
               :src="require('@/flow/assets/movici-logo.svg')"
@@ -58,7 +58,7 @@ import FlowExport from '@/flow/src/components/FlowExport.vue';
 import { flowStore, flowUIStore } from '@/flow/src/store/store-accessor'; // create getters for other store it interacts with?
 
 @Component({})
-export default class Flow extends Vue {
+export default class FlowMain extends Vue {
   @Prop([String]) currentProjectName!: string;
   @Prop([String]) currentScenarioName!: string;
 
@@ -113,18 +113,6 @@ export default class Flow extends Vue {
 
   createFlowSections() {
     const sections: FlowSection[] = [];
-
-    // if (!generalStore.isLocalhost) {
-    //   sections.push({
-    //     name: FlowSectionItem.PROJECT,
-    //     label: 'flow.projects.label',
-    //     icon: 'fa-workspace',
-    //     iconPack: 'fak',
-    //     enabled: true,
-    //     to: '/flow/workspace',
-    //     type: 'route'
-    //   });
-    // }
 
     sections.push(
       {
