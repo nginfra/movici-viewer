@@ -12,12 +12,7 @@
         <div class="count-details is-size-7 mb-3" v-if="countDetails">
           <div class="mb-1">
             <label>{{ $t('flow.projects.details.dataset_count') }}: </label>
-            <router-link
-              custom
-              v-slot="{ navigate }"
-              :to="'/flow/datasets?' + queryString"
-              class="value"
-            >
+            <router-link custom v-slot="{ navigate }" :to="toDatasets" class="value">
               <a @click="navigate" @keypress.enter="navigate" role="link">
                 {{ countDetails.dataset_count }}
               </a>
@@ -25,12 +20,7 @@
           </div>
           <div class="mb-1">
             <label>{{ $t('flow.projects.details.scenario_count') }}: </label>
-            <router-link
-              custom
-              v-slot="{ navigate }"
-              :to="'/flow/scenario?' + queryString"
-              class="value"
-            >
+            <router-link custom v-slot="{ navigate }" :to="toScenario" class="value">
               <a @click="navigate" @keypress.enter="navigate" role="link">
                 {{ countDetails.scenario_count }}
               </a>
@@ -105,6 +95,14 @@ export default class FlowProjects extends Vue {
 
   get currentProject() {
     return flowStore.project;
+  }
+
+  get toDatasets() {
+    return '/flow/datasets?' + this.queryString;
+  }
+
+  get toScenario() {
+    return '/flow/scenario?' + this.queryString;
   }
 
   get details() {
