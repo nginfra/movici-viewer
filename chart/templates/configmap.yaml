@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ include "webconsole.configMapName" .}}
-data:
-{{ (.Files.Glob "settings/*").AsConfig | indent 2 }}
-  settings.json: |
-    {{- .Values.app.settings | mustToPrettyJson | nindent 4 }}
-
