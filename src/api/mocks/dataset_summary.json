@@ -1,0 +1,92 @@
+{
+  "entity_groups": [
+    {
+      "name": "antenna_entities",
+      "count": 182,
+      "properties": [
+        {
+          "component": "",
+          "name": "id",
+          "data_type": "INT",
+          "description": "Identifier of the entity",
+          "unit": "",
+          "min_val": 0,
+          "max_val": 181
+        },
+        {
+          "component": "antenna_properties",
+          "name": "capacity",
+          "data_type": "INT",
+          "description": "Maximum number of people that can connect to the antenna",
+          "unit": "",
+          "min_val": 3000,
+          "max_val": 3000
+        },
+        {
+          "component": "antenna_properties",
+          "name": "radius",
+          "data_type": "DOUBLE",
+          "description": "Radius of the antenna's range",
+          "unit": "m",
+          "min_val": 3000,
+          "max_val": 3000
+        },
+        {
+          "component": "battery_properties",
+          "name": "charge",
+          "data_type": "DOUBLE",
+          "description": "Battery charge percentage 0-1",
+          "unit": "",
+          "min_val": 1,
+          "max_val": 1
+        },
+        {
+          "component": "battery_properties",
+          "name": "max_life",
+          "data_type": "DOUBLE",
+          "description": "Max time before a battery depletes from full charge",
+          "unit": "",
+          "min_val": 9000,
+          "max_val": 9000
+        },
+        {
+          "component": "operation_status_properties",
+          "name": "has_power",
+          "data_type": "BOOLEAN",
+          "description": "Has power to operate",
+          "unit": "",
+          "min_val": 1,
+          "max_val": 1
+        },
+        {
+          "component": "point_properties",
+          "name": "position_x",
+          "data_type": "DOUBLE",
+          "description": "X coordinate",
+          "unit": "m",
+          "min_val": 80178,
+          "max_val": 82228
+        },
+        {
+          "component": "point_properties",
+          "name": "position_y",
+          "data_type": "DOUBLE",
+          "description": "Y coordinate",
+          "unit": "m",
+          "min_val": 454129,
+          "max_val": 455900
+        },
+        {
+          "component": "point_properties",
+          "name": "position_z",
+          "data_type": "DOUBLE",
+          "description": "Z coordinate",
+          "unit": "m",
+          "min_val": -0.907,
+          "max_val": 4.494
+        }
+      ]
+    }
+  ],
+  "count": 182
+}

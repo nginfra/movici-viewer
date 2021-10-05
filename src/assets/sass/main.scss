@@ -1,7 +1,12 @@
 // Import Bulma's core
 @import '~bulma/sass/utilities/_all';
-@import './variables';
+@import '../../flow/assets/sass/variables';
 
+// Update some of Bulma's component variables
+$background: $white-ter;
+$body-background-color: $white-ter;
+$card-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 0 rgba($black, 0.1) !default;
+$control-border-width: 2px;
 // Add a font family
 $family-primary: 'Source Sans Pro', sans-serif;
 $radius: 4px;
@@ -11,94 +16,44 @@ $link: $primary;
 $link-invert: $primary-invert;
 $link-focus-border: $primary;
 
-// Modal
-$modal-background-background-color: rgba($grey-light, 0.9);
-$modal-card-head-background-color: $white;
-$modal-content-width: 1200px;
-
 // Forms colors
-$background: $white-ter;
 $input-color: $grey-darker !default;
 $input-background-color: $white !default;
 $input-border-color: $white-ter !default;
 $input-height: $control-height !default;
 $input-shadow: inset 0 1px 2px rgba($black, 0.1) !default;
 $input-placeholder-color: rgba($input-color, 0.6) !default;
-
 $input-hover-color: $grey-darker !default;
 $input-hover-border-color: $grey-light !default;
-
 $input-focus-color: $grey-darker !default;
 $input-focus-border-color: $link !default;
 $input-focus-box-shadow-size: 0 0 0 0.125em !default;
 $input-focus-box-shadow-color: rgba($link, 0.25) !default;
-
 $input-disabled-color: rgba($grey-dark, 0.9) !default;
 $input-disabled-background-color: rgba($background, 0.8) !default;
 $input-disabled-border-color: $white !default;
 $input-disabled-placeholder-color: $input-disabled-color !default;
-
 $input-arrow: $link !default;
 $input-icon-color: $grey-lighter !default;
 $input-icon-active-color: $grey !default;
-
 $input-radius: $radius !default;
+$input-shadow: none;
 
-// Webviz
-$sidebar-background: $modal-background-background-color;
-$sidebar-box-shadow: 5px 0px 13px 3px rgba($black, 0.1);
-$sidebar-width: 300px;
-$sidebar-mobile-width: 80px;
-$sidebar-mobile-breakpoint: $tablet;
+// menu
+$menu-item-color: $black;
+$menu-item-radius: 0.2em;
+$menu-item-hover-color: $primary;
+$menu-item-hover-background-color: $white-ter;
+$menu-item-active-color: $link-invert;
+$menu-item-active-background-color: $white-ter;
+$menu-list-border-left: 1px solid $border;
+$menu-label-color: $black;
 
-.sidebar-page {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  min-height: 100%;
-  // min-height: 100vh;
-  .sidebar-layout {
-    display: flex;
-    flex-direction: row;
-    min-height: 100%;
-    // min-height: 100vh;
-  }
-}
+// Responsiveness
+// The container horizontal gap, which acts as the offset for breakpoints
+$gap: 0;
+$column-gap: 0.75rem;
 
-// General
-.app-main {
-  padding-top: 3.25em;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-.main {
-  padding: 2em 1em 2em 1em;
-  margin: 0 !important;
-}
-h1.title {
-  padding-bottom: 0.5em;
-  color: $black;
-}
-
-.has-padding {
-  padding: 2em;
-}
-.has-padding-top {
-  padding-top: 2em;
-}
-
-.is-rounded {
-  @include border-radius;
-}
-.logo {
-  background-image: url('../images/movici_logo.svg');
-  background-repeat: no-repeat;
-}
-.logo-symbol {
-  background-image: url('../images/movici_symbol.svg');
-  background-repeat: no-repeat;
-}
 pre {
   background-color: $white-ter !important;
 }
@@ -133,13 +88,6 @@ html {
 .status .fa-lg {
   font-size: 1em;
 }
-
-.icon.is-tiny {
-  font-weight: 100;
-  height: 0.75rem;
-  width: 0.75rem;
-}
-
 // Tags
 .tag {
   font-weight: bold;
@@ -149,23 +97,6 @@ html {
   line-height: 1.25 !important;
   padding-left: 0.5em !important;
   padding-right: 0.5em !important;
-}
-// Breadcrumbs
-.breadcrumb {
-  user-select: auto !important;
-}
-.breadcrumb li:after {
-  padding: 0 10px;
-  color: $black;
-  content: '/';
-}
-.breadcrumb li:last-child:after {
-  padding: 0;
-  content: '';
-}
-.breadcrumb .linked {
-  color: $primary;
-  cursor: pointer;
 }
 
 option.attribute-option-disabled {
@@ -188,34 +119,6 @@ input.is-small {
   @include border-radius;
 }
 
-// Update some of Bulma's component variables
-$body-background-color: $white-ter;
-$control-border-width: 2px;
-$input-shadow: none;
-$card-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 0 rgba($black, 0.1) !default;
-
-// Nav styles
-$navbar-box-shadow-color: rgba($black, 0.1);
-$navbar-box-shadow-size: 0 0 8px !default;
-$navbar-item-img-max-height: 2.2rem !default;
-.sidebar,
-.login {
-  background: $white;
-}
-$navbar-item-hover-background-color: $white-ter !important;
-$menu-item-color: $black;
-$menu-item-radius: 0.2em;
-$menu-item-hover-color: $primary;
-$menu-item-hover-background-color: $white-ter;
-$menu-item-active-color: $link-invert;
-$menu-item-active-background-color: $white-ter;
-$menu-list-border-left: 1px solid $border;
-$menu-label-color: $black;
-
-.router-link-active {
-  background: $white-ter;
-  @include border-radius;
-}
 .menu-label {
   font-weight: bold;
 }
@@ -229,95 +132,13 @@ $menu-label-color: $black;
 .modal {
   .modal-card-title {
     color: $black;
+    font-weight: bold;
   }
   .modal-close {
     background-color: rgba($black, 0.7);
   }
 }
 
-.modal-card-title {
-  font-weight: bold;
-}
-
-// Footer
-.footer {
-  min-height: 4em;
-  background-color: rgba($black, 0.05) !important;
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
-  font-size: 0.8rem;
-  .modal {
-    font-size: 1rem;
-  }
-}
-
-// Responsiveness
-// The container horizontal gap, which acts as the offset for breakpoints
-$gap: 0;
-$column-gap: 0.75rem;
-
-//divider
-$divider-background-color: $primary;
-$divider-thickness: 0.075rem;
-$divider-font-size: $size-7;
-$divider-color: $primary;
-
-.is-divider {
-  display: block;
-  position: relative;
-  border-top: $divider-thickness solid $divider-background-color;
-  height: $divider-thickness;
-  margin: 4rem 0 2rem;
-  text-align: left;
-  &[data-content]::after {
-    background: $primary-invert;
-    color: $primary;
-  }
-  &::before {
-    border-left-color: $primary;
-  }
-}
-
-.is-divider[data-content]::after {
-  background: $white;
-  color: $primary;
-  font-weight: bold;
-  letter-spacing: 0.05rem;
-  content: attr(data-content);
-  display: inline-block;
-  font-size: $divider-font-size;
-  padding: 0.4rem 0.8rem 0 0;
-  transform: translateY(-1.1rem);
-  text-align: center;
-  text-transform: uppercase;
-}
-
-// tables
-.b-table .table tr.detail {
-  background: $white-bis !important;
-  .table {
-    background: $white-bis !important;
-  }
-}
-
-// Login
-.hero {
-  background-color: $white-ter;
-}
-.logo {
-  background-size: contain;
-  margin-bottom: 1em;
-  width: 12em;
-  height: 3em;
-}
-.logo-symbol {
-  background-size: contain;
-  margin-left: auto;
-  margin-right: auto;
-  margin-bottom: 1em;
-  width: 3em;
-  height: 3em;
-}
 .card {
   @include border-radius;
   h1 {
@@ -346,76 +167,6 @@ $divider-color: $primary;
     letter-spacing: 0.1em;
     background-color: rgba(0, 0, 0, 0.6);
   }
-  .caption {
-    opacity: 0.7;
-    color: $white;
-    text-transform: uppercase;
-    font-weight: 900;
-    letter-spacing: 0.2em;
-    font-size: 0.7em;
-    padding: 0.3em 0.8em;
-    position: absolute;
-    top: 2em;
-    right: 2em;
-    z-index: 2;
-    span {
-      opacity: 1;
-    }
-  }
-}
-
-// Dashboard
-.tile {
-  line-height: 1.25em;
-  flex-grow: 1 !important;
-  h2 {
-    font-size: 0.75em !important;
-    font-weight: 900;
-    color: $grey-light !important;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 1.5em;
-  }
-  h3 {
-    font-size: 1.1em;
-    font-weight: 900;
-    padding-bottom: 0.75em;
-  }
-  .content h3 {
-    font-size: 1.3em;
-    font-weight: 900;
-    padding-bottom: 0.75em;
-  }
-  a.linked {
-    text-decoration: none !important;
-    article {
-      margin: 0 -0.5em;
-      padding: 1em 0.5em;
-      &:hover {
-        background-color: $white-ter;
-        @include border-radius;
-      }
-    }
-    h3 {
-      color: $primary;
-      font-size: 1.1em;
-      margin-bottom: 0;
-      padding-bottom: 0.3em;
-    }
-    p {
-      color: $black;
-    }
-  }
-}
-
-.tile.notification {
-  padding: 1.25rem 1.5rem 1.25rem 1.5rem;
-}
-.tile.notification a:not(.button):not(.dropdown-item) {
-  color: $primary;
-  &:hover {
-    color: $blue;
-  }
 }
 
 // Forms
@@ -423,95 +174,10 @@ $divider-color: $primary;
 .timepicker input {
   max-width: 130px;
 }
-.short {
-  max-width: 70px;
-  input {
-    @include border-radius;
-  }
-}
 
-// Pagination
-a.pagination-link.is-current {
-  background-color: $primary;
-  border-color: $primary;
-  color: $white;
-}
-
-// Dataset generator map
-.map {
-  width: 90%;
-  height: 475px;
-  padding: 0.5em;
-  background-color: $white-ter;
-
-  .add-polygon {
-    top: 115px;
-    left: 0.5em;
-  }
-
-  .remove-polygon {
-    top: 155px;
-    left: 0.5em;
-  }
-
-  .ol-control {
-    box-shadow: 0px 2px 5px $grey-dark;
-    border: solid 3px $white;
-    padding: 0;
-    button {
-      margin: 0;
-      cursor: pointer;
-      color: $grey-darker;
-      background-color: $white;
-      border: 0;
-      &:hover {
-        color: $white;
-        background-color: $primary;
-      }
-    }
-  }
-  .ol-control.layer-switcher {
-    button {
-      width: 26px;
-      height: 26px;
-      background: url('../images/map-solid.svg');
-      background-repeat: no-repeat;
-      background-size: 18px 18px;
-      background-position: center center;
-      background-color: $white;
-    }
-  }
-  .ol-control.layer-switcher.shown {
-    border: 0;
-    box-shadow: none;
-    .panel {
-      ul {
-        padding: 0.75em 0.2em 0.75em 0.75em;
-        li {
-          label {
-            cursor: pointer;
-          }
-        }
-      }
-    }
-  }
-
-  form {
-    margin: 10px;
-  }
-}
-
-// google charts
-.chart-tooltip {
-  padding: 10px !important;
-  white-space: nowrap !important;
-  width: auto !important;
-  @include border-radius;
-}
-
-@import './helpers';
 @import './media-query';
-@import './flow';
+@import '../../flow/assets/sass/helpers';
+@import '../../flow/assets/sass/style';
 
 // Import Bulma and Buefy styles
 @import '~bulma';

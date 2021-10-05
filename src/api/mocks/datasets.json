@@ -1,0 +1,12 @@
+[
+  {
+    "uuid": "e12c43eb-93e8-453a-b573-5fadaffe8a90",
+    "name": "antennas_test",
+    "type": "antenna_point_set",
+    "display_name": "Antennas",
+    "created_on": 1598965496,
+    "last_modified": 1623232097,
+    "has_data": true,
+    "status": "Done"
+  }
+]

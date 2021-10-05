@@ -1,0 +1,11 @@
+[
+  {
+    "uuid": "b39c3fb6-86e2-4650-a582-93de2537cae8",
+    "name": "test_integration_scenario",
+    "display_name": "Test integration scenario",
+    "created_on": 1598965549,
+    "project_name": "test_project",
+    "status": "Succeeded",
+    "has_timeline": true
+  }
+]

@@ -1,5 +1,4 @@
 import Vue_ from 'vue';
-import truncate from 'lodash/truncate';
 import upperFirst from 'lodash/upperFirst';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -19,10 +18,6 @@ export const filters: Record<string, (term: number | string) => string> = {
   upperFirst: value => {
     if (!value || typeof value === 'number') return '';
     return upperFirst(value.toLowerCase());
-  },
-  truncate: value => {
-    if (!value || typeof value === 'number') return '';
-    return truncate(value);
   }
 };
 

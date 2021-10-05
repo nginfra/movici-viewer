@@ -5,16 +5,14 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
+import { generalStore } from '@/store';
 
 @Component({
   name: 'App'
 })
 export default class App extends Vue {
-  data() {
-    return {};
-  }
-  created() {
-    this.$store.dispatch('initApp').then(() => {});
+  async mounted() {
+    await generalStore.initApp();
   }
 }
 </script>
