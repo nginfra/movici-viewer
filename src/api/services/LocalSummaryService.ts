@@ -1,6 +1,6 @@
-import { Client, SummaryService } from 'flow/api';
-import { GetDatasetSummary, GetScenarioSummary } from 'flow/api/requests';
-import { DatasetSummary, UUID } from 'flow/types';
+import { Client, SummaryService } from '@/flow/api';
+import { GetDatasetSummary, GetScenarioSummary } from '@/flow/api/requests';
+import { DatasetSummary, UUID } from '@/flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalSummaryService implements SummaryService {

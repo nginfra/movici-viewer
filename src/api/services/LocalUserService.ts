@@ -1,5 +1,5 @@
-import { Client, UserService } from 'flow/api';
-import { User } from 'flow/types';
+import { Client, UserService } from '@/flow/api';
+import { User } from '@/flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalUserService implements UserService {

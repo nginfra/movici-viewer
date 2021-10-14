@@ -4,8 +4,8 @@
  */
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { failMessage } from 'flow/utils/snackbar';
-import { Client } from 'flow/api';
+import { failMessage } from '@/flow/utils/snackbar';
+import { Client } from '@/flow/api';
 
 const API_CONCURRENCY = 10;
 

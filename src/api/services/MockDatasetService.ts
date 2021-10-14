@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, DatasetService } from 'flow/api';
-import { ComponentProperty, Dataset, DatasetWithData, UUID } from 'flow/types';
+import { Client, DatasetService } from '@/flow/api';
+import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 type getDataParams = {

@@ -1,7 +1,7 @@
 import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { ApplicationSettings } from 'flow/types';
+import { ApplicationSettings } from '@/flow/types';
 import { GetGlobalSettings } from '@/api/requests';
 import { apiStore } from '@/store/store-accessor';
 
