@@ -1,5 +1,5 @@
-import { Client, GetProjects, ProjectService } from '@/flow/src';
-import { Project } from '@/flow/src/types';
+import { Client, GetProjects, ProjectService } from 'flow/api';
+import { Project } from 'flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalProjectService implements ProjectService {

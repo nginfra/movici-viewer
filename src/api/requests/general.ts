@@ -1,6 +1,6 @@
-import { ApplicationSettings } from '@/flow/src/types';
+import { ApplicationSettings } from 'flow/types';
 import { AxiosRequestConfig } from 'axios';
-import { BaseRequest } from '@/flow/src/api/requests/base';
+import { BaseRequest } from 'flow/api';
 
 export class GetGlobalSettings extends BaseRequest<ApplicationSettings> {
   makeRequest(): AxiosRequestConfig {

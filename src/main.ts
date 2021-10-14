@@ -8,7 +8,7 @@ import store from './store';
 import i18n from './i18n';
 import Buefy from 'buefy';
 import Filters from './filters';
-import Flow from './flow/src';
+import Flow from '../flow/src/index';
 
 // Force importing all dynamic vuex modules. This is necessary until
 // we only use the Store modules directly (

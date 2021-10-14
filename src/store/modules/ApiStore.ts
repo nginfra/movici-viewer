@@ -4,9 +4,8 @@
  */
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import Client from '@/flow/src//api/client';
-import { failMessage } from '@/flow/src//utils/snackbar';
-//  import { CheckToken, LoginRequest, LogoutRequest } from '@/api/requests';
+import { failMessage } from 'flow/utils/snackbar';
+import { Client } from 'flow/api';
 
 const API_CONCURRENCY = 10;
 

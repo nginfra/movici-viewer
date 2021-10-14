@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, UpdatesService } from '@/flow/src';
-import { ComponentProperty, Update, UUID } from '@/flow/src/types';
+import { Client, UpdatesService } from 'flow/api';
+import { ComponentProperty, Update, UUID } from 'flow/types';
 import { MOCK_TIMEOUT } from '../mocks';
 export default class MockUpdatesService implements UpdatesService {
   client: Client;

@@ -3,7 +3,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Main from '@/components/Main';
 import Settings from '@/components/Settings';
-import { getFlowRoutes } from '@/flow/src';
+import { getFlowRoutes } from 'flow/router';
 
 const originalPush = Router.prototype.push;
 

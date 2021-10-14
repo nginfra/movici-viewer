@@ -1,5 +1,5 @@
-import { Client, ViewService } from '@/flow/src';
-import { UUID, View } from '@/flow/src/types';
+import { Client, ViewService } from 'flow/api';
+import { UUID, View } from 'flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalViewService implements ViewService {

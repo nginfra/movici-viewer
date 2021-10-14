@@ -19,6 +19,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "flow/*": [
+        "flow/src/*"
       ]
     },
     "lib": [
@@ -33,7 +36,9 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "flow/**/*.ts",
+    "flow/**/*.vue"
   ],
   "exclude": [
     "node_modules"
