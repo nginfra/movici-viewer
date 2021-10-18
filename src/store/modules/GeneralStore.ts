@@ -96,25 +96,25 @@ class GeneralStore extends VuexModule {
   }
 
   get isLocalhost() {
-    return this.settings_.localhost;
+    return this.settings.localhost;
   }
 
   get apiBase() {
-    return this.settings_.ApiAddress ?? '/';
+    return this.settings.ApiAddress ?? '/';
   }
 
   get language() {
-    return this.settings_.Language ?? '';
+    return this.settings.Language ?? '';
   }
 
   get featureToggle() {
     return (feature: string) => {
-      if (!this.settings_.features) {
+      if (!this.settings.features) {
         return false;
       }
 
       try {
-        return this.settings_.features.indexOf(feature) > -1;
+        return this.settings.features.indexOf(feature) > -1;
       } catch (e) {
         return false;
       }

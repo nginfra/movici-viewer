@@ -9,9 +9,9 @@ import {
   SimulationMode,
   TimeOrientedSimulationInfo,
   UUID,
-  User,
   View
 } from '@/flow/types';
+import { User } from '@/flow/types/users';
 import { ComposableVisualizerInfo } from '@/flow/visualizers/VisualizerInfo';
 import { exportFromConfig } from '@/flow/utils/DataExporter';
 import Backend from '@/flow/api/backend';
