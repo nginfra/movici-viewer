@@ -4,8 +4,10 @@
  */
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { failMessage } from '@/flow/utils/snackbar';
-import { Client } from '@/flow/api';
+import { failMessage } from '~flow/utils/snackbar';
+import { Client } from '~flow/api';
+import { bindAPI } from '~flow/store/store-accessor';
+import MockBackend from '@/api/MockBackend';
 
 const API_CONCURRENCY = 10;
 
@@ -52,6 +54,9 @@ class ApiStore extends VuexModule {
   @Mutation
   CONFIGURE_CLIENT(client: Client) {
     this.client_ = client;
+    this.baseURL = client.baseURL;
+
+    bindAPI(new MockBackend(client));
   }
 
   @Mutation

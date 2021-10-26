@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, ViewService } from '@/flow/api';
-import { UUID, View } from '@/flow/types';
+import { Client, ViewService } from '~flow/api';
+import { UUID, View, ViewCrudResponse } from '~flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class MockViewService implements ViewService {
@@ -11,7 +11,9 @@ export default class MockViewService implements ViewService {
   }
 
   async create(scenarioUUID: UUID, view: View) {
-    return { view_uuid: '1234' };
+    return new Promise<ViewCrudResponse | null>(resolve => {
+      setTimeout(() => resolve({ view_uuid: '1234' } as ViewCrudResponse), MOCK_TIMEOUT);
+    });
   }
 
   async list(scenarioUUID: UUID): Promise<View[]> {
@@ -26,11 +28,15 @@ export default class MockViewService implements ViewService {
     });
   }
 
-  async update(viewUUID: UUID, view: View) {
-    return new Promise<void>(resolve => resolve());
+  async update(viewUUID: UUID, view: View): Promise<ViewCrudResponse | null> {
+    return new Promise<ViewCrudResponse | null>(resolve => {
+      setTimeout(() => resolve({ view_uuid: '1234' } as ViewCrudResponse), MOCK_TIMEOUT);
+    });
   }
 
   async delete(viewUUID: UUID) {
-    return new Promise<void>(resolve => resolve());
+    return new Promise<ViewCrudResponse | null>(resolve => {
+      setTimeout(() => resolve({ view_uuid: '1234' } as ViewCrudResponse), MOCK_TIMEOUT);
+    });
   }
 }

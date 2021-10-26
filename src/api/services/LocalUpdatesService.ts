@@ -1,6 +1,6 @@
-import { Client, UpdatesService } from '@/flow/api';
-import { GetUpdates, GetUpdateWithData } from '@/flow/api/requests';
-import { ComponentProperty, Update, UUID } from '@/flow/types';
+import { Client, UpdatesService } from '~flow/api';
+import { GetUpdateWithData } from '~flow/api/requests';
+import { ComponentProperty, Update, UUID } from '~flow/types';
 import { MOCK_TIMEOUT } from '../mocks';
 export default class LocalUpdatesService implements UpdatesService {
   client: Client;
@@ -14,7 +14,6 @@ export default class LocalUpdatesService implements UpdatesService {
   }
 
   list(scenario_uuid: string) {
-    // return this.client.request(new GetUpdates(scenario_uuid));
     return new Promise<Update[]>(resolve => {
       setTimeout(() => resolve(([] as unknown) as Update[]), MOCK_TIMEOUT);
     });

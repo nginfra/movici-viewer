@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, ProjectService } from '@/flow/api';
-import { Project } from '@/flow/types';
+import { Client, ProjectService } from '~flow/api';
+import { Project } from '~flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class MockProjectService implements ProjectService {

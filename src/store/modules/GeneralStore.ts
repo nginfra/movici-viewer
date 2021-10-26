@@ -1,7 +1,7 @@
 import i18n from '../../i18n';
 import pick from 'lodash/pick';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { ApplicationSettings } from '@/flow/types';
+import { ApplicationSettings } from '~flow/types';
 import { GetGlobalSettings } from '@/api/requests';
 import { apiStore } from '@/store/store-accessor';
 
@@ -83,8 +83,11 @@ class GeneralStore extends VuexModule {
 
   @Action({ rawError: true })
   async loadRemoteSettings() {
-    const settings = (await apiStore.client.request(new GetGlobalSettings())) ?? {};
-    this.UPDATE_SETTINGS(settings);
+    const settings = await apiStore.client.request(new GetGlobalSettings());
+    if (settings) {
+      this.UPDATE_SETTINGS(settings);
+      apiStore.configureClient({ baseURL: settings.ApiAddress });
+    }
   }
 
   get initialized(): boolean {

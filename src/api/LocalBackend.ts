@@ -1,4 +1,4 @@
-import { Backend, Client } from '@/flow/api';
+import { Backend, Client } from '~flow/api';
 import LocalDatasetService from '@/api/services/LocalDatasetService';
 import LocalGeocodeService from './services/LocalGeocodeService';
 import LocalProjectService from '@/api/services/LocalProjectService';

@@ -19,6 +19,9 @@
     "paths": {
       "@/*": [
         "src/*"
+      ],
+      "~flow/*": [
+        "movici-flow-common/src/*"
       ]
     },
     "lib": [

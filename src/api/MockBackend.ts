@@ -1,4 +1,4 @@
-import { Backend, Client } from '@/flow/api';
+import { Backend, Client } from '~flow/api';
 import MockDatasetService from '@/api/services/MockDatasetService';
 import MockGeocodeService from './services/MockGeocodeService';
 import MockProjectService from '@/api/services/MockProjectService';

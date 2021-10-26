@@ -1,5 +1,5 @@
-import { Client, GetProjects, ProjectService } from '@/flow/api';
-import { Project } from '@/flow/types';
+import { Client, ProjectService } from '~flow/api';
+import { Project } from '~flow/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalProjectService implements ProjectService {
@@ -14,7 +14,6 @@ export default class LocalProjectService implements ProjectService {
       setTimeout(() => {
         resolve((mocks('./projects.json') as unknown) as Project[]);
       }, MOCK_TIMEOUT);
-      // return this.client?.request(new GetProjects());
     });
   }
 }

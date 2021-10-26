@@ -1,7 +1,7 @@
-import { Client, DatasetService } from '@/flow/api';
-import { GetDatasetData, GetScenarioState } from '@/flow/api/requests';
-import { ComponentProperty, Dataset, DatasetWithData, UUID } from '@/flow/types';
-import { NumberSizeMap } from '@/flow/visualizers/maps/sizeMaps';
+import { Client, DatasetService } from '~flow/api';
+import { GetDatasetData, GetScenarioState } from '~flow/api/requests';
+import { ComponentProperty, Dataset, DatasetWithData, UUID } from '~flow/types';
+import { NumberSizeMap } from '~flow/visualizers/maps/sizeMaps';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 type getDataParams = {

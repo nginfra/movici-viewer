@@ -1,6 +1,6 @@
 // Import Bulma's core
 @import '~bulma/sass/utilities/_all';
-@import '../../flow/assets/sass/variables.scss';
+@import '../../../movici-flow-common/src/assets/sass/variables.scss';
 
 // Update some of Bulma's component variables
 $background: $white-ter;
@@ -176,8 +176,8 @@ input.is-small {
 }
 
 @import './media-query';
-@import '../../flow/assets/sass/helpers';
-@import '../../flow/assets/sass/style';
+@import '../../../movici-flow-common/src/assets/sass/helpers';
+@import '../../../movici-flow-common/src/assets/sass/style';
 
 // Import Bulma and Buefy styles
 @import '~bulma';
