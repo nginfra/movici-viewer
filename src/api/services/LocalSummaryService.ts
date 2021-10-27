@@ -1,5 +1,5 @@
-import { Client, SummaryService } from '~flow/api';
-import { DatasetSummary, UUID } from '~flow/types';
+import { Client, SummaryService } from '@movici-flow-common/api';
+import { DatasetSummary, UUID } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalSummaryService implements SummaryService {

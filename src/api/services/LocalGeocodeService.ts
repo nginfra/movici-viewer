@@ -1,6 +1,10 @@
-import { Client, GeocodeService } from '~flow/api';
-import { GetGeocodeResult, GetGeocodeResults, GetGeocodeSuggestions } from '~flow/api/requests';
-import { GeocodeSearchQuery, GeocodeSuggestion } from '~flow/types';
+import { Client, GeocodeService } from '@movici-flow-common/api';
+import {
+  GetGeocodeResult,
+  GetGeocodeResults,
+  GetGeocodeSuggestions
+} from '@movici-flow-common/api/requests';
+import { GeocodeSearchQuery, GeocodeSuggestion } from '@movici-flow-common/types';
 
 export default class LocalGeocodeService implements GeocodeService {
   client: Client;

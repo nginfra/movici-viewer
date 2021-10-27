@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, ViewService } from '~flow/api';
-import { UUID, View, ViewCrudResponse } from '~flow/types';
+import { Client, ViewService } from '@movici-flow-common/api';
+import { UUID, View, ViewCrudResponse } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class MockViewService implements ViewService {

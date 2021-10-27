@@ -1,6 +1,6 @@
-import { Client, ScenarioService } from '~flow/api';
+import { Client, ScenarioService } from '@movici-flow-common/api';
 
-import { Scenario, ShortScenario, UUID } from '~flow/types';
+import { Scenario, ShortScenario, UUID } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalScenarioService implements ScenarioService {

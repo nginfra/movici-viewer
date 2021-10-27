@@ -1,5 +1,5 @@
-import { Client, ViewService } from '~flow/api';
-import { UUID, View, ViewCrudResponse } from '~flow/types';
+import { Client, ViewService } from '@movici-flow-common/api';
+import { UUID, View, ViewCrudResponse } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalViewService implements ViewService {

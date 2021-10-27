@@ -1,6 +1,6 @@
-import { Client, UpdatesService } from '~flow/api';
-import { GetUpdateWithData } from '~flow/api/requests';
-import { ComponentProperty, Update, UUID } from '~flow/types';
+import { Client, UpdatesService } from '@movici-flow-common/api';
+import { GetUpdateWithData } from '@movici-flow-common/api/requests';
+import { ComponentProperty, Update, UUID } from '@movici-flow-common/types';
 import { MOCK_TIMEOUT } from '../mocks';
 export default class LocalUpdatesService implements UpdatesService {
   client: Client;

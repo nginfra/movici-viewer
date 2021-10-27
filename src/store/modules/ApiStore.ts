@@ -4,9 +4,9 @@
  */
 
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
-import { failMessage } from '~flow/utils/snackbar';
-import { Client } from '~flow/api';
-import { bindAPI } from '~flow/store/store-accessor';
+import { failMessage } from '@movici-flow-common/utils/snackbar';
+import { Client } from '@movici-flow-common/api';
+import { bindAPI } from '@movici-flow-common/store/store-accessor';
 import MockBackend from '@/api/MockBackend';
 
 const API_CONCURRENCY = 10;

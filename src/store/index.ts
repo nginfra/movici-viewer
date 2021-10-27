@@ -3,15 +3,15 @@ import Vuex, { Store } from 'vuex';
 import GeneralStore from '@/store/modules/GeneralStore';
 import ApiStore from '@/store/modules/ApiStore';
 import { initStores } from '@/store/store-accessor';
-import { initFlowStores } from '~flow/store/store-accessor';
-import FlowStore from '~flow/store/FlowStore';
-import FlowUIStore from '~flow/store/FlowUserInterfaceStore';
-import GeocodeStore from '~flow/store/GeocodeStore';
+import { initFlowStores } from '@movici-flow-common/store/store-accessor';
+import FlowStore from '@movici-flow-common/store/FlowStore';
+import FlowUIStore from '@movici-flow-common/store/FlowUserInterfaceStore';
+import GeocodeStore from '@movici-flow-common/store/GeocodeStore';
 
 Vue.use(Vuex);
 
 export * from '@/store/store-accessor';
-export * from '~flow/store/store-accessor';
+export * from '@movici-flow-common/store/store-accessor';
 
 const store = new Store({
   plugins: [initStores, initFlowStores],

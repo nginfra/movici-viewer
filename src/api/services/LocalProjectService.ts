@@ -1,5 +1,5 @@
-import { Client, ProjectService } from '~flow/api';
-import { Project } from '~flow/types';
+import { Client, ProjectService } from '@movici-flow-common/api';
+import { Project } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from '../mocks';
 
 export default class LocalProjectService implements ProjectService {

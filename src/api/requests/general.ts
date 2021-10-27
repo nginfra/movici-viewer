@@ -1,6 +1,6 @@
-import { ApplicationSettings } from '~flow/types';
+import { ApplicationSettings } from '@movici-flow-common/types';
 import { AxiosRequestConfig } from 'axios';
-import { BaseRequest } from '~flow/api';
+import { BaseRequest } from '@movici-flow-common/api';
 
 export class GetGlobalSettings extends BaseRequest<ApplicationSettings> {
   makeRequest(): AxiosRequestConfig {

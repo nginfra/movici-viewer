@@ -22,6 +22,6 @@ module.exports = {
       config.optimization.splitChunks.chunks = 'all';
     }
 
-    config.resolve.alias['~flow'] = path.join(__dirname, 'movici-flow-common/src/');
+    config.resolve.alias['@movici-flow-common'] = path.join(__dirname, 'movici-flow-common/src/');
   }
 };
