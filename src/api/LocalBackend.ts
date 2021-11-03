@@ -1,35 +1,34 @@
-import { Backend, Client } from '@movici-flow-common/api';
-import LocalDatasetService from '@/api/services/LocalDatasetService';
+import { Backend, Client, CAPABILITIES } from '@movici-flow-common/api';
+import LocalDatasetService from './services/LocalDatasetService';
 import LocalGeocodeService from './services/LocalGeocodeService';
-import LocalProjectService from '@/api/services/LocalProjectService';
-import LocalScenarioService from '@/api/services/LocalScenarioService';
-import LocalSummaryService from '@/api/services/LocalSummaryService';
-import LocalUpdatesService from '@/api/services/LocalUpdatesService';
-import LocalUserService from '@/api/services/LocalUserService';
-import LocalViewService from '@/api/services/LocalViewService';
-
+import DummyProjectService from './services/LocalProjectService';
+import LocalScenarioService from './services/LocalScenarioService';
+import LocalSummaryService from './services/LocalSummaryService';
+import LocalUpdatesService from './services/LocalUpdatesService';
+import DummyUserService from './services/LocalUserService';
+import LocalViewService from './services/LocalViewService';
 export default class LocalBackend implements Backend {
   dataset: LocalDatasetService;
-  project: LocalProjectService;
+  project: DummyProjectService;
   geocode: LocalGeocodeService;
   scenario: LocalScenarioService;
   summary: LocalSummaryService;
   updates: LocalUpdatesService;
-  user: LocalUserService;
+  user: DummyUserService;
   view: LocalViewService;
 
   constructor(client: Client) {
     this.dataset = new LocalDatasetService(client);
     this.geocode = new LocalGeocodeService(client);
-    this.project = new LocalProjectService(client);
+    this.project = new DummyProjectService(client);
     this.scenario = new LocalScenarioService(client);
     this.summary = new LocalSummaryService(client);
     this.updates = new LocalUpdatesService(client);
-    this.user = new LocalUserService(client);
+    this.user = new DummyUserService(client);
     this.view = new LocalViewService(client);
   }
 
-  getCapabilities(): string[] {
+  getCapabilities(): CAPABILITIES[] {
     return [];
   }
 }

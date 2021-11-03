@@ -23,5 +23,6 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+*.code-workspace
 
 coverage

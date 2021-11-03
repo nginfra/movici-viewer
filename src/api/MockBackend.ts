@@ -1,4 +1,4 @@
-import { Backend, Client } from '@movici-flow-common/api';
+import { Backend, Client, CAPABILITIES } from '@movici-flow-common/api';
 import MockDatasetService from '@/api/services/MockDatasetService';
 import MockGeocodeService from './services/MockGeocodeService';
 import MockProjectService from '@/api/services/MockProjectService';
@@ -29,7 +29,7 @@ export default class MockBackend implements Backend {
     this.view = new MockViewService(client);
   }
 
-  getCapabilities(): string[] {
+  getCapabilities(): CAPABILITIES[] {
     return [];
   }
 }

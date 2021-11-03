@@ -1,13 +1,9 @@
-/**
- * Top level store module. This one cannot depend on any other store modules to prevent circular
- * dependencies
- */
-
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { failMessage } from '@movici-flow-common/utils/snackbar';
 import { Client } from '@movici-flow-common/api';
 import { bindAPI } from '@movici-flow-common/store/store-accessor';
-import MockBackend from '@/api/MockBackend';
+import Backend from '@/api/MockBackend';
+// import Backend from '@/api/LocalBackend';
 
 const API_CONCURRENCY = 10;
 
@@ -28,17 +24,6 @@ function defaultClient(baseURL: string, apiToken: string | null): Client {
   name: 'api',
   namespaced: true
 })
-// Create a backend service that will work as interface
-// Local and Remote clients inherit this interface but have different methods
-// Implement method getCapabilities that will respond if some actions are possible (projects, currentUser...)
-// FlowComponent requests data from FlowStore
-//    |--> FlowStore calls client interface (local or remote)
-//    |--> Interface calls other Store (Datasets, Projects, etc)
-
-// Local Client
-
-// Remote Client
-// Uses stores to get data, summaries and resources
 class ApiStore extends VuexModule {
   client_: Client | null = null;
   baseURL = '/';
@@ -56,7 +41,7 @@ class ApiStore extends VuexModule {
     this.client_ = client;
     this.baseURL = client.baseURL;
 
-    bindAPI(new MockBackend(client));
+    bindAPI(new Backend(client));
   }
 
   @Mutation
