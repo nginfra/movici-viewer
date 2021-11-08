@@ -1,9 +1,9 @@
 .DS_Store
 node_modules
-flow_module
 /dist
+client/dist
 
-/tests/e2e/reports/
+/client/tests/e2e/reports/
 selenium-debug.log
 
 # local env files

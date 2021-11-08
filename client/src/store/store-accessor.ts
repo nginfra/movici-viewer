@@ -1,7 +1,7 @@
 import { Store } from 'vuex';
 import { getModule } from 'vuex-module-decorators';
-import GeneralStore from '@/store/modules/GeneralStore';
-import ApiStore from '@/store/modules/ApiStore';
+import GeneralStore from './modules/GeneralStore';
+import ApiStore from './modules/ApiStore';
 
 let apiStore: ApiStore, generalStore: GeneralStore;
 

@@ -10,7 +10,7 @@
   </section>
 </template>
 <script lang="ts">
-import { generalStore } from '@/store/store-accessor';
+import { generalStore } from '../store/store-accessor';
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({})

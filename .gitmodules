@@ -1,3 +1,3 @@
 [submodule "movici-flow-common"]
-	path = movici-flow-common
+	path = client/movici-flow-common
 	url = git@gitlab.com:nginfra/experiments/movici-flow-common.git

@@ -1,12 +1,12 @@
 import { Backend, Client, CAPABILITIES } from '@movici-flow-common/api';
-import MockDatasetService from '@/api/services/MockDatasetService';
+import MockDatasetService from './services/MockDatasetService';
 import MockGeocodeService from './services/MockGeocodeService';
-import MockProjectService from '@/api/services/MockProjectService';
-import MockScenarioService from '@/api/services/MockScenarioService';
-import MockSummaryService from '@/api/services/MockSummaryService';
-import MockUpdatesService from '@/api/services/MockUpdatesService';
-import MockUserService from '@/api/services/MockUserService';
-import MockViewService from '@/api/services/MockViewService';
+import MockProjectService from './services/MockProjectService';
+import MockScenarioService from './services/MockScenarioService';
+import MockSummaryService from './services/MockSummaryService';
+import MockUpdatesService from './services/MockUpdatesService';
+import MockUserService from './services/MockUserService';
+import MockViewService from './services/MockViewService';
 
 export default class MockBackend implements Backend {
   dataset: MockDatasetService;

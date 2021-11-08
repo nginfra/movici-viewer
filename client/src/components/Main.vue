@@ -6,7 +6,7 @@
   </div>
 </template>
 <script lang="ts">
-import { generalStore } from '@/store';
+import { generalStore } from '../store';
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({})

@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Main from '@/components/Main.vue';
-import Settings from '@/components/Settings.vue';
+import Main from './components/Main.vue';
+import Settings from './components/Settings.vue';
 import { getFlowRoutes } from '@movici-flow-common/router';
 
 Vue.use(Router);
