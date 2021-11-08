@@ -12,6 +12,7 @@ variables:
   DOCKER_REGISTRY: eu.gcr.io
   GCLOUD_PROJECT_ID: movici-develop
   IMAGE: $DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/webconsole
+  GIT_SUBMODULE_STRATEGY: recursive
 
 .build_docker_image:
   image:
