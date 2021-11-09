@@ -52,9 +52,9 @@ check_version_upgrade:
   variables:
     VERSION_FILES: "VERSION"
   script:
-    - git fetch origin master
+    - git fetch origin main
     - |-
-      if [[ -z $(git diff origin/master --name-only ${VERSION_FILES}) ]]; then
+      if [[ -z $(git diff origin/main --name-only ${VERSION_FILES}) ]]; then
         echo "All merge requests require a version upgrade. Please update your version"
         exit 1
       fi
@@ -71,9 +71,9 @@ check_chart_version:
   variables:
     VERSION_FILES: "chart/Chart.yaml"
   script:
-    - git fetch origin master
+    - git fetch origin main
     - |-
-      if [[ -z $(git diff origin/master --name-only ${VERSION_FILES}) ]]; then
+      if [[ -z $(git diff origin/main --name-only ${VERSION_FILES}) ]]; then
         echo "Changes to the Chart or to the version should update the versions in Chart.yaml"
         exit 1
       fi
