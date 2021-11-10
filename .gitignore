@@ -15,14 +15,20 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# cache dirs
+.cache
+.pytest_cache
+__pycache__/
+.benchmarks
+
+# Tets reports
+coverage
+.coverage
+coverage.xml
+pylint.txt
+bandit-report.json
+
 # Editor directories and files
 .idea
 .vscode
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw*
-*.code-workspace
 
-coverage
