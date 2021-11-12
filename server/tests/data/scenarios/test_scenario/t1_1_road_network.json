@@ -1,0 +1,12 @@
+{
+  "road_network": {
+    "road_segment_entities": {
+      "id": [
+        1, 2, 3
+      ],
+      "traffic_properties": {
+        "average_time": [10.0, 20.0, 30.0]
+      }
+    }
+  }
+}

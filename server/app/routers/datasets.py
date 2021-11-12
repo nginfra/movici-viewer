@@ -1,8 +1,10 @@
 from fastapi import APIRouter, Depends
-
+from fastapi.responses import FileResponse
 from ..model.model import Repository
 from ..schemas.dataset import DatasetCollection, Dataset
 from .. import dependencies
+from ..schemas.summary import DatasetSummary
+from ..types import UUID
 
 dataset_router = APIRouter(prefix="/datasets")
 
@@ -13,7 +15,17 @@ def list_datasets(repository: Repository = Depends(dependencies.repository)):
 
 
 @dataset_router.get("/{uuid}", response_model=Dataset)
-def get_dataset(
-    uuid: str, repository: Repository = Depends(dependencies.repository)
-):
+def get_dataset(uuid: UUID, repository: Repository = Depends(dependencies.repository)):
     return repository.get_dataset(uuid)
+
+
+@dataset_router.get("/{uuid}/data")
+def get_dataset_data(
+        uuid: UUID, repository: Repository = Depends(dependencies.repository)
+):
+    return FileResponse(repository.get_dataset_data(uuid))
+
+
+@dataset_router.get("/{uuid}/summary", response_model=DatasetSummary)
+def get_dataset_summary(uuid: UUID, repository: Repository = Depends(dependencies.repository)):
+    return repository.get_dataset_summary(uuid)
