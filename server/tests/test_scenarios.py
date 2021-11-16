@@ -3,10 +3,10 @@ import pytest
 
 def test_get_scenarios(get_with_status):
     response = get_with_status("/scenarios/", 200)
-    assert [scen["name"] for scen in response.json()["scenarios"]] == [
+    assert set(scen["name"] for scen in response.json()["scenarios"]) == {
         "test_scenario",
         "no_updates_scenario",
-    ]
+    }
 
 
 def test_get_single_scenario(get_with_status):
