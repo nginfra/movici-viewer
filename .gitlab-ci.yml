@@ -1,4 +1,4 @@
-image: eu.gcr.io/movici-develop/toolbox:latest
+image: eu.gcr.io/movici-develop/cicd-pipeline-tools:latest
 
 stages:
   - verify
@@ -9,23 +9,9 @@ stages:
   - staging
 
 variables:
-  DOCKER_REGISTRY: eu.gcr.io
-  GCLOUD_PROJECT_ID: movici-develop
-  IMAGE: $DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/webconsole
   GIT_SUBMODULE_STRATEGY: recursive
 
-.build_docker_image:
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""] # Override the entrypoint so that a different script can be run
-
-.with_gcloud:
-  before_script:
-    - gcloud auth activate-service-account --key-file=$GOOGLE_APPLICATION_CREDENTIALS
-    - gcloud container clusters get-credentials movici-development-cluster --zone europe-west4-a
-
 .testing:
-  image: node:14
   only:
     - master
     - merge_requests
@@ -37,15 +23,9 @@ check_version_upgrade:
     refs:
       - merge_requests
     changes:
-      - etc/**/*
-      - public/**/*
-      - src/**/*
-      - .dockerignore
-      - .env
-      - Dockerfile
-      - package.json
+      - client/**/*
+      - server/**/*
       - VERSION
-      - vue.config.js
   except:
     refs:
       - /^dependabot\/.*$/
@@ -59,26 +39,8 @@ check_version_upgrade:
         exit 1
       fi
 
-check_chart_version:
-  stage: verify
-  image: alpine/git
-  only:
-    refs:
-      - merge_requests
-    changes:
-      - VERSION
-      - chart/**/*
-  variables:
-    VERSION_FILES: "chart/Chart.yaml"
-  script:
-    - git fetch origin main
-    - |-
-      if [[ -z $(git diff origin/main --name-only ${VERSION_FILES}) ]]; then
-        echo "Changes to the Chart or to the version should update the versions in Chart.yaml"
-        exit 1
-      fi
-
-test:unit:
+test:client:
+  image: node:14
   extends: .testing
   stage: test
   variables:
@@ -90,86 +52,15 @@ test:unit:
     paths:
       - coverage/lcov.info
   before_script:
+    - cd client/
     - npm install
   script:
     - npm run test:unit -- --coverage
 
-.test:security:webconsole:
-  extends: .testing
-  stage: test
+test:server:
+  before_script:
+    - cd server
+    - pip install -r requirements.txt
+    - pip install -r requirements-dev.txt
   script:
-    - npm audit
-
-report:sonarqube:
-  image:
-    name: sonarsource/sonar-scanner-cli:latest
-    entrypoint: [ "" ]
-  stage: report
-  only:
-    - master
-    - merge_requests
-  dependencies:
-    - test:unit
-  variables:
-    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
-    GIT_DEPTH: "0"
-    KUBERNETES_MEMORY_REQUEST: 4096Mi
-    KUBERNETES_MEMORY_LIMIT: 4096Mi
-    KUBERNETES_CPU_REQUEST: 1500m
-    KUBERNETES_CPU_LIMIT: 2000m
-  script:
-    - sonar-scanner -Dsonar.branch.name="${CI_COMMIT_REF_NAME}"
-
-build:web_console:
-  extends: .build_docker_image
-  stage: build
-  only:
-    - master
-    - merge_requests
-  variables:
-    KUBERNETES_MEMORY_REQUEST: 4096Mi
-    KUBERNETES_MEMORY_LIMIT: 4096Mi
-    KUBERNETES_CPU_REQUEST: 1500m
-    KUBERNETES_CPU_LIMIT: 2000m
-  script:
-    - |-
-      /kaniko/executor --cache=true \
-      --build-arg=PYPI_SERVER_URL=$PYPI_SERVER_URL \
-      --build-arg=PYPI_SERVER_HOST=$PYPI_SERVER_HOST \
-      --context $CI_PROJECT_DIR \
-      --dockerfile $CI_PROJECT_DIR/Dockerfile \
-      --destination $IMAGE:$CI_COMMIT_SHORT_SHA
-
-tag:image:
-  extends: .with_gcloud
-  stage: tag
-  only:
-    refs:
-      - master
-    changes:
-      - VERSION
-  script:
-    - VERSION=$(tail -1 $CI_PROJECT_DIR/VERSION)
-    - gcloud container images add-tag $IMAGE:$CI_COMMIT_SHORT_SHA $IMAGE:$VERSION
-    - gcloud container images add-tag $IMAGE:$CI_COMMIT_SHORT_SHA $IMAGE:latest
-
-deploy:staging:
-  extends: .with_gcloud
-  stage: staging
-  variables:
-    NAMESPACE: staging
-    RELEASE_NAME: webconsole
-  only:
-    - master
-  script:
-    - helm upgrade --install -n $NAMESPACE $RELEASE_NAME chart/ -f k8s/values-staging.yaml
-
-deploy:kubernetes_repo:chart:
-  image: $DOCKER_REGISTRY/$GCLOUD_PROJECT_ID/cicd-build-env:latest
-  stage: staging
-  retry: 1
-  only:
-    refs:
-      - master
-  script:
-    - commit-helm-chart-to-kubernetes-repo.sh
+    - pytest tests
