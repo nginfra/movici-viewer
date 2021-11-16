@@ -12,6 +12,8 @@ variables:
   GIT_SUBMODULE_STRATEGY: recursive
 
 .testing:
+  stage: test
+
   only:
     - master
     - merge_requests
@@ -42,7 +44,6 @@ check_version_upgrade:
 test:client:
   image: node:14
   extends: .testing
-  stage: test
   variables:
     KUBERNETES_MEMORY_REQUEST: 2048Mi
     KUBERNETES_MEMORY_LIMIT: 2048Mi
@@ -58,6 +59,7 @@ test:client:
     - npm run test:unit -- --coverage
 
 test:server:
+  extends: .testing
   before_script:
     - cd server
     - pip install -r requirements.txt
