@@ -1,7 +1,7 @@
 import { Client, ScenarioService } from '@movici-flow-common/api';
 
-import { Scenario, ShortScenario, UUID } from '@movici-flow-common/types';
-import mocks, { MOCK_TIMEOUT } from '../mocks';
+import { UUID } from '@movici-flow-common/types';
+import { GetScenario, GetScenarios } from '@/api/requests';
 
 export default class LocalScenarioService implements ScenarioService {
   client: Client;
@@ -10,15 +10,11 @@ export default class LocalScenarioService implements ScenarioService {
     this.client = client;
   }
 
-  get(scenario_uuid: UUID) {
-    return new Promise<Scenario>(resolve => {
-      resolve((mocks('./scenario.json') as unknown) as Scenario);
-    });
+  async get(scenario_uuid: UUID) {
+    return this.client?.request(new GetScenario(scenario_uuid));
   }
 
-  list(project_uuid: UUID) {
-    return new Promise<ShortScenario[]>(resolve => {
-      setTimeout(() => resolve(mocks('./scenarios.json')), MOCK_TIMEOUT);
-    });
+  async list() {
+    return this.client?.request(new GetScenarios());
   }
 }

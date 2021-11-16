@@ -11,14 +11,13 @@ import itertools
 import numpy as np
 import orjson as json
 
-from movici_simulation_core.core.schema import AttributeSchema, PropertySpec, DataType
+from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.data_tracker.data_format import (
     EntityInitDataFormat,
     extract_dataset_data,
 )
 from movici_simulation_core.data_tracker.index import Index
 from movici_simulation_core.data_tracker.property import (
-    OPT,
     PropertyObject,
     property_min,
     property_max,
@@ -30,9 +29,9 @@ from movici_simulation_core.postprocessing.results import (
 )
 from movici_simulation_core.types import PropertyIdentifier
 from movici_simulation_core.utils.plugin import configure_global_plugins
-from ...app.caching import memoize, cache_clear
-from ...app.exceptions import NotFound, InvalidObject
-from ...app.types import UUID
+from ..caching import memoize, cache_clear
+from ..exceptions import NotFound, InvalidObject
+from ..types import UUID
 
 
 class Repository:
@@ -192,8 +191,11 @@ class DirectorySource:
             result = json.loads(path.read_bytes())
         except (JSONDecodeError, OSError) as e:
             raise InvalidObject("scenario", scenario, exception=e)
+        for ds in result.get("datasets", []):
+            ds["uuid"] = ds["name"]
         return {
             **result,
+            "name": scenario,
             "uuid": scenario,
             "has_timeline": has_timeline(scenario),
             "status": get_scenario_status(result),
@@ -303,6 +305,10 @@ class UpdateInfo:
     iteration: int
     path: Path
 
+    def __post_init__(self):
+        self.timestamp = int(self.timestamp)
+        self.iteration = int(self.iteration)
+
     @property
     def uuid(self):
         return f"{self.scenario}__{self.path.stem}"
@@ -381,7 +387,7 @@ def get_property_summary(
     if extreme_values and identifier in extreme_values:
         min_val, max_val = extreme_values[identifier]
     else:
-        min_val, max_val = float(property_min(prop)), float(property_max(prop))
+        min_val, max_val = property_min(prop), property_max(prop)
 
     return {
         "component": identifier[0],
@@ -389,8 +395,8 @@ def get_property_summary(
         "data_type": get_datatype_string(prop.data_type),
         "description": "",
         "unit": "",
-        "min_val": min_val,
-        "max_val": max_val,
+        "min_val": float(min_val) if min_val is not None else None,
+        "max_val": float(max_val) if max_val is not None else None,
     }
 
 

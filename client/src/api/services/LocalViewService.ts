@@ -1,6 +1,13 @@
-import { Client, ViewService } from '@movici-flow-common/api';
-import { UUID, View, ViewCrudResponse } from '@movici-flow-common/types';
-import mocks, { MOCK_TIMEOUT } from '../mocks';
+import {
+  AddView,
+  Client,
+  DeleteView,
+  GetView,
+  GetViews,
+  UpdateView,
+  ViewService
+} from '@movici-flow-common/api';
+import { UUID, View } from '@movici-flow-common/types';
 
 export default class LocalViewService implements ViewService {
   client: Client;
@@ -10,39 +17,22 @@ export default class LocalViewService implements ViewService {
   }
 
   async create(scenarioUUID: UUID, view: View) {
-    return new Promise<ViewCrudResponse>(resolve =>
-      resolve({
-        view_uuid: '1234'
-      } as ViewCrudResponse)
-    );
+    return await this.client.request(new AddView(scenarioUUID, view));
   }
 
-  async list(scenarioUUID: UUID): Promise<View[]> {
-    return new Promise<View[]>(resolve => {
-      setTimeout(() => resolve((mocks('./views.json') as unknown) as View[]), MOCK_TIMEOUT);
-    });
+  async list(scenarioUUID: UUID) {
+    return await this.client.request(new GetViews(scenarioUUID));
   }
 
   async get(viewUUID: UUID) {
-    return new Promise<View>(resolve => {
-      setTimeout(() => resolve(mocks('./views.json')[0]), MOCK_TIMEOUT);
-    });
+    return await this.client.request(new GetView(viewUUID));
   }
 
-  // for local we can setup save files for views
   async update(viewUUID: UUID, view: View) {
-    return new Promise<ViewCrudResponse>(resolve =>
-      resolve({
-        view_uuid: viewUUID
-      } as ViewCrudResponse)
-    );
+    return await this.client.request(new UpdateView(viewUUID, view));
   }
 
   async delete(viewUUID: UUID) {
-    return new Promise<ViewCrudResponse>(resolve =>
-      resolve({
-        view_uuid: viewUUID
-      } as ViewCrudResponse)
-    );
+    return await this.client.request(new DeleteView(viewUUID));
   }
 }

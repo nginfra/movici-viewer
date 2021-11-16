@@ -1,6 +1,6 @@
 import { Client, SummaryService } from '@movici-flow-common/api';
-import { DatasetSummary, UUID } from '@movici-flow-common/types';
-import mocks, { MOCK_TIMEOUT } from '../mocks';
+import { UUID } from '@movici-flow-common/types';
+import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
 
 export default class LocalSummaryService implements SummaryService {
   client: Client;
@@ -10,14 +10,10 @@ export default class LocalSummaryService implements SummaryService {
   }
 
   getScenario(scenario_uuid: UUID, dataset_uuid: UUID) {
-    return new Promise<DatasetSummary | null>(resolve => {
-      setTimeout(() => resolve(mocks('./scenario_summary.json')), MOCK_TIMEOUT);
-    });
+    return this.client?.request(new GetScenarioSummary(scenario_uuid, dataset_uuid));
   }
 
   getDataset(dataset_uuid: UUID) {
-    return new Promise<DatasetSummary>(resolve => {
-      setTimeout(() => resolve(mocks('./dataset_summary.json')), MOCK_TIMEOUT);
-    });
+    return this.client?.request(new GetDatasetSummary(dataset_uuid));
   }
 }

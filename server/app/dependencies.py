@@ -3,9 +3,9 @@ from functools import lru_cache
 
 from fastapi import Depends, HTTPException
 
-from server.app.model.model import Repository
-from server.app.settings import Settings
-from server.app.types import UUID
+from .model.model import Repository
+from .settings import Settings
+from .types import UUID
 
 
 @lru_cache()

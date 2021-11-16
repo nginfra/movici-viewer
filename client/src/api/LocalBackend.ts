@@ -19,8 +19,8 @@ export default class LocalBackend implements Backend {
 
   constructor(client: Client) {
     this.dataset = new LocalDatasetService(client);
-    this.geocode = new LocalGeocodeService(client);
-    this.project = new DummyProjectService(client);
+    this.geocode = new LocalGeocodeService();
+    this.project = new DummyProjectService();
     this.scenario = new LocalScenarioService(client);
     this.summary = new LocalSummaryService(client);
     this.updates = new LocalUpdatesService(client);

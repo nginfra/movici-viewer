@@ -1,27 +1,15 @@
-import { Client, GeocodeService } from '@movici-flow-common/api';
-import {
-  GetGeocodeResult,
-  GetGeocodeResults,
-  GetGeocodeSuggestions
-} from '@movici-flow-common/api/requests';
-import { GeocodeSearchQuery, GeocodeSuggestion } from '@movici-flow-common/types';
+import { GeocodeService } from '@movici-flow-common/api';
 
 export default class LocalGeocodeService implements GeocodeService {
-  client: Client;
-
-  constructor(client: Client) {
-    this.client = client;
+  async getSuggestions() {
+    return null;
   }
 
-  getSuggestions(query: GeocodeSearchQuery) {
-    return this.client.request(new GetGeocodeSuggestions(query));
+  async resolveSuggestion() {
+    return null;
   }
 
-  resolveSuggestion(suggestion: GeocodeSuggestion) {
-    return this.client.request(new GetGeocodeResult(suggestion.result_uuid));
-  }
-
-  getResults(query: GeocodeSearchQuery) {
-    return this.client.request(new GetGeocodeResults(query));
+  async getResults() {
+    return null;
   }
 }

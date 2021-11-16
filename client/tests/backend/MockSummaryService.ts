@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client, SummaryService } from '@movici-flow-common/api';
 import { DatasetSummary, UUID } from '@movici-flow-common/types';
-import mocks, { MOCK_TIMEOUT } from '../mocks';
+import mocks, { MOCK_TIMEOUT } from './mocks';
 
 export default class MockSummaryService implements SummaryService {
   client: Client;

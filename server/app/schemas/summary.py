@@ -22,8 +22,8 @@ class PropertySummary(BaseModel):
     data_type: str
     description: str
     unit: str
-    min_val: float
-    max_val: float
+    min_val: t.Optional[float] = ...
+    max_val: t.Optional[float] = ...
 
 
 EntityGroupSummary.update_forward_refs()

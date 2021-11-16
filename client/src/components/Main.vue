@@ -1,8 +1,6 @@
 <template>
   <div>
-    <div v-if="initialized">
-      <router-view />
-    </div>
+    <router-view />
   </div>
 </template>
 <script lang="ts">
@@ -15,12 +13,6 @@ export default class Main extends Vue {
 
   get initialized() {
     return generalStore.initialized;
-  }
-
-  userLoggedIn!: boolean;
-
-  get initializedAndLoggedIn(): boolean {
-    return this.initialized;
   }
 }
 </script>

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Client, UpdatesService } from '@movici-flow-common/api';
 import { ComponentProperty, Update, UUID } from '@movici-flow-common/types';
-import { MOCK_TIMEOUT } from '../mocks';
+import { MOCK_TIMEOUT } from './mocks';
 export default class MockUpdatesService implements UpdatesService {
   client: Client;
 

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <div v-if="initialized">
+      <router-view />
+    </div>
   </div>
 </template>
 <script lang="ts">
@@ -11,6 +13,9 @@ import { generalStore } from './store';
   name: 'App'
 })
 export default class App extends Vue {
+  get initialized() {
+    return generalStore.initialized;
+  }
   async mounted() {
     await generalStore.initApp();
   }

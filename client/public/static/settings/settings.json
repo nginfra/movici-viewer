@@ -1,5 +1,4 @@
 {
   "ApiAddress": "http://localhost:5000",
-  "localhost": true,
   "features": []
 }

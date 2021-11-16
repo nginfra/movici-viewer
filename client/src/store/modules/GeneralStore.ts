@@ -1,15 +1,14 @@
-import i18n from '../../i18n';
+import i18n from '@/i18n';
 import pick from 'lodash/pick';
 import { Action, Module, Mutation, VuexModule } from 'vuex-module-decorators';
 import { ApplicationSettings } from '@movici-flow-common/types';
-import { GetGlobalSettings } from '../../api/requests';
-import { apiStore } from '../store-accessor';
+import { GetGlobalSettings } from '@/api/requests';
+import { apiStore } from '@/store';
 
+const DEFAULT_LANGUAGE = 'en';
 const defaultSettings = {
-  Language: 'en'
+  Language: DEFAULT_LANGUAGE
 };
-
-const fixedSettings = {};
 
 function getLocalSettings() {
   let localSettings;
@@ -36,8 +35,9 @@ class GeneralStore extends VuexModule {
 
   @Mutation
   UPDATE_SETTINGS(payload: Partial<ApplicationSettings>) {
+    console.log('here', payload);
+
     const localSettingsKeys = ['Language'];
-    payload = { ...payload, ...fixedSettings };
     const localSettings = pick(payload, localSettingsKeys);
 
     const currentSettings = getLocalSettings();
@@ -52,8 +52,8 @@ class GeneralStore extends VuexModule {
   @Action({ rawError: true })
   async initApp() {
     try {
-      await this.loadLocalSettings();
-      await this.setLanguage(this.language);
+      this.loadLocalSettings();
+      this.setLanguage(this.language);
       await this.loadRemoteSettings();
 
       setTimeout(() => {
@@ -67,18 +67,13 @@ class GeneralStore extends VuexModule {
   @Action({ rawError: true })
   loadLocalSettings() {
     const localSettings = getLocalSettings();
-    return this.updateSettings({ ...defaultSettings, ...localSettings });
+    this.UPDATE_SETTINGS({ ...defaultSettings, ...localSettings });
   }
 
   @Action({ rawError: true })
   setLanguage(lang: string) {
     i18n.locale = lang;
-    return this.updateSettings({ Language: lang });
-  }
-
-  @Action({ rawError: true })
-  updateSettings(settings: Partial<ApplicationSettings>) {
-    this.UPDATE_SETTINGS(settings);
+    return this.UPDATE_SETTINGS({ Language: lang });
   }
 
   @Action({ rawError: true })
@@ -95,11 +90,7 @@ class GeneralStore extends VuexModule {
   }
 
   get settings() {
-    return this.settings_;
-  }
-
-  get isLocalhost() {
-    return this.settings.localhost;
+    return this.settings_ ?? {};
   }
 
   get apiBase() {
@@ -107,7 +98,7 @@ class GeneralStore extends VuexModule {
   }
 
   get language() {
-    return this.settings.Language ?? '';
+    return this.settings.Language ?? DEFAULT_LANGUAGE;
   }
 
   get featureToggle() {
