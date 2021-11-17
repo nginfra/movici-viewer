@@ -3,10 +3,7 @@ image: eu.gcr.io/movici-develop/cicd-pipeline-tools:latest
 stages:
   - verify
   - test
-  - report
-  - build
-  - tag
-  - staging
+  - deploy
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -65,3 +62,19 @@ test:server:
     - pip install .[dev] --extra-index-url=$PYPI_SERVER_URL --trusted-host=$PYPI_SERVER_HOST
   script:
     - pytest tests
+
+deploy:package:
+  stage: deploy
+  variables:
+    POETRY_HTTP_BASIC_MOVICI_USERNAME: $TWINE_USERNAME
+    POETRY_HTTP_BASIC_MOVICI_PASSWORD: $TWINE_PASSWORD
+  only:
+    - main
+
+  before_script:
+    - apt update && apt install -y make
+    - pip install poetry
+    - poetry config repositories.movici $PYPI_SERVER
+  script:
+    - make init
+    - cd server && poetry publish --build --repository movici
