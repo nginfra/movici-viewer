@@ -80,6 +80,8 @@ deploy:package:
     - apt update && apt install -y make
     - pip install poetry
     - poetry config repositories.movici $PYPI_SERVER
+    - sed -i "s#https://pypi.movici.nl#${PYPI_SERVER}#g" server/poetry.lock
+    - sed -i "s#https://pypi.movici.nl#${PYPI_SERVER}#g" server/pyproject.toml
   script:
     - make init
     - cd server && poetry publish --build --repository movici
