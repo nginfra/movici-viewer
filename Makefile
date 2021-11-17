@@ -6,7 +6,7 @@ bump-version:
 
 ui:
 	cd client && npm run build
-	rm -r server/movici_viewer/ui/*
+	rm -rf server/movici_viewer/ui/*
 	cp -r client/dist/* server/movici_viewer/ui
 
 build: ui
