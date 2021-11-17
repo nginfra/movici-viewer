@@ -1,3 +1,36 @@
+[tool.poetry]
+name = "movici-viewer"
+version = "0.1.0"
+description = "Movici Viewer"
+authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
+
+[tool.poetry.scripts]
+movici-viewer = "movici_viewer.main:main"
+
+[tool.poetry.dependencies]
+python = "^3.8"
+fastapi = "^0.70.0"
+movici-simulation-core = { version = ">=1.2.1", extras = ["models"] }
+orjson = "^3.6.4"
+pydantic = "^1.8.2"
+uvicorn = { extras = ["standard"], version = "^0.15.0" }
+click = "^8.0.3"
+
+requests = { version = "^2.26.0", optional = true }
+pytest = { version = "^6.2.5", optional = true }
+
+[tool.poetry.extras]
+dev = ["requests", "pytest"]
+
+[[tool.poetry.source]]
+name = "movici"
+url = "https://pypi.movici.nl/simple/"
+secondary = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
 [tool.black]
 line-length = 99
 include = '\.pyi?$'
@@ -14,7 +47,7 @@ exclude = '''(
   | buck-out
   | build
   | dist
-
+  | venv
 )/
 )
 '''

@@ -4,7 +4,6 @@ import typing as t
 
 from pydantic import BaseModel
 
-from ..types import UUID
 
 
 class ScenarioCollection(BaseModel):
@@ -12,7 +11,7 @@ class ScenarioCollection(BaseModel):
 
 
 class Scenario(BaseModel):
-    uuid: UUID
+    uuid: str
     name: str
     display_name: str
     has_timeline: bool

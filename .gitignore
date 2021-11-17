@@ -1,7 +1,8 @@
 .DS_Store
 node_modules
 /dist
-client/dist
+/client/dist
+/server/movici_viewer/ui/*
 
 /client/tests/e2e/reports/
 selenium-debug.log

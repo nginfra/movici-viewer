@@ -1,9 +1,5 @@
 [bumpversion]
-current_version = 0.1.0
+current_version = 0.2.0
 allow_dirty = True
 
 [bumpversion:file:VERSION]
-
-[bumpversion:file:./chart/Chart.yaml]
-search = appVersion: {current_version}
-replace = appVersion: {new_version}

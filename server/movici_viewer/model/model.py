@@ -31,12 +31,11 @@ from movici_simulation_core.types import PropertyIdentifier
 from movici_simulation_core.utils.plugin import configure_global_plugins
 from ..caching import memoize, cache_clear
 from ..exceptions import NotFound, InvalidObject
-from ..types import UUID
 
 
 class Repository:
     result_datasets: t.Dict[str, ResultDataset]
-    active_scenario: t.Optional[UUID] = None
+    active_scenario: t.Optional[str] = None
     scenario_results: t.Optional[SimulationResults] = None
 
     def __init__(self, data_dir, use_global_plugins=True):
@@ -50,19 +49,19 @@ class Repository:
     def get_scenarios(self):
         return list(self.source.get_scenarios())
 
-    def get_scenario(self, uuid: UUID):
+    def get_scenario(self, uuid: str):
         return self.source.get_scenario(uuid)
 
     def get_datasets(self):
         return list(self.source.get_datasets())
 
-    def get_dataset(self, uuid: UUID):
+    def get_dataset(self, uuid: str):
         return self.source.get_dataset(uuid)
 
-    def get_dataset_data(self, uuid: UUID) -> Path:
+    def get_dataset_data(self, uuid: str) -> Path:
         return self.source.get_dataset_path(uuid)
 
-    def get_state(self, scenario_uuid: UUID, dataset_uuid: UUID, timestamp: t.Optional = None):
+    def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: t.Optional = None):
 
         if self.active_scenario != scenario_uuid:
             self.set_active_scenario(scenario_uuid)
@@ -79,10 +78,10 @@ class Repository:
             "data": EntityInitDataFormat().dump_dict(dataset.state.to_dict()[dataset.name]),
         }
 
-    def get_updates(self, scenario_uuid: UUID):
+    def get_updates(self, scenario_uuid: str):
         return list(self.source.get_updates(scenario_uuid))
 
-    def get_update(self, update_uuid: UUID):
+    def get_update(self, update_uuid: str):
         return self.source.get_update(update_uuid)
 
     def get_dataset_summary(self, dataset_uuid):
@@ -108,8 +107,8 @@ class DirectorySource:
     VIEWS = "views"
     UPDATE_PATTERN = r"t(?P<timestamp>\d+)_(?P<iteration>\d+)_(?P<dataset>\w+)"
 
-    updates: t.Dict[UUID, UpdateInfo] = {}
-    updates_by_scenario: t.Dict[UUID, t.Dict[UUID, UpdateInfo]] = defaultdict(dict)
+    updates: t.Dict[str, UpdateInfo] = {}
+    updates_by_scenario: t.Dict[str, t.Dict[str, UpdateInfo]] = defaultdict(dict)
 
     def __init__(self, data_dir: Path, schema: AttributeSchema):
         self.dir = data_dir
@@ -146,7 +145,7 @@ class DirectorySource:
         self.build_updates_index(scenario)
         return self.updates_by_scenario[scenario].values()
 
-    def build_updates_index(self, scenario: UUID):
+    def build_updates_index(self, scenario: str):
         if scenario in self.updates_by_scenario:
             return
 
@@ -235,11 +234,11 @@ class DirectorySource:
             attributes=self.schema,
         )
 
-    def get_updates(self, scenario: UUID):
+    def get_updates(self, scenario: str):
         for update in self.iter_updates(scenario):
             yield update.as_dict()
 
-    def get_update(self, update_uuid: UUID):
+    def get_update(self, update_uuid: str):
         if "__" not in update_uuid:
             raise NotFound("update", update_uuid)
         scenario, filename = update_uuid.split("__")
@@ -261,7 +260,7 @@ class DirectorySource:
         return None
 
     @memoize
-    def get_dataset_summary(self, dataset: UUID):
+    def get_dataset_summary(self, dataset: str):
         path = self.get_dataset_path(dataset)
         data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).load_bytes(
             path.read_bytes()
@@ -271,7 +270,7 @@ class DirectorySource:
         return get_summary_from_state(state)
 
     @memoize
-    def get_scenario_summary(self, scenario: UUID, dataset: UUID):
+    def get_scenario_summary(self, scenario: str, dataset: str):
         results = self.get_results(scenario).get_dataset(dataset)
         state = results.state
         min_max: t.Dict[str, t.Dict[PropertyIdentifier, t.Tuple[float, float]]] = defaultdict(dict)
@@ -299,8 +298,8 @@ class DirectorySource:
 
 @dataclasses.dataclass
 class UpdateInfo:
-    dataset: UUID
-    scenario: UUID
+    dataset: str
+    scenario: str
     timestamp: int
     iteration: int
     path: Path

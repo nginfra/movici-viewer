@@ -4,7 +4,6 @@ import typing as t
 
 from pydantic import BaseModel
 
-from ..types import UUID
 
 
 class DatasetCollection(BaseModel):
@@ -12,7 +11,7 @@ class DatasetCollection(BaseModel):
 
 
 class Dataset(BaseModel):
-    uuid: UUID
+    uuid: str
     name: str
     display_name: str
     type: str

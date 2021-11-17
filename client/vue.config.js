@@ -2,6 +2,7 @@
 const path = require('path');
 
 module.exports = {
+  publicPath: './',
   lintOnSave: 'warning',
   pluginOptions: {
     i18n: {

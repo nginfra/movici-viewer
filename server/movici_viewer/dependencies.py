@@ -5,7 +5,6 @@ from fastapi import Depends, HTTPException
 
 from .model.model import Repository
 from .settings import Settings
-from .types import UUID
 
 
 @lru_cache()
@@ -18,7 +17,7 @@ def repository(settings: Settings = Depends(get_settings)):
 
 
 def dataset_uuid(
-    dataset_name: t.Optional[str] = None, dataset_uuid: t.Optional[UUID] = None
+    dataset_name: t.Optional[str] = None, dataset_uuid: t.Optional[str] = None
 ):
     if not (bool(dataset_uuid) ^ bool(dataset_name)):
         raise HTTPException(400, "supply either dataset_uuid or dataset_name")

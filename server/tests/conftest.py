@@ -4,10 +4,10 @@ import pytest as pytest
 from fastapi.testclient import TestClient
 
 from movici_simulation_core.data_tracker.numba_extensions import disable_jit
-from ..app.caching import cache_clear
-from ..app.main import get_app
-from ..app.settings import Settings
-from ..app import dependencies
+from movici_viewer.caching import cache_clear
+from movici_viewer.main import get_app
+from movici_viewer.settings import Settings
+from movici_viewer import dependencies
 
 
 @pytest.fixture(scope='session')
@@ -31,7 +31,7 @@ def app(settings, disable_numba):
         return settings
 
     cache_clear()
-    app = get_app()
+    app = get_app(mount_ui=False)
     app.dependency_overrides[dependencies.get_settings] = override
 
     return app

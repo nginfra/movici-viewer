@@ -4,7 +4,6 @@ import typing as t
 
 from pydantic import BaseModel
 
-from ..types import UUID
 
 
 class UpdateCollection(BaseModel):
@@ -12,10 +11,10 @@ class UpdateCollection(BaseModel):
 
 
 class Update(BaseModel):
-    uuid: UUID
+    uuid: str
     name: str
-    dataset_uuid: UUID
-    scenario_uuid: UUID
+    dataset_uuid: str
+    scenario_uuid: str
     timestamp: int
     iteration: int
     data: t.Optional[dict]

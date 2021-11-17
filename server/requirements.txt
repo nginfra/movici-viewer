@@ -1,5 +1,0 @@
-fastapi
-movici-simulation-core[models]>=1.2.1
-orjson
-pydantic
-uvicorn[standard]
