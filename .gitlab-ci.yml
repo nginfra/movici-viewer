@@ -15,7 +15,7 @@ variables:
   stage: test
 
   only:
-    - master
+    - main
     - merge_requests
 
 check_version_upgrade:
