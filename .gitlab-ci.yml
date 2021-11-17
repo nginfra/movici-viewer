@@ -64,6 +64,7 @@ test:server:
     - pytest tests
 
 deploy:package:
+  image: eu.gcr.io/movici-develop/cicd-build-tools:latest
   stage: deploy
   variables:
     POETRY_HTTP_BASIC_MOVICI_USERNAME: $TWINE_USERNAME
