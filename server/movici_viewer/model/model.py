@@ -79,6 +79,11 @@ class Repository:
         dataset.state.move_to(timestamp)
         return {
             **dataset.metadata.copy(),
+            "uuid": dataset_uuid,
+            "name": dataset_uuid,
+            "display_name": dataset.metadata.get('display_name', dataset_uuid),
+            "type": dataset.metadata['type'],
+            "format": "entity_based",
             "has_data": True,
             "data": EntityInitDataFormat().dump_dict(dataset.state.to_dict()[dataset.name]),
         }
@@ -257,7 +262,7 @@ class DirectorySource:
         return {
             "uuid": dataset_name,
             "name": dataset_name,
-            "display_name": result.get("display_name"),
+            "display_name": result.get("display_name", dataset_name),
             "type": result.get("type"),
             "format": dataset_format_from_type(result.get("type")),
             "has_data": "data" in result,
