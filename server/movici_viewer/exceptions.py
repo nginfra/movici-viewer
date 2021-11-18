@@ -2,6 +2,8 @@ import typing as t
 
 from fastapi import FastAPI, Request, HTTPException
 from fastapi.responses import JSONResponse
+from fastapi.encoders import jsonable_encoder
+from fastapi.exceptions import RequestValidationError
 
 
 class ServerError(Exception):
@@ -32,9 +34,21 @@ class InvalidObject(ServerError):
         return f"Error while reading {self.kind} '{self.name}'"
 
 
+class Conflict(ServerError):
+    status_code = 409
+
+    def __init__(self, kind, name):
+        self.kind = kind
+        self.name = name
+
+    def __str__(self):
+        return f"{self.kind} '{self.name}' already exists"
+
+
 def add_exception_handling(app: FastAPI):
     app.add_exception_handler(ServerError, format_server_error)
     app.add_exception_handler(HTTPException, format_http_exception)
+    app.add_exception_handler(RequestValidationError, format_request_validation_exception)
 
 
 def format_server_error(_: Request, exception: ServerError):
@@ -49,4 +63,11 @@ def format_http_exception(_: Request, exception: HTTPException):
         status_code=exception.status_code,
         content={"message": exception.detail},
         headers=exception.headers,
+    )
+
+
+def format_request_validation_exception(_: Request, exc: RequestValidationError) -> JSONResponse:
+    return JSONResponse(
+        status_code=400,
+        content={"message": jsonable_encoder(exc.errors())},
     )

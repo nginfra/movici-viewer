@@ -14,4 +14,3 @@ class InitDataInfo:
     name: str
     path: Path
     format: DatasetFormat
-

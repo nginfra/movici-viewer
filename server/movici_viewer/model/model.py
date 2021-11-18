@@ -30,7 +30,12 @@ from movici_simulation_core.postprocessing.results import (
 from movici_simulation_core.types import PropertyIdentifier
 from movici_simulation_core.utils.plugin import configure_global_plugins
 from ..caching import memoize, cache_clear
-from ..exceptions import NotFound, InvalidObject
+from ..exceptions import NotFound, InvalidObject, Conflict
+from ..schemas.view import InView
+
+
+def snake_case(text: str):
+    return re.sub(r"_*[\W]+_*", "_", text, flags=re.ASCII).lower().strip("_")
 
 
 class Repository:
@@ -90,6 +95,22 @@ class Repository:
     def get_scenario_summary(self, scenario_uuid, dataset_uuid):
         return self.source.get_scenario_summary(scenario_uuid, dataset_uuid)
 
+    def get_views(self, scenario_uuid):
+        return list(self.source.get_views(scenario_uuid))
+
+    def get_view(self, view_uuid):
+        return self.source.get_view(view_uuid)
+
+    def add_view(self, scenario_uuid: str, payload: InView):
+        view_name = snake_case(payload.name)
+        return self.source.add_view(scenario_uuid, view_name, payload)
+
+    def update_view(self, view_uuid, payload: InView):
+        return self.source.update_view(view_uuid, payload)
+
+    def delete_view(self, view_uuid):
+        return self.source.delete_view(view_uuid)
+
     def cache_clear(self):
         self.set_active_scenario(None)
         self.source.cache_clear()
@@ -132,6 +153,10 @@ class DirectorySource:
     @property
     def scenario_dir(self):
         return self.dir / self.SCENARIOS
+
+    @property
+    def views_dir(self):
+        return self.dir / self.VIEWS
 
     def iter_scenario_names(self):
         for file in self.scenario_dir.glob("*.json"):
@@ -176,6 +201,19 @@ class DirectorySource:
         if not updates_dir.is_dir():
             raise NotFound("simulation", scenario)
         return updates_dir
+
+    def get_views_path(self, scenario):
+        self.get_scenario_path(scenario)
+        return self.views_dir.joinpath(scenario)
+
+    def get_view_path(self, view_uuid) -> t.Optional[Path]:
+        if "__" not in view_uuid:
+            return None
+        scenario, view = view_uuid.split("__")
+        path = self.views_dir / scenario / f"{view}.json"
+        if not path.is_file():
+            return None
+        return path
 
     def get_scenario(self, scenario: str) -> dict:
         def has_timeline(scenario):
@@ -294,6 +332,54 @@ class DirectorySource:
                     min_max[entity_type][identifier] = (min_val, max_val)
 
         return get_summary_from_state(state, extreme_values=min_max)
+
+    def get_view(self, view_uuid: str):
+        if "__" not in view_uuid:
+            raise NotFound("view", view_uuid)
+        scenario, view = view_uuid.split("__")
+
+        path = self.get_views_path(scenario).joinpath(view).with_suffix(".json")
+        if not path.is_file():
+            raise NotFound("view", view)
+
+        try:
+            result = json.loads(path.read_bytes())
+            return {
+                "uuid": view_uuid,
+                "name": result["name"],
+                "scenario_uuid": scenario,
+                "config": result["config"],
+            }
+        except (JSONDecodeError, OSError, KeyError) as e:
+            raise InvalidObject("view", view, exception=e)
+
+    def get_views(self, scenario):
+        if not (path := self.get_views_path(scenario)).is_dir():
+            return
+        for file in path.glob("*.json"):
+            yield self.get_view(f"{scenario}__{file.stem}")
+
+    def add_view(self, scenario, view_name, payload: InView):
+        self.get_scenario_path(scenario)
+        target_path = self.views_dir / scenario / f"{view_name}.json"
+        if target_path.exists():
+            raise Conflict("view", view_name)
+        target_path.parent.mkdir(parents=True, exist_ok=True)
+        target_path.write_bytes(json.dumps(payload.dict()))
+        return f"{scenario}__{view_name}"
+
+    def update_view(self, view_uuid, payload: InView):
+        if not (target_path := self.get_view_path(view_uuid)):
+            raise NotFound("view", view_uuid)
+
+        target_path.write_bytes(json.dumps(payload.dict()))
+        return view_uuid
+
+    def delete_view(self, view_uuid):
+        if not (target_path := self.get_view_path(view_uuid)):
+            raise NotFound("view", view_uuid)
+        target_path.unlink(missing_ok=True)
+        return view_uuid
 
 
 @dataclasses.dataclass

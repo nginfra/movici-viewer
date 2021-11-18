@@ -9,6 +9,7 @@ from ..schemas.summary import DatasetSummary
 from ..schemas.update import UpdateCollection
 import typing as t
 
+from ..schemas.view import ViewCollection, ViewCrudResponse, InView
 
 scenario_router = APIRouter(prefix="/scenarios")
 
@@ -48,6 +49,17 @@ def get_dataset_summary(
     repository: Repository = Depends(dependencies.repository),
     dataset_uuid: str = Depends(dependencies.dataset_uuid),
 ):
-    return repository.get_scenario_summary(
-        scenario_uuid=uuid, dataset_uuid=dataset_uuid
-    )
+    return repository.get_scenario_summary(scenario_uuid=uuid, dataset_uuid=dataset_uuid)
+
+
+@scenario_router.get("/{uuid}/views", response_model=ViewCollection)
+def list_views(uuid: str, repository: Repository = Depends(dependencies.repository)):
+    return {"views": repository.get_views(uuid)}
+
+
+@scenario_router.post("/{uuid}/views", response_model=ViewCrudResponse)
+def add_view(
+    uuid: str, payload: InView, repository: Repository = Depends(dependencies.repository)
+):
+    uuid = repository.add_view(uuid, payload)
+    return {"result": "ok", "message": "view created", "view_uuid": uuid}

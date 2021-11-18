@@ -1,13 +1,6 @@
-import {
-  AddView,
-  Client,
-  DeleteView,
-  GetView,
-  GetViews,
-  UpdateView,
-  ViewService
-} from '@movici-flow-common/api';
 import { UUID, View } from '@movici-flow-common/types';
+import { Client, ViewService } from '@movici-flow-common/api';
+import { AddView, DeleteView, GetView, GetViews, UpdateView } from '../requests';
 
 export default class LocalViewService implements ViewService {
   client: Client;

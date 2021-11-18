@@ -35,8 +35,6 @@ class GeneralStore extends VuexModule {
 
   @Mutation
   UPDATE_SETTINGS(payload: Partial<ApplicationSettings>) {
-    console.log('here', payload);
-
     const localSettingsKeys = ['Language'];
     const localSettings = pick(payload, localSettingsKeys);
 

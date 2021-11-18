@@ -19,9 +19,7 @@ def get_dataset(uuid: str, repository: Repository = Depends(dependencies.reposit
 
 
 @dataset_router.get("/{uuid}/data")
-def get_dataset_data(
-        uuid: str, repository: Repository = Depends(dependencies.repository)
-):
+def get_dataset_data(uuid: str, repository: Repository = Depends(dependencies.repository)):
     return FileResponse(repository.get_dataset_data(uuid))
 
 

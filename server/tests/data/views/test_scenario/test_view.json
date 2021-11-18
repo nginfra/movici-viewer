@@ -1,0 +1,76 @@
+{
+  "uuid": "363509d9-fcf2-429e-b1bb-3d10518594a8",
+  "name": "Test View",
+  "scenario_uuid": "9edb5b66-13b2-4ba7-85f1-83e65d1a69ab",
+  "config": {
+    "camera": {
+      "zoom": 13.597959305354571,
+      "pitch": 0,
+      "bearing": 0,
+      "latitude": 52.074725639205234,
+      "longitude": 4.305573982119168
+    },
+    "version": 1,
+    "timestamp": 0,
+    "visualizers": [
+      {
+        "name": "antenna_entities",
+        "visible": true,
+        "settings": {
+          "size": {
+            "static": {
+              "size": 5,
+              "units": "pixels"
+            }
+          },
+          "type": "points",
+          "color": {
+            "byValue": {
+              "type": "buckets",
+              "colors": [
+                [
+                  0,
+                  [
+                    229,
+                    75,
+                    75
+                  ]
+                ],
+                [
+                  1,
+                  [
+                    26,
+                    182,
+                    126
+                  ]
+                ]
+              ],
+              "maxValue": 1,
+              "attribute": {
+                "name": "has_power",
+                "unit": "",
+                "max_val": 1,
+                "min_val": 0,
+                "component": "operation_status_properties",
+                "data_type": "BOOLEAN",
+                "description": "Has power to operate"
+              },
+              "specialColor": [
+                255,
+                255,
+                255
+              ],
+              "undefinedColor": [
+                0,
+                0,
+                0
+              ]
+            }
+          }
+        },
+        "dataset_name": "antennas",
+        "entity_group": "antenna_entities"
+      }
+    ]
+  }
+}

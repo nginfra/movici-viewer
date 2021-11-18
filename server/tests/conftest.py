@@ -1,3 +1,4 @@
+import functools
 from pathlib import Path
 
 import pytest as pytest
@@ -10,14 +11,21 @@ from movici_viewer.settings import Settings
 from movici_viewer import dependencies
 
 
-@pytest.fixture(scope='session')
+@pytest.fixture(scope="session")
 def disable_numba():
     disable_jit()
 
 
 @pytest.fixture
-def data_dir():
+def base_data_dir():
     return Path(__file__).parent / "data"
+
+
+@pytest.fixture
+def data_dir(base_data_dir):
+    """this fixture can be overridden, for example with a temporary directory, while base_data_dir
+    remains available to use"""
+    return base_data_dir
 
 
 @pytest.fixture
@@ -43,10 +51,15 @@ def client(app):
 
 
 @pytest.fixture
-def get_with_status(client):
-    def _get(url, expected_status, **kwargs):
-        response = client.get(url, **kwargs)
+def request_with_status(client):
+    def _request(method, url, expected_status, **kwargs):
+        response = client.request(method, url, **kwargs)
         assert response.status_code == expected_status, response.json()
         return response
 
-    return _get
+    return _request
+
+
+@pytest.fixture
+def get_with_status(request_with_status):
+    return functools.partial(request_with_status, "get")

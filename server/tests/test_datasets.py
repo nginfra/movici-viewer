@@ -37,9 +37,7 @@ def test_get_dataset_with_data(get_with_status):
 
 
 def test_get_datasets_data_ignores_query_parameters(get_with_status):
-    response = get_with_status(
-        "/datasets/road_network/data?entity_group=some_entities", 200
-    )
+    response = get_with_status("/datasets/road_network/data?entity_group=some_entities", 200)
     assert "road_segment_entities" in response.json()["data"]
 
 

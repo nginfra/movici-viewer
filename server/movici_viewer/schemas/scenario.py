@@ -5,7 +5,6 @@ import typing as t
 from pydantic import BaseModel
 
 
-
 class ScenarioCollection(BaseModel):
     scenarios: t.List[Scenario]
 
