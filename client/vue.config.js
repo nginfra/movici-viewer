@@ -19,11 +19,21 @@ module.exports = {
       }
     }
   },
-  configureWebpack: config => {
-    if (process.env.NODE_ENV === 'production') {
-      config.optimization.splitChunks.chunks = 'all';
-    }
-
-    config.resolve.alias['@movici-flow-common'] = path.join(__dirname, 'movici-flow-common/src/');
+  configureWebpack: () => {
+    return {
+      optimization: {
+        splitChunks: {
+          chunks: process.env.NODE_ENV === 'production' ? 'all' : 'async' // async is webpack default
+        }
+      },
+      resolve: {
+        alias: { '@movici-flow-common': path.join(__dirname, 'movici-flow-common/src/') }
+      },
+      devServer: {
+        watchOptions: {
+          ignored: /node_modules/
+        }
+      }
+    };
   }
 };

@@ -1,3 +1,13 @@
+import pytest
+
+from movici_viewer.settings import Settings
+
+
+@pytest.fixture(params=[True, False], ids=["validate updates", "no validate updates"])
+def settings(request, data_dir):
+    return Settings(DATA_DIR=data_dir, VALIDATE_UPDATES=request.param)
+
+
 def test_get_updates(get_with_status):
     response = get_with_status("/scenarios/test_scenario/updates", 200)
     assert len(response.json()["updates"]) == 5
