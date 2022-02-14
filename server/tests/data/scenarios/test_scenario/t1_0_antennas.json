@@ -1,10 +1,1 @@
-  {
-  "antennas": {
-    "antenna_entities": {
-      "id": [0],
-      "operation_status_properties": {
-        "has_power": [false]
-      }
-    }
-  }
-}
+{"antennas":{"antenna_entities":{"id":[0],"operational.has_power":[false]}}}

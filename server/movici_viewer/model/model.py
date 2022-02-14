@@ -17,10 +17,10 @@ from movici_simulation_core.data_tracker.data_format import (
     extract_dataset_data,
 )
 from movici_simulation_core.data_tracker.index import Index
-from movici_simulation_core.data_tracker.property import (
-    PropertyObject,
-    property_min,
-    property_max,
+from movici_simulation_core.data_tracker.attribute import (
+    AttributeObject,
+    attribute_min,
+    attribute_max,
 )
 from movici_simulation_core.data_tracker.state import TrackedState
 from movici_simulation_core.postprocessing.results import (
@@ -28,7 +28,7 @@ from movici_simulation_core.postprocessing.results import (
     ResultDataset,
 )
 from movici_simulation_core.types import PropertyIdentifier
-from movici_simulation_core.utils.plugin import configure_global_plugins
+from movici_simulation_core.core.utils import configure_global_plugins
 from ..caching import memoize, cache_clear
 from ..exceptions import NotFound, InvalidObject, Conflict
 from ..schemas.view import InView
@@ -66,7 +66,7 @@ class Repository:
     def get_dataset_data(self, uuid: str) -> Path:
         return self.source.get_dataset_path(uuid)
 
-    def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: t.Optional = None):
+    def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: t.Optional[int] = None):
 
         if self.active_scenario != scenario_uuid:
             self.set_active_scenario(scenario_uuid)
@@ -319,20 +319,20 @@ class DirectorySource:
         min_max: t.Dict[str, t.Dict[PropertyIdentifier, t.Tuple[float, float]]] = defaultdict(dict)
         for timestamp in state.get_timestamps(dataset):
             state.move_to(timestamp)
-            for (dataset, entity_type, identifier, prop) in state.iter_properties():
+            for (dataset, entity_type, identifier, prop) in state.iter_attributes():
                 if identifier not in min_max[entity_type]:
-                    min_max[entity_type][identifier] = (property_min(prop), property_max(prop))
+                    min_max[entity_type][identifier] = (attribute_min(prop), attribute_max(prop))
                 else:
                     curr_min, curr_max = min_max[entity_type][identifier]
                     min_val = (
-                        property_min(prop)
+                        attribute_min(prop)
                         if curr_min is None
-                        else min(curr_min, property_min(prop))
+                        else min(curr_min, attribute_min(prop))
                     )
                     max_val = (
-                        property_max(prop)
+                        attribute_max(prop)
                         if curr_max is None
-                        else max(curr_max, property_max(prop))
+                        else max(curr_max, attribute_max(prop))
                     )
                     min_max[entity_type][identifier] = (min_val, max_val)
 
@@ -432,7 +432,7 @@ def get_summary_from_state(
     summary_per_entity = {}
     summary_dataset = None
     entity_counts = {}
-    for (dataset, entity_type, identifier, prop) in state.iter_properties():
+    for (dataset, entity_type, identifier, prop) in state.iter_attributes():
         if summary_dataset is None:
             summary_dataset = dataset
         if dataset != summary_dataset:
@@ -471,13 +471,13 @@ def get_id_summary(index: Index):
 
 def get_property_summary(
     identifier: PropertyIdentifier,
-    prop: PropertyObject,
+    prop: AttributeObject,
     extreme_values: t.Optional[t.Dict[PropertyIdentifier, t.Tuple[float, float]]] = None,
 ):
     if extreme_values and identifier in extreme_values:
         min_val, max_val = extreme_values[identifier]
     else:
-        min_val, max_val = property_min(prop), property_max(prop)
+        min_val, max_val = attribute_min(prop), attribute_max(prop)
 
     return {
         "component": identifier[0],

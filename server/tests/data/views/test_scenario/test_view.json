@@ -47,11 +47,11 @@
               ],
               "maxValue": 1,
               "attribute": {
-                "name": "has_power",
+                "name": "operational.has_power",
                 "unit": "",
                 "max_val": 1,
                 "min_val": 0,
-                "component": "operation_status_properties",
+                "component": "",
                 "data_type": "BOOLEAN",
                 "description": "Has power to operate"
               },

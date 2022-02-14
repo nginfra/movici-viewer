@@ -1,4 +1,5 @@
-import { Client, UserService } from '@movici-flow-common/api';
+import { Client } from '@movici-flow-common/api';
+import { UserService } from '@movici-flow-common/types';
 
 export default class DummyUserService implements UserService {
   client: Client;

@@ -1,5 +1,5 @@
-import { Client, SummaryService } from '@movici-flow-common/api';
-import { UUID } from '@movici-flow-common/types';
+import { Client } from '@movici-flow-common/api';
+import { SummaryService, UUID } from '@movici-flow-common/types';
 import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
 
 export default class LocalSummaryService implements SummaryService {

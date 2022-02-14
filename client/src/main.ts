@@ -19,7 +19,9 @@ Vue.use(Buefy, {
   defaultIconPack: 'fas'
 });
 Vue.use(Filters);
-Vue.use(Flow);
+Vue.use(Flow, {
+  homeRoute: '/flow'
+});
 
 new Vue({
   router,

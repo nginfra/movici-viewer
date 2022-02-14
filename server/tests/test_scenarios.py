@@ -25,7 +25,13 @@ def test_get_single_scenario(get_with_status):
             "time_scale": 1,
         },
         "models": [],
-        "datasets": [],
+        "datasets": [
+            {
+                "name": "antennas",
+                "uuid": "antennas",
+                "type": "antenna_point_set",
+            }
+        ],
     }
 
 
@@ -43,10 +49,7 @@ def test_get_scenario_state(get_with_status, timestamp, expected):
     if timestamp is not None:
         params["timestamp"] = timestamp
     response = get_with_status("/scenarios/test_scenario/state", 200, params=params)
-    assert (
-        response.json()["data"]["antenna_entities"]["operation_status_properties"]["has_power"]
-        == expected
-    )
+    assert response.json()["data"]["antenna_entities"]["operational.has_power"] == expected
 
 
 def test_scenario_summary(get_with_status):
@@ -68,8 +71,8 @@ def test_scenario_summary(get_with_status):
                         "max_val": 1,
                     },
                     {
-                        "component": "point_properties",
-                        "name": "position_x",
+                        "name": "geometry.x",
+                        "component": None,
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",
@@ -77,8 +80,8 @@ def test_scenario_summary(get_with_status):
                         "max_val": 81758.0,
                     },
                     {
-                        "component": "point_properties",
-                        "name": "position_y",
+                        "name": "geometry.y",
+                        "component": None,
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",
@@ -86,8 +89,8 @@ def test_scenario_summary(get_with_status):
                         "max_val": 455843.0,
                     },
                     {
-                        "component": "operation_status_properties",
-                        "name": "has_power",
+                        "component": None,
+                        "name": "operational.has_power",
                         "data_type": "BOOLEAN",
                         "description": "",
                         "unit": "",

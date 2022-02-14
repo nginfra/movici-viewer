@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Client, ScenarioService } from '@movici-flow-common/api';
-import { Scenario, ShortScenario, UUID } from '@movici-flow-common/types';
+import { Client } from '@movici-flow-common/api';
+import { Scenario, ScenarioService, ShortScenario, UUID } from '@movici-flow-common/types';
 import mocks, { MOCK_TIMEOUT } from './mocks';
 export default class MockScenarioService implements ScenarioService {
   client: Client;

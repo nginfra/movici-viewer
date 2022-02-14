@@ -1,4 +1,4 @@
 [submodule "movici-flow-common"]
 	path = client/movici-flow-common
-    url = ../../experiments/movici-flow-common.git
+    url = ../movici-flow-common.git
 

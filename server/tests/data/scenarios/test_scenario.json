@@ -8,5 +8,11 @@
     "time_scale": 1
   },
   "models": [],
-  "datasets": []
+  "datasets": [
+    {
+      "name": "antennas",
+      "uuid": "antennas",
+      "type": "antenna_point_set"
+    }
+  ]
 }

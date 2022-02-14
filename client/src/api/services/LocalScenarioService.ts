@@ -1,6 +1,6 @@
-import { Client, ScenarioService } from '@movici-flow-common/api';
+import { Client } from '@movici-flow-common/api';
 
-import { UUID } from '@movici-flow-common/types';
+import { ScenarioService, UUID } from '@movici-flow-common/types';
 import { GetScenario, GetScenarios } from '@/api/requests';
 
 export default class LocalScenarioService implements ScenarioService {

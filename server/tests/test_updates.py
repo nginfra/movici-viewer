@@ -25,7 +25,7 @@ def test_get_single_update(get_with_status):
         "data": {
             "antenna_entities": {
                 "id": [1],
-                "operation_status_properties": {"has_power": [False]},
+                "operational.has_power": [False],
             }
         },
     }

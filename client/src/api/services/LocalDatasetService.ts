@@ -1,5 +1,10 @@
-import { Client, DatasetService } from '@movici-flow-common/api';
-import { ComponentProperty, DatasetWithData, UUID } from '@movici-flow-common/types';
+import { Client } from '@movici-flow-common/api';
+import {
+  ComponentProperty,
+  DatasetService,
+  DatasetWithData,
+  UUID
+} from '@movici-flow-common/types';
 import { GetDatasetData, GetDatasets, GetScenarioState } from '@/api/requests/datasets';
 
 type getDataParams = {

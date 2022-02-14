@@ -1,4 +1,5 @@
-import { Backend, Client, CAPABILITIES } from '@movici-flow-common/api';
+import {  Client, CAPABILITIES } from '@movici-flow-common/api';
+import { Backend } from '@movici-flow-common/types';
 import MockDatasetService from './MockDatasetService';
 import MockGeocodeService from './MockGeocodeService';
 import MockProjectService from './MockProjectService';

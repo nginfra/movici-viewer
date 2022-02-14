@@ -60,8 +60,8 @@ def test_dataset_summary(get_with_status):
                         "max_val": 1,
                     },
                     {
-                        "component": "point_properties",
-                        "name": "position_x",
+                        "component": None,
+                        "name": "geometry.x",
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",
@@ -69,8 +69,8 @@ def test_dataset_summary(get_with_status):
                         "max_val": 81758.0,
                     },
                     {
-                        "component": "point_properties",
-                        "name": "position_y",
+                        "component": None,
+                        "name": "geometry.y",
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",

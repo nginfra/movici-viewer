@@ -1,5 +1,5 @@
-import { Client, UpdatesService } from '@movici-flow-common/api';
-import { ComponentProperty, UUID } from '@movici-flow-common/types';
+import { Client } from '@movici-flow-common/api';
+import { ComponentProperty, UpdatesService, UUID } from '@movici-flow-common/types';
 import { GetUpdates, GetUpdateWithData } from '@/api/requests';
 
 export default class LocalUpdatesService implements UpdatesService {
