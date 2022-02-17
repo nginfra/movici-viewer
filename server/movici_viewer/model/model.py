@@ -46,7 +46,7 @@ class Repository:
     def __init__(self, data_dir, use_global_plugins=True):
         self.schema = AttributeSchema()
         if use_global_plugins:
-            configure_global_plugins(self.schema)
+            configure_global_plugins(self.schema, ignore_missing_imports=True)
         self.source = DirectorySource(Path(data_dir), self.schema)
         self.source.validate()
         self.set_active_scenario(None)
