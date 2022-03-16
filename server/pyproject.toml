@@ -11,7 +11,7 @@ movici-viewer = "movici_viewer.main:main"
 [tool.poetry.dependencies]
 python = "^3.8"
 fastapi = "^0.70.0"
-movici-simulation-core = { version = "2.0.0", extras = ["models"] }
+movici-simulation-core = { version = "2.1.2", extras = ["models"] }
 orjson = "^3.6.4"
 pydantic = "^1.8.2"
 uvicorn = { extras = ["standard"], version = "^0.15.0" }
