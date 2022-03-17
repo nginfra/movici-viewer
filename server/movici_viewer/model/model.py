@@ -15,6 +15,7 @@ from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.data_tracker.data_format import (
     EntityInitDataFormat,
     extract_dataset_data,
+    FileType
 )
 from movici_simulation_core.data_tracker.index import Index
 from movici_simulation_core.data_tracker.attribute import (
@@ -305,8 +306,8 @@ class DirectorySource:
     @memoize
     def get_dataset_summary(self, dataset: str):
         path = self.get_dataset_path(dataset)
-        data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).load_bytes(
-            path.read_bytes()
+        data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).loads(
+            path.read_bytes(), FileType.JSON
         )
         state = TrackedState(track_unknown=True)
         state.receive_update(data, is_initial=True)

@@ -4,16 +4,11 @@ from pathlib import Path
 import pytest as pytest
 from fastapi.testclient import TestClient
 
-from movici_simulation_core.data_tracker.numba_extensions import disable_jit
 from movici_viewer.caching import cache_clear
 from movici_viewer.main import get_app
 from movici_viewer.settings import Settings
 from movici_viewer import dependencies
 
-
-@pytest.fixture(scope="session")
-def disable_numba():
-    disable_jit()
 
 
 @pytest.fixture
@@ -34,7 +29,7 @@ def settings(data_dir):
 
 
 @pytest.fixture
-def app(settings, disable_numba):
+def app(settings):
     def override():
         return settings
 
