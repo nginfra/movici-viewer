@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "movici-viewer"
-version = "0.4.1"
+version = "0.5.0"
 description = "Movici Viewer"
 authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
 include = ["movici_viewer/ui/**/*"]

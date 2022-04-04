@@ -10,7 +10,6 @@ from movici_viewer.settings import Settings
 from movici_viewer import dependencies
 
 
-
 @pytest.fixture
 def base_data_dir():
     return Path(__file__).parent / "data"

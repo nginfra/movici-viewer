@@ -50,8 +50,10 @@ def setup_cors(app: FastAPI):
 
 @click.command()
 @click.argument("directory")
+@click.option("--host", "-h", default="localhost")
+@click.option("--port", "-p", default=5000)
 @click.option("--allow-cors", is_flag=True, default=False)
-def main(directory, allow_cors):
+def main(directory, host, port, allow_cors):
     settings = Settings(DATA_DIR=directory)
     app = get_app(settings, allow_cors=allow_cors)
-    uvicorn.run(app, host="localhost", port=5000, log_level="info")
+    uvicorn.run(app, host=host, port=port, log_level="info")

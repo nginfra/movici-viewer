@@ -15,7 +15,7 @@ from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.data_tracker.data_format import (
     EntityInitDataFormat,
     extract_dataset_data,
-    FileType
+    FileType,
 )
 from movici_simulation_core.data_tracker.index import Index
 from movici_simulation_core.data_tracker.attribute import (
