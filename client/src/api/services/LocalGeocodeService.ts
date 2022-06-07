@@ -1,4 +1,4 @@
-import { GeocodeService } from "@movici-flow-common/types";
+import { GeocodeService } from '@movici-flow-common/types';
 
 export default class LocalGeocodeService implements GeocodeService {
   async getSuggestions() {

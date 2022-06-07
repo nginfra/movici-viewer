@@ -53,8 +53,8 @@ def test_get_scenario_state(get_with_status, timestamp, expected):
 
 
 def test_scenario_summary(get_with_status):
-    response = get_with_status("/scenarios/test_scenario/summary?dataset_name=antennas", 200)
-    assert response.json() == {
+    response = get_with_status("/scenarios/test_scenario/summary?dataset_name=antennas", 200).json()
+    assert response == {
         "count": 2,
         "entity_groups": [
             {

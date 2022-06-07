@@ -4,7 +4,7 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry]
 name = "movici-viewer"
-version = "0.5.0"
+version = "0.5.1"
 description = "Movici Viewer"
 authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
 include = ["movici_viewer/ui/**/*"]
@@ -15,7 +15,7 @@ movici-viewer = "movici_viewer.main:main"
 [tool.poetry.dependencies]
 python = "^3.8, <3.11"
 fastapi = "^0.70.0"
-movici-simulation-core = { version = "2.1.2", extras = ["models"] }
+movici-simulation-core = { version = "2.5.3", extras = ["models"] }
 orjson = "^3.6.4"
 pydantic = "^1.8.2"
 uvicorn = { extras = ["standard"], version = "^0.15.0" }

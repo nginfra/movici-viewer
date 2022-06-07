@@ -28,7 +28,6 @@ from movici_simulation_core.postprocessing.results import (
     SimulationResults,
     ResultDataset,
 )
-from movici_simulation_core.types import PropertyIdentifier
 from movici_simulation_core.core.utils import configure_global_plugins
 from ..caching import memoize, cache_clear
 from ..exceptions import NotFound, InvalidObject, Conflict
@@ -317,7 +316,7 @@ class DirectorySource:
     def get_scenario_summary(self, scenario: str, dataset: str):
         results = self.get_results(scenario).get_dataset(dataset)
         state = results.state
-        min_max: t.Dict[str, t.Dict[PropertyIdentifier, t.Tuple[float, float]]] = defaultdict(dict)
+        min_max: t.Dict[str, t.Dict[str, t.Tuple[float, float]]] = defaultdict(dict)
         for timestamp in state.get_timestamps(dataset):
             state.move_to(timestamp)
             for (dataset, entity_type, identifier, prop) in state.iter_attributes():
@@ -426,7 +425,7 @@ def dataset_format_from_type(dataset_type):
 def get_summary_from_state(
     state: TrackedState,
     extreme_values: t.Optional[
-        t.Dict[str, t.Dict[PropertyIdentifier, t.Tuple[float, float]]]
+        t.Dict[str, t.Dict[str, t.Tuple[float, float]]]
     ] = None,
 ):
     extreme_values = extreme_values or {}
@@ -471,9 +470,9 @@ def get_id_summary(index: Index):
 
 
 def get_property_summary(
-    identifier: PropertyIdentifier,
+    identifier: str,
     prop: AttributeObject,
-    extreme_values: t.Optional[t.Dict[PropertyIdentifier, t.Tuple[float, float]]] = None,
+    extreme_values: t.Optional[t.Dict[str, t.Tuple[float, float]]] = None,
 ):
     if extreme_values and identifier in extreme_values:
         min_val, max_val = extreme_values[identifier]
@@ -481,8 +480,8 @@ def get_property_summary(
         min_val, max_val = attribute_min(prop), attribute_max(prop)
 
     return {
-        "component": identifier[0],
-        "name": identifier[1],
+        "component": None,
+        "name": identifier,
         "data_type": get_datatype_string(prop.data_type),
         "description": "",
         "unit": "",
