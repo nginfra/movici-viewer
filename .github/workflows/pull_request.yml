@@ -7,7 +7,7 @@ env:
   python-version: "3.11"
 
 jobs:
-  unittests:
+  unit-tests:
     strategy:
       fail-fast: false
       matrix:
@@ -29,4 +29,4 @@ jobs:
     - name: Run tests with coverage
       working-directory: ./server/tests
       run: |
-        pytest tests/
+        pytest .
