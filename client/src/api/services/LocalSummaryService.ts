@@ -1,11 +1,10 @@
-import { Client } from '@movici-flow-common/api';
-import { SummaryService, UUID } from '@movici-flow-common/types';
 import { GetDatasetSummary, GetScenarioSummary } from '@/api/requests';
+import type { IClient, SummaryService, UUID } from '@movici-flow-lib/types';
 
 export default class LocalSummaryService implements SummaryService {
-  client: Client;
+  client: IClient;
 
-  constructor(client: Client) {
+  constructor(client: IClient) {
     this.client = client;
   }
 

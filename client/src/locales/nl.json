@@ -1,1 +1,243 @@
-{}
+{
+  "account": {
+    "accountActivation": "Account activeren",
+    "backToLogin": "Terug naar inloggen",
+    "forgotPassword": "Wachtwoord vergeten",
+    "forgotPasswordDescription": "Als u uw wachtwoord opnieuw wilt instellen, geeft u het e-mailadres op dat u gebruikt om in te loggen.",
+    "forgotPasswordFailed": "Er ging iets mis tijdens uw verzoek voor vergeten wachtwoord.",
+    "forgotPasswordSuccess": "Een activatie link is verstuurd naar uw e-mail. Als dit te lang duurt controleer dan uw spam folder.",
+    "login": "Inloggen",
+    "resetPassword": "Reset wachtwoord",
+    "resetPasswordDescription": "Reset uw wachtwoord door een nieuw wachtwoord in te voeren. Zorg ervoor dat u een sterk wachtwoord kiest.",
+    "resetPasswordFailed": "Er ging iets mis tijdens het resetten van uw wachtwoord.",
+    "resetPasswordSuccess": "Uw wachtwoord is succesvol gereset. Log opnieuw in."
+  },
+  "actions": {
+    "changePassword": "Wachtwoord veranderen",
+    "setPassword": "Wachtwoord instellen",
+    "deactivateAccount": "Account deactiveren",
+    "getStarted": "Voltooien!",
+    "resetLoginCooldown": "Login cooldown terugzetten"
+  },
+  "dashboardWelcome": "Welkom bij Movici",
+  "dataset_generator": {
+    "addNew": "Dataset generator toevoegen",
+    "config": "Config",
+    "created": "Dataset Generator succesvol aangemaakt",
+    "created_and_started": "Dataset Generator succcesvol aangemaakt and generatie van datasets gestart",
+    "created_on": "Gecreëerd op",
+    "dataset_types": "Dataset types",
+    "edit": "Dataset generator bewerken",
+    "editor": "Editor",
+    "existing_datasets": "Bestaande datasets worden overschreven wanneer geselecteerd",
+    "force_subset": "Forceer subsetten",
+    "general": "Algemeen",
+    "generate": "Genereer",
+    "generate_datasets_for": "Genereer datasets voor",
+    "invalid": "Ongeldige dataset generator",
+    "last_modified": "Laatste wijziging op",
+    "logs": "Activiteitenlog",
+    "map": "Kaart",
+    "nonAvailable": "Geen dataset generator beschikbaar",
+    "polygon": "Interessegebied",
+    "rawConfig": "Ruwe configuratie",
+    "selectWorkload": "Selecteer een taak",
+    "status": "Status",
+    "subset_only": "Alleen subsetten geen datasets aanmaken",
+    "uploadPolygon": "GeoJSON uploaden",
+    "workload": {
+      "activity_log": {
+        "created_on": "Tijdstip",
+        "message": "Bericht",
+        "verbosity_level": "Info level"
+      },
+      "created_on": "Tijdstip",
+      "flags": "Instellingen",
+      "payload": "Instellingen",
+      "status": "Status"
+    },
+    "workloads": "Taken"
+  },
+  "dataset_type": {
+    "addNew": "Dataset type toevoegen",
+    "config": "Config",
+    "current": "Huidig dataset type",
+    "edit": "Dataset type bewerken",
+    "invalid": "Ongeldig dataset type",
+    "nonAvailable": "Geen dataset type beschikbaar",
+    "select": "Kies een dataset type"
+  },
+  "entity_type": {
+    "addNew": "Entiteitstype toevoegen",
+    "config": "Config",
+    "current": "Huidige entiteitstype",
+    "edit": "Entiteitstype bewerken",
+    "invalid": "Ongeldig entiteitstype",
+    "nonAvailable": "Geen entiteitstype beschikbaar",
+    "select": "Kies een entiteitstype"
+  },
+  "feedbackFormWidget": {
+    "button": "Geef feedback",
+    "cancel": "Annuleren",
+    "content": "Heb je een probleem of een bug gevonden, of heb je een idee voor een nieuwe feature? Laat dan hier een bericht achter.",
+    "feedbackTypes": {
+      "bug_report": "Bug report",
+      "feature_request": "Feature verzoek",
+      "other": "Anders"
+    },
+    "messageLabel": "Bericht",
+    "messagePlaceholder": "Schrijf een bericht...",
+    "popupSubtitle": "Gebruik het onderstaande formulier om je feedback op te sturen. We stellen je hulp bij de verbetering van het platform zeer op prijs.",
+    "popupTitle": "Feedback",
+    "submit": "Verzenden",
+    "success": "Bedankt dat je de tijd hebt genomen om ons feedback te geven! We horen graag hoe we ons product kunnen verbeter, en aan alle wensen kunnen voldoen. Alle suggesties worden meegenomen in het ontwikkelproces.",
+    "title": "Jouw mening telt",
+    "typeLabel": "Feedback Type",
+    "typePlaceholder": "Selecteer een type",
+    "validation": {
+      "length": "Het bericht moet ten minste 10 tekens bevatten",
+      "message": "Schrijf een bericht",
+      "type": "Kies een feedback type"
+    }
+  },
+  "messages": {
+    "emailComplexity": "Onjuist e-mailadres",
+    "passwordComplexity": "Een wachtwoord moet ten minste 8 tekens bevatten en ten minste bestaan uit kleine letters, hoofdletters, en cijfers",
+    "passwordMismatch": "Wachtwoorden komen niet overeen",
+    "passwordSecure": "Uw wachtwoord is veilig",
+    "viewCopiedToClipboard": "Weergave-configuratie naar klembord gekopieerd"
+  },
+  "misc": {
+    "activate": "Account activeren",
+    "agreement": "Ik ga akkoord met de gebruiksvoorwaarden en privacybeleid van Movici.",
+    "allRightsReserved": "Alle Rechten Voorbehouden",
+    "completeSetup": "U hoeft alleen nog uw wachtwoord in te stellen om uw accountinstellingen te voltooien",
+    "documentation": "documentatie",
+    "here": "hier",
+    "loadPrivacyPolicyFailure": "Onze excuses, we konden de privacy policy niet laden",
+    "loginTermsMessage": "Door in te loggen gaat u akkoord met ons {privacy} en onze {terms}",
+    "logout": "Uitloggen",
+    "privacyPolicy": "Privacy beleid",
+    "profile": "Profiel",
+    "settings": "Instellingen",
+    "termsOfUse": "Gebruiksvoorwaarden",
+    "tosMessage": "Klik {0} om onze algemene gebruiksvoorwaarden te lezen",
+    "total": "Totaal",
+    "version": "versie",
+    "welcome": "Welkom",
+    "yourUsername": "Uw gebruikersnaam is:"
+  },
+  "model": {
+    "selectedType": "Geselecteerd model type",
+    "selectType": "Kies een model type"
+  },
+  "model_type": {
+    "addNew": "Model type toevoegen",
+    "config": "Config",
+    "current": "Huidige model type",
+    "edit": "Model type bewerken",
+    "invalid": "Ongeldig model type",
+    "nonAvailable": "Geen model types beschikbaar",
+    "select": "Kies een model type"
+  },
+  "organisation": {
+    "addNew": "Organisatie toevoegen",
+    "edit": "Organisatie bewerken",
+    "invalid": "Ongeldige organisatie",
+    "nonAvailable": "Geen organisaties beschikbaar",
+    "select": "Selecteer een organisatie"
+  },
+  "project": {
+    "addNew": "Werkruimte toevoegen",
+    "current": "Huidige werkruimte",
+    "edit": "Werkruimte bewerken",
+    "invalid": "Ongeldige werkruimte",
+    "nonAvailable": "Geen werkruimtes beschikbaar",
+    "noneSelected": "Geen werkruimte geselecteerd",
+    "select": "Selecteer een werkruimte",
+    "pleaseSelect": "Selecteer een werkruimte..."
+  },
+  "attribute_type": {
+    "addNew": "Attribuut type toevoegen",
+    "config": "Config",
+    "current": "Huidig attribuut type",
+    "edit": "Attribuut type bewerken",
+    "invalid": "Ongeldig attribuut type",
+    "nonAvailable": "Geen attribuut type beschikbaar",
+    "select": "Kies een attribuut type"
+  },
+
+  "role": {
+    "add": "Rol toevoegen",
+    "select": "Kies een rol"
+  },
+  "scenario": {
+    "addNew": "Scenario toevoegen",
+    "config": "Config",
+    "current": "Huidig scenario",
+    "duration": "Scenarioduur",
+    "edit": "Scenario bewerken",
+    "editor": "Editor",
+    "endMoment": "Einddatum en -tijd",
+    "externalModels": "Externe modellen",
+    "invalid": "Ongeldig scenario",
+    "liveMode": "Live Modus",
+    "logs": "Logs",
+    "nonAvailable": "Geen scenarios beschikbaar",
+    "noneSelected": "Geen scenario geselecteerd",
+    "overview": "Overzicht",
+    "rawConfig": "Ruwe configuratie",
+    "select": "Selecteer een scenario",
+    "selectDate": "Selecteer datum",
+    "selectRegion": "Selecteer een regio",
+    "selectTime": "Selecteer tijd",
+    "startMoment": "Startdatum en -tijd"
+  },
+  "scope": {
+    "addNew": "Scope toevoegen",
+    "nonAvailable": "Geen scopes beschikbaar",
+    "select": "Kies een scope",
+    "type": "Scope type"
+  },
+  "settings": {
+    "language": "Taal",
+    "selectLanguage": "Selecteer een taal"
+  },
+  "sidebar": {
+    "administration": "Beheer",
+    "dashboard": "Dashboard",
+    "general": "Algemeen",
+    "MoviciFlow": "Movici Flow",
+    "simulationManagement": "Simulaties",
+    "visualization": "Visualisatie"
+  },
+  "timeline": {
+    "datasetName": "Datasetnaam",
+    "datasetType": "Dataset type",
+    "iteration": "Iteratie",
+    "modelName": "Modelnaam",
+    "modelType": "Model type",
+    "timestamp": "Timestamp"
+  },
+  "update": {
+    "count": "Aantal updates"
+  },
+  "user": {
+    "addNew": "Gebruiker toevoegen",
+    "current": "Huidige gebruikers",
+    "edit": "Gebruiker bewerken",
+    "invalid": "Ongeldige gebruiker",
+    "nonAvailable": "Geen gebruikers beschikbaar",
+    "select": "Selecteer een gebruiker"
+  },
+  "view": {
+    "addNew": "View toevoegen",
+    "config": "Config",
+    "edit": "View bewerken",
+    "invalid": "Ongeldige view",
+    "nonAvailable": "Er zijn geen views beschikbaar voor dit scenario",
+    "selectScenario": "Selecteer een scenario...",
+    "noScenarios": "Geen scenarios beschikbaar, kies een andere werkruimte",
+    "viewDuplicated": "View succesvol gedupliceerd"
+  }
+}

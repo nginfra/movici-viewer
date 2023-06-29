@@ -1,9 +1,9 @@
 image: eu.gcr.io/movici-develop/cicd-pipeline-tools:latest
 
 stages:
-  - verify
-  - test
-  - deploy
+- verify
+- test
+- deploy
 
 variables:
   GIT_SUBMODULE_STRATEGY: recursive
@@ -12,75 +12,37 @@ variables:
   stage: test
 
   only:
-    - main
-    - merge_requests
+  - main
+  - merge_requests
 
 check_version_upgrade:
   stage: verify
   image: alpine/git
   only:
     refs:
-      - merge_requests
+    - merge_requests
     changes:
-      - client/**/*
-      - server/**/*
-      - VERSION
+    - client/**/*
+    - server/**/*
+    - VERSION
   except:
     refs:
-      - /^dependabot\/.*$/
+    - /^dependabot\/.*$/
   variables:
     VERSION_FILES: "VERSION"
   script:
-    - git fetch origin main
-    - |-
-      if [[ -z $(git diff origin/main --name-only ${VERSION_FILES}) ]]; then
-        echo "All merge requests require a version upgrade. Please update your version"
-        exit 1
-      fi
-
-test:client:
-  image: node:14
-  extends: .testing
-  variables:
-    KUBERNETES_MEMORY_REQUEST: 2048Mi
-    KUBERNETES_MEMORY_LIMIT: 2048Mi
-    KUBERNETES_CPU_REQUEST: 1500m
-    KUBERNETES_CPU_LIMIT: 2000m
-  artifacts:
-    paths:
-      - coverage/lcov.info
-  before_script:
-    - cd client/
-    - npm install
-  script:
-    - npm run test:unit -- --coverage
+  - git fetch origin main
+  - |-
+    if [[ -z $(git diff origin/main --name-only ${VERSION_FILES}) ]]; then
+      echo "All merge requests require a version upgrade. Please update your version"
+      exit 1
+    fi
 
 test:server:
   extends: .testing
   before_script:
-    - cd server
-    - pip install .[dev] --extra-index-url=$PYPI_SERVER_URL --trusted-host=$PYPI_SERVER_HOST
+  - cd server
+  - pip install .[dev]
   script:
-    - pytest tests
+  - pytest tests
 
-deploy:package:
-  image: eu.gcr.io/movici-develop/cicd-build-tools:latest
-  stage: deploy
-  variables:
-    POETRY_HTTP_BASIC_MOVICI_USERNAME: $TWINE_USERNAME
-    POETRY_HTTP_BASIC_MOVICI_PASSWORD: $TWINE_PASSWORD
-    KUBERNETES_MEMORY_REQUEST: 4096Mi
-    KUBERNETES_MEMORY_LIMIT: 4096Mi
-    KUBERNETES_CPU_REQUEST: 1500m
-    KUBERNETES_CPU_LIMIT: 2000m
-  only:
-    - main
-
-  before_script:
-    - pip install poetry
-    - poetry config repositories.movici $PYPI_SERVER
-    - sed -i "s#https://pypi.movici.nl#${PYPI_SERVER}#g" server/poetry.lock
-    - sed -i "s#https://pypi.movici.nl#${PYPI_SERVER}#g" server/pyproject.toml
-    - make init
-  script:
-    - cd server && poetry publish --build --repository movici

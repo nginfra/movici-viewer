@@ -34,6 +34,7 @@ def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_cors=Fal
 
 def add_ui(app: FastAPI):
     app.mount("/ui", StaticFiles(directory=__UI_DIR__, html=True), name="ui")
+    app.mount("/assets", StaticFiles(directory=__UI_DIR__ / "assets", html=True), name="ui")
     app.mount("/static", StaticFiles(directory=__UI_DIR__ / "static", html=True), name="ui")
     app.get("/")(lambda: RedirectResponse(url="/ui"))
 

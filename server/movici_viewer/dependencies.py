@@ -2,6 +2,7 @@ import typing as t
 from functools import lru_cache
 
 from fastapi import Depends, HTTPException
+from movici_simulation_core import AttributeSchema
 
 from .model.model import Repository
 from .settings import Settings
@@ -12,8 +13,16 @@ def get_settings():
     return Settings()
 
 
-def repository(settings: Settings = Depends(get_settings)):
-    return Repository(settings.DATA_DIR, use_global_plugins=settings.USE_GLOBAL_PLUGINS)
+def attributes():
+    return AttributeSchema()
+
+
+def repository(
+    settings: Settings = Depends(get_settings), attributes: Settings = Depends(attributes)
+):
+    return Repository(
+        settings.DATA_DIR, attributes=attributes, use_global_plugins=settings.USE_GLOBAL_PLUGINS
+    )
 
 
 def dataset_uuid(dataset_name: t.Optional[str] = None, dataset_uuid: t.Optional[str] = None):

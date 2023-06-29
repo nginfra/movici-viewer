@@ -1,5 +1,6 @@
 import functools
 from pathlib import Path
+from movici_simulation_core import AttributeSchema, AttributeSpec
 
 import pytest as pytest
 from fastapi.testclient import TestClient
@@ -28,13 +29,24 @@ def settings(data_dir):
 
 
 @pytest.fixture
-def app(settings):
-    def override():
-        return settings
+def override_attributes():
+    return [
+        AttributeSpec("operational.power_source", data_type=int),
+        AttributeSpec("operational.has_power", data_type=bool),
+    ]
 
+
+@pytest.fixture
+def attribute_schema(override_attributes):
+    return AttributeSchema(override_attributes)
+
+
+@pytest.fixture
+def app(settings, attribute_schema):
     cache_clear()
     app = get_app(mount_ui=False)
-    app.dependency_overrides[dependencies.get_settings] = override
+    app.dependency_overrides[dependencies.get_settings] = lambda: settings
+    app.dependency_overrides[dependencies.attributes] = lambda: attribute_schema
 
     return app
 

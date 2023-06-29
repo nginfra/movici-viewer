@@ -1,15 +1,15 @@
-import { Client } from '@movici-flow-common/api';
-import { ComponentProperty, UpdatesService, UUID } from '@movici-flow-common/types';
 import { GetUpdates, GetUpdateWithData } from '@/api/requests';
+import type { IClient } from '@movici-flow-lib/types';
+import type { DataAttribute, UpdatesService, UUID } from '@movici-flow-lib/types';
 
 export default class LocalUpdatesService implements UpdatesService {
-  client: Client;
+  client: IClient;
 
-  constructor(client: Client) {
+  constructor(client: IClient) {
     this.client = client;
   }
 
-  get(uuid: UUID, entityGroup: string, properties: ComponentProperty[]) {
+  get(uuid: UUID, entityGroup: string, properties: DataAttribute[]) {
     return this.client.request(new GetUpdateWithData(uuid, entityGroup, properties));
   }
 

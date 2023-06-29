@@ -1,4 +1,5 @@
 {
-  "ApiAddress": "http://localhost:5000",
-  "features": []
+  "baseURL": "http://localhost:5000",
+  "features": [],
+  "projections": {}
 }

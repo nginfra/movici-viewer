@@ -53,7 +53,9 @@ def test_get_scenario_state(get_with_status, timestamp, expected):
 
 
 def test_scenario_summary(get_with_status):
-    response = get_with_status("/scenarios/test_scenario/summary?dataset_name=antennas", 200).json()
+    response = get_with_status(
+        "/scenarios/test_scenario/summary?dataset_name=antennas", 200
+    ).json()
     assert response == {
         "count": 2,
         "entity_groups": [
@@ -87,6 +89,15 @@ def test_scenario_summary(get_with_status):
                         "unit": "",
                         "min_val": 454993.0,
                         "max_val": 455843.0,
+                    },
+                    {
+                        "component": None,
+                        "name": "operational.power_source",
+                        "data_type": "INT",
+                        "description": "",
+                        "unit": "",
+                        "min_val": 0,
+                        "max_val": 1,
                     },
                     {
                         "component": None,

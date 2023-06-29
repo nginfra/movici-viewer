@@ -1,29 +1,29 @@
-import { AxiosRequestConfig } from 'axios';
-import uri from '@movici-flow-common/api/requests/uri';
-import { DatasetSummary, UUID } from '@movici-flow-common/types';
-import { Request } from '@movici-flow-common/api/requests/base';
+import { Request } from '@movici-flow-lib/api/requests/base'
+import uri from './uri'
+import type { DatasetSummary, UUID } from '@movici-flow-lib/types'
+import type { AxiosRequestConfig } from 'axios'
 
 export class GetDatasetSummary extends Request<DatasetSummary> {
-  datasetUUID: string;
+  datasetUUID: string
   constructor(datasetUUID: UUID) {
-    super();
-    this.datasetUUID = datasetUUID;
+    super()
+    this.datasetUUID = datasetUUID
   }
   makeRequest(): AxiosRequestConfig {
     return {
       method: 'get',
       url: `${uri.datasets}/${this.datasetUUID}${uri.summary}`
-    };
+    }
   }
 }
 
 export class GetScenarioSummary extends Request<DatasetSummary> {
-  scenarioUUID: UUID;
-  datasetUUID: UUID;
+  scenarioUUID: UUID
+  datasetUUID: UUID
   constructor(scenarioUUID: UUID, datasetUUID: UUID) {
-    super();
-    this.scenarioUUID = scenarioUUID;
-    this.datasetUUID = datasetUUID;
+    super()
+    this.scenarioUUID = scenarioUUID
+    this.datasetUUID = datasetUUID
   }
   makeRequest(): AxiosRequestConfig {
     return {
@@ -32,6 +32,6 @@ export class GetScenarioSummary extends Request<DatasetSummary> {
       params: {
         dataset_uuid: this.datasetUUID
       }
-    };
+    }
   }
 }

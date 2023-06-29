@@ -1,10 +1,10 @@
 [build-system]
-requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]
 
 [tool.poetry]
 name = "movici-viewer"
-version = "0.5.1"
+version = "1.0.0"
 description = "Movici Viewer"
 authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
 include = ["movici_viewer/ui/**/*"]
@@ -13,31 +13,22 @@ include = ["movici_viewer/ui/**/*"]
 movici-viewer = "movici_viewer.main:main"
 
 [tool.poetry.dependencies]
-python = "^3.8, <3.11"
-fastapi = "^0.70.0"
-movici-simulation-core = { version = "2.5.3", extras = ["models"] }
-orjson = "^3.6.4"
-pydantic = "^1.8.2"
-uvicorn = { extras = ["standard"], version = "^0.15.0" }
-click = "^8.0.3"
-numpy = "<1.22"
+click = "^8.1.3"
+fastapi = "^0.98.0"
+movici-simulation-core = {version = "2.10.4", extras = ["models"]}
 numba = ">=0.55"
+orjson = "^3.9.1"
+pydantic = "^1.10.9"
+python = "^3.8"
+uvicorn = {extras = ["standard"], version = "^0.22.0"}
 
-requests = { version = "^2.26.0", optional = true }
-pytest = { version = "^6.2.5", optional = true }
+pytest = {version = "^6.2.5", optional = true}
+httpx = {version = "^0.24.1", optional = true}
 
 [tool.poetry.extras]
-dev = ["requests", "pytest"]
-
-[[tool.poetry.source]]
-name = "movici"
-url = "https://pypi.movici.nl/simple/"
-secondary = true
-
+dev = ["httpx", "pytest"]
 
 [tool.black]
-line-length = 99
-include = '\.pyi?$'
 exclude = '''(
 /(
   | \.direnv
@@ -55,3 +46,5 @@ exclude = '''(
 )/
 )
 '''
+include = '\.pyi?$'
+line-length = 99

@@ -1,10 +1,9 @@
-import { Client } from '@movici-flow-common/api';
-import { UserService } from '@movici-flow-common/types';
+import type { IClient, UserService } from '@movici-flow-lib/types';
 
 export default class DummyUserService implements UserService {
-  client: Client;
+  client: IClient;
 
-  constructor(client: Client) {
+  constructor(client: IClient) {
     this.client = client;
   }
 

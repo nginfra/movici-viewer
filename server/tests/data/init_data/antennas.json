@@ -1,1 +1,22 @@
-{"uuid":"e12c43eb-93e8-453a-b573-5fadaffe8a90","name":"antennas","display_name":"Antennas","type":"antenna_point_set","epsg_code":28992,"format":"entity_based","general":{"enum":{"label":["distribution"],"power_source":["electricity_net","battery","no_power"]}},"data":{"antenna_entities":{"id":[0,1],"geometry.x":[81758.0,81017.0],"geometry.y":[454993.0,455843.0]}}}
+{
+  "uuid": "e12c43eb-93e8-453a-b573-5fadaffe8a90",
+  "name": "antennas",
+  "display_name": "Antennas",
+  "type": "antenna_point_set",
+  "epsg_code": 28992,
+  "format": "entity_based",
+  "general": {
+    "enum": {
+      "label": [ "distribution" ],
+      "power_source": [ "electricity_net", "battery", "no_power" ]
+    }
+  },
+  "data": {
+    "antenna_entities": {
+      "id": [ 0, 1 ],
+      "geometry.x": [ 81758.0, 81017.0 ],
+      "geometry.y": [ 454993.0, 455843.0 ],
+      "operational.power_source": [ 0, 1 ]
+    }
+  }
+}

@@ -1,1 +1,247 @@
-{}
+{
+  "account": {
+    "accountActivation": "Account activation",
+    "backToLogin": "Back to login",
+    "forgotPassword": "Forgot password",
+    "forgotPasswordDescription": "Enter your email address below and we will send you instructions on how to reset your password.",
+    "forgotPasswordFailed": "Something went wrong while requesting forgot password.",
+    "forgotPasswordSuccess": "An activation link has been sent to your email. Please check your junk folder, if necessary.",
+    "login": "Login",
+    "resetPassword": "Reset password",
+    "resetPasswordDescription": "Reset your password by entering your new password.",
+    "resetPasswordFailed": "Something went wrong while resetting your password.",
+    "resetPasswordSuccess": "Congratulations, your password has been reset! Please login to continue."
+  },
+  "actions": {
+    "changePassword": "Change password",
+    "setPassword": "Set password",
+    "deactivateAccount": "Deactivate Account",
+    "getStarted": "Get started!",
+    "resetLoginCooldown": "Reset login cooldown"
+  },
+
+  "dashboardWelcome": "Welcome to Movici",
+  "dataset_generator": {
+    "addNew": "Add new dataset generator",
+    "config": "Config",
+    "created": "Dataset Generator successfully created",
+    "created_and_started": "Dataset Generator successfully created and generation of datasets started",
+    "created_on": "Created on",
+    "dataset_types": "Dataset types",
+    "edit": "Edit dataset generator",
+    "editor": "Editor",
+    "existing_datasets": "Existing datasets will be overwritten if selected",
+    "general": "General",
+    "generate": "Generate",
+    "generate_datasets_for": "Generate datasets for",
+    "invalid": "Invalid dataset generator",
+    "last_modified": "Last modified on",
+    "logs": "Activity Log",
+    "map": "Map",
+    "nonAvailable": "No dataset generator available",
+    "polygon": "Area of interest",
+    "rawConfig": "Raw config",
+    "selectWorkload": "Select workload",
+    "status": "Status",
+    "uploadPolygon": "Upload GeoJSON",
+    "flags": {
+      "subset_only": "Subset only (no creation of datasets)",
+      "force_subset": "Force subset"
+    },
+    "workload": {
+      "activity_log": {
+        "created_on": "Timestamp",
+        "message": "Message",
+        "verbosity_level": "Verbosity Level"
+      },
+      "created_on": "Timestamp",
+      "flags": "Settings",
+      "payload": "Settings",
+      "status": "Status"
+    },
+    "workloads": "Workloads"
+  },
+  "dataset_type": {
+    "addNew": "Add new dataset type",
+    "config": "Config",
+    "current": "Current dataset type",
+    "edit": "Edit dataset type",
+    "invalid": "Invalid dataset type",
+    "nonAvailable": "No dataset type available",
+    "select": "Select a dataset type"
+  },
+  "entity_type": {
+    "addNew": "Add new entity type",
+    "config": "Config",
+    "current": "Current entity type",
+    "edit": "Edit entity type",
+    "invalid": "Invalid entity type",
+    "nonAvailable": "No entity type available",
+    "select": "Select a entity type"
+  },
+  "feedbackFormWidget": {
+    "button": "Give feedback",
+    "cancel": "Cancel",
+    "content": "Have you found a bug or do you have an idea for a new feature? Help us improve our platform!",
+    "feedbackTypes": {
+      "bug_report": "Bug report",
+      "feature_request": "Feature request",
+      "other": "Other"
+    },
+    "messageLabel": "Message",
+    "messagePlaceholder": "Write a message...",
+    "popupSubtitle": "Use the form below to submit your feedback. We greatly appreciate your help in improving the platform.",
+    "popupTitle": "Feedback",
+    "submit": "Submit",
+    "success": "Thank you for taking the time to give us feedback! We love to hear how we can improve our product and tailor it to your needs. We will seriously consider your suggestions",
+    "title": "Your opinion matters",
+    "typeLabel": "Feedback Type",
+    "typePlaceholder": "Select a type",
+    "validation": {
+      "length": "The message must have at least 10 characters",
+      "message": "Please write a message",
+      "type": "Please choose a feedback type"
+    }
+  },
+  "messages": {
+    "emailComplexity": "Invalid email address",
+    "passwordComplexity": "A password must have at least 8 characters </br>and at least one lower case letter </br>one upper case letter and a number",
+    "passwordMismatch": "Your passwords do not match",
+    "passwordSecure": "Your password is secure",
+    "viewCopiedToClipboard": "View configuration copied to clipboard"
+  },
+  "misc": {
+    "activate": "Activate Account",
+    "agreement": "I agree to MoViCI's privacy policy and terms of use.",
+    "allRightsReserved": "All Rights Reserved",
+    "completeSetup": "You now just need to set your password in order to complete your account setup",
+    "documentation": "documentation",
+    "here": "here",
+    "loadPrivacyPolicyFailure": "We're sorry, we could not load the privacy policy",
+    "loginTermsMessage": "By logging in you agree to our {privacy} and {terms}",
+    "logout": "Log out",
+    "privacyPolicy": "Privacy policy",
+    "profile": "Profile",
+    "settings": "Settings",
+    "termsOfUse": "Terms of use",
+    "tosMessage": "Please click {0} to view our general terms and conditions",
+    "total": "Total",
+    "version": "version",
+    "welcome": "Welcome",
+    "yourUsername": "Your username is:"
+  },
+  "model": {
+    "selectedType": "Selected model type",
+    "selectType": "Select a model type"
+  },
+  "model_type": {
+    "addNew": "Add new model type",
+    "config": "Config",
+    "current": "Current model type",
+    "edit": "Edit model type",
+    "invalid": "Invalid model type",
+    "nonAvailable": "No model types available",
+    "select": "Select a model type"
+  },
+  "organisation": {
+    "addNew": "Add new organisation",
+    "edit": "Edit organisation",
+    "invalid": "Invalid organisation",
+    "nonAvailable": "No organisations available",
+    "select": "Select a organisation"
+  },
+  "project": {
+    "addNew": "Add new workspace",
+    "current": "Current workspace",
+    "edit": "Edit workspace",
+    "invalid": "Invalid workspace",
+    "nonAvailable": "No workspaces available",
+    "noneSelected": "No workspace selected",
+    "select": "Select a workspace",
+    "pleaseSelect": "Please select a workspace"
+  },
+
+  "attribute_type": {
+    "addNew": "Add new attribute type",
+    "config": "Config",
+    "current": "Current attribute type",
+    "edit": "Edit attribute type",
+    "invalid": "Invalid attribute type",
+    "nonAvailable": "No attribute type available",
+    "select": "Select an attribute type"
+  },
+
+  "role": {
+    "add": "Add role",
+    "select": "Select a role"
+  },
+  "scenario": {
+    "addNew": "Add new scenario",
+    "config": "Config",
+    "current": "Current scenario",
+    "duration": "Scenario duratino",
+    "edit": "Edit scenario",
+    "editor": "Editor",
+    "endMoment": "End date and time",
+    "externalModels": "External models",
+    "invalid": "Invalid scenario",
+    "liveMode": "Live Mode",
+    "logs": "Logs",
+    "nonAvailable": "No scenarios available",
+    "noneSelected": "No scenario selected",
+    "overview": "Overview",
+    "rawConfig": "Raw config",
+    "select": "Select a scenario",
+    "selectDate": "Select date",
+    "selectRegion": "Select region",
+    "selectTime": "Select time",
+    "startMoment": "Start date and time"
+  },
+  "scope": {
+    "addNew": "Add new scope",
+    "nonAvailable": "No scopes available",
+    "select": "Select a scope",
+    "type": "Scope type"
+  },
+  "settings": {
+    "language": "Language",
+    "selectLanguage": "Select a language"
+  },
+  "sidebar": {
+    "administration": "Administration",
+    "dashboard": "Dashboard",
+    "general": "General",
+    "moviciFlow": "Movici Flow",
+    "simulationManagement": "Simulation Management",
+    "visualization": "Visualisation"
+  },
+  "timeline": {
+    "datasetName": "Dataset name",
+    "datasetType": "Dataset type",
+    "iteration": "Iteration",
+    "modelName": "Model name",
+    "modelType": "Model type",
+    "timestamp": "Timestamp"
+  },
+  "update": {
+    "count": "Update count"
+  },
+  "user": {
+    "addNew": "Add new user ",
+    "current": "Current users",
+    "edit": "Edit user",
+    "invalid": "Invalid user",
+    "nonAvailable": "No users available",
+    "select": "Select a user"
+  },
+  "view": {
+    "addNew": "Add new view",
+    "config": "Config",
+    "edit": "Edit view",
+    "invalid": "Invalid view",
+    "nonAvailable": "No views available for this scenario",
+    "selectScenario": "Please select a scenario...",
+    "noScenarios": "No scenarios available, choose a different workspace.",
+    "viewDuplicated": "View successfully duplicated"
+  }
+}

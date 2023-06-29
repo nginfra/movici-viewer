@@ -1,36 +1,29 @@
 from __future__ import annotations
 
 import dataclasses
+import itertools
 import re
 import typing as t
 from collections import defaultdict
 from json import JSONDecodeError
 from pathlib import Path
 
-import itertools
 import numpy as np
 import orjson as json
-
-from movici_simulation_core.core.schema import AttributeSchema, DataType
-from movici_simulation_core.data_tracker.data_format import (
+from movici_simulation_core import TrackedState
+from movici_simulation_core.core import Index, AttributeObject
+from movici_simulation_core.core.attribute import attribute_max, attribute_min
+from movici_simulation_core.core.data_format import (
     EntityInitDataFormat,
-    extract_dataset_data,
     FileType,
+    extract_dataset_data,
 )
-from movici_simulation_core.data_tracker.index import Index
-from movici_simulation_core.data_tracker.attribute import (
-    AttributeObject,
-    attribute_min,
-    attribute_max,
-)
-from movici_simulation_core.data_tracker.state import TrackedState
-from movici_simulation_core.postprocessing.results import (
-    SimulationResults,
-    ResultDataset,
-)
+from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.core.utils import configure_global_plugins
-from ..caching import memoize, cache_clear
-from ..exceptions import NotFound, InvalidObject, Conflict
+from movici_simulation_core.postprocessing.results import ResultDataset, SimulationResults
+
+from ..caching import cache_clear, memoize
+from ..exceptions import Conflict, InvalidObject, NotFound
 from ..schemas.view import InView
 
 
@@ -43,8 +36,8 @@ class Repository:
     active_scenario: t.Optional[str] = None
     scenario_results: t.Optional[SimulationResults] = None
 
-    def __init__(self, data_dir, use_global_plugins=True):
-        self.schema = AttributeSchema()
+    def __init__(self, data_dir, attributes=None, use_global_plugins=True):
+        self.schema = attributes or AttributeSchema()
         if use_global_plugins:
             configure_global_plugins(self.schema, ignore_missing_imports=True)
         self.source = DirectorySource(Path(data_dir), self.schema)

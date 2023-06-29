@@ -1,5 +1,5 @@
-import { Client, CAPABILITIES } from '@movici-flow-common/api';
-import { Backend } from '@movici-flow-common/types';
+import type { CAPABILITIES } from '@movici-flow-lib/api';
+import type { Backend, IClient } from '@movici-flow-lib/types';
 import LocalDatasetService from './services/LocalDatasetService';
 import LocalGeocodeService from './services/LocalGeocodeService';
 import DummyProjectService from './services/LocalProjectService';
@@ -8,6 +8,7 @@ import LocalSummaryService from './services/LocalSummaryService';
 import LocalUpdatesService from './services/LocalUpdatesService';
 import DummyUserService from './services/LocalUserService';
 import LocalViewService from './services/LocalViewService';
+import LocalFetchRequestService from './services/LocalFetchRequestService';
 export default class LocalBackend implements Backend {
   dataset: LocalDatasetService;
   project: DummyProjectService;
@@ -17,8 +18,8 @@ export default class LocalBackend implements Backend {
   updates: LocalUpdatesService;
   user: DummyUserService;
   view: LocalViewService;
-
-  constructor(client: Client) {
+  fetch: LocalFetchRequestService;
+  constructor(client: IClient) {
     this.dataset = new LocalDatasetService(client);
     this.geocode = new LocalGeocodeService();
     this.project = new DummyProjectService();
@@ -27,6 +28,7 @@ export default class LocalBackend implements Backend {
     this.updates = new LocalUpdatesService(client);
     this.user = new DummyUserService(client);
     this.view = new LocalViewService(client);
+    this.fetch = new LocalFetchRequestService(client);
   }
 
   getCapabilities(): CAPABILITIES[] {

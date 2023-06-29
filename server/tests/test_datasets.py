@@ -77,6 +77,15 @@ def test_dataset_summary(get_with_status):
                         "min_val": 454993.0,
                         "max_val": 455843.0,
                     },
+                    {
+                        "component": None,
+                        "name": "operational.power_source",
+                        "data_type": "INT",
+                        "description": "",
+                        "unit": "",
+                        "min_val": 0.0,
+                        "max_val": 1.0,
+                    },
                 ],
             }
         ],

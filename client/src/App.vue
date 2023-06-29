@@ -1,24 +1,11 @@
 <template>
-  <div id="app">
-    <div v-if="initialized">
-      <router-view />
-    </div>
-  </div>
+  <RouterView v-if="store.initialized" />
+  <o-loading v-else full-page active icon-size="large" />
 </template>
-<script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
-import { generalStore } from './store';
 
-@Component({
-  name: 'App'
-})
-export default class App extends Vue {
-  get initialized() {
-    return generalStore.initialized;
-  }
-  async mounted() {
-    await generalStore.initApp();
-  }
-}
+<script setup lang="ts">
+import { RouterView } from 'vue-router'
+import { useMainStore } from './stores/main'
+const store = useMainStore()
+store.initializeApp()
 </script>
-<style></style>

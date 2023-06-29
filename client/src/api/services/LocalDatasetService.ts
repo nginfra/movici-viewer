@@ -1,16 +1,17 @@
-import { Client } from '@movici-flow-common/api';
-import {
-  ComponentProperty,
+import type {
+  DataAttribute,
+  Dataset,
   DatasetService,
   DatasetWithData,
+  IClient,
   UUID
-} from '@movici-flow-common/types';
-import { GetDatasetData, GetDatasets, GetScenarioState } from '@/api/requests/datasets';
+} from '@movici-flow-lib/types';
+import { GetDataset, GetDatasetData, GetDatasets, GetScenarioState } from '@/api/requests/datasets';
 
 type getDataParams = {
   datasetUUID: UUID;
   entityGroup?: string;
-  properties?: ComponentProperty[];
+  properties?: DataAttribute[];
 };
 
 type getStateParams = {
@@ -18,12 +19,12 @@ type getStateParams = {
   scenarioUUID: UUID;
   entityGroup: string;
   timestamp: number;
-  properties: ComponentProperty[];
+  properties: DataAttribute[];
 };
 export default class LocalDatasetService implements DatasetService {
-  client: Client;
+  client: IClient;
 
-  constructor(client: Client) {
+  constructor(client: IClient) {
     this.client = client;
   }
 
@@ -42,5 +43,8 @@ export default class LocalDatasetService implements DatasetService {
     return await this.client.request(
       new GetScenarioState(datasetUUID, scenarioUUID, entityGroup, properties, timestamp)
     );
+  }
+  async getMetaData(datasetUUID: string): Promise<Dataset | null> {
+    return await this.client.request(new GetDataset(datasetUUID));
   }
 }
