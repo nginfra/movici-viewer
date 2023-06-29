@@ -60,5 +60,5 @@ jobs:
       with:
         pypi_token: ${{ secrets.PYPI_TOKEN }}
         repository_name: "testpypi"
-        repository_url: ${{ env.PYPI_REPOSITORY_URL }}
+        repository_url: ${{ vars.PYPI_REPOSITORY_URL }}
         package_directory: "server/"
