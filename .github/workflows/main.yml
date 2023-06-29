@@ -53,7 +53,7 @@ jobs:
 
     - name: Prepare package
       run: |
-        make init
+        make pre-init ui
 
     - name: Build and publish to pypi
       uses: JRubics/poetry-publish@v1.17
