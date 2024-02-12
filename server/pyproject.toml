@@ -4,7 +4,7 @@ requires = ["poetry-core>=1.0.0"]
 
 [tool.poetry]
 name = "movici-viewer"
-version = "1.0.0"
+version = "1.0.1"
 description = "Movici Viewer"
 authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
 include = ["movici_viewer/ui/**/*"]
