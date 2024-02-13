@@ -16,7 +16,7 @@ movici-viewer = "movici_viewer.main:main"
 click = "^8.1.3"
 fastapi = "^0.98.0"
 movici-simulation-core = {version = "2.10.4", extras = ["models"]}
-numba = "0.56.4"
+numba = "0.57.1"
 orjson = "^3.9.1"
 pydantic = "^1.10.9"
 python = "^3.8"
