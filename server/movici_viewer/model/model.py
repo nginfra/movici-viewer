@@ -78,6 +78,7 @@ class Repository:
             "type": dataset.metadata["type"],
             "format": "entity_based",
             "has_data": True,
+            "bounding_box": dataset.metadata.get("bounding_box"),
             "data": EntityInitDataFormat().dump_dict(dataset.state.to_dict()[dataset.name]),
         }
 

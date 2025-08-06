@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 __UI_DIR__ = Path(__file__).parent / "ui"
 
 
-async def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_cors=False):
+def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_cors=False):
     if settings is None:
         settings = Settings()
     
@@ -38,8 +38,8 @@ async def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_co
     # Add settings to dependency injection
     app.dependency_overrides[get_settings] = lambda: settings
     
-    # Add monitoring and health checks
-    await add_monitoring_middleware(app, settings)
+    # Add monitoring and health checks (remove await)
+    add_monitoring_middleware(app, settings)
     setup_health_checks(app)
     
     # Add routers
@@ -99,13 +99,14 @@ def main(directory, host, port, allow_cors, workers):
     # Setup logging before creating app
     setup_logging(settings)
     
+    # Create app directly with settings instead of using factory
+    app = get_app(settings=settings, mount_ui=True, allow_cors=allow_cors)
+    
     uvicorn.run(
-        "movici_viewer.main:get_app",
+        app,
         host=host,
         port=port,
         workers=workers if workers > 1 else None,
-        factory=True,
         log_level=settings.LOG_LEVEL.value.lower(),
         access_log=True,
-        app_dir=".",
     )

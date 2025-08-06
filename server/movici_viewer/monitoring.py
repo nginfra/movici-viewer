@@ -2,7 +2,7 @@ import time
 import logging
 from typing import Callable
 from fastapi import FastAPI, Request, Response
-from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
+from prometheus_client import Counter, Histogram, Gauge, generate_latest, CONTENT_TYPE_LATEST
 import threading
 import http.server
 import socketserver
@@ -23,9 +23,9 @@ REQUEST_DURATION = Histogram(
     ['method', 'endpoint']
 )
 
-ACTIVE_CONNECTIONS = Counter(
-    'active_connections_total',
-    'Total active connections'
+ACTIVE_CONNECTIONS = Gauge(
+    'active_connections_current',
+    'Current active connections'
 )
 
 
@@ -60,7 +60,7 @@ def start_metrics_server(port: int) -> None:
     thread.start()
 
 
-async def add_monitoring_middleware(app: FastAPI, settings: Settings) -> None:
+def add_monitoring_middleware(app: FastAPI, settings: Settings) -> None:
     """Add monitoring middleware to FastAPI app."""
     
     @app.middleware("http")

@@ -18,7 +18,7 @@ def attributes():
 
 
 def repository(
-    settings: Settings = Depends(get_settings), attributes: Settings = Depends(attributes)
+    settings: Settings = Depends(get_settings), attributes: AttributeSchema = Depends(attributes)
 ):
     return Repository(
         settings.DATA_DIR, attributes=attributes, use_global_plugins=settings.USE_GLOBAL_PLUGINS
