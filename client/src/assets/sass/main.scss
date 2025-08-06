@@ -1,11 +1,9 @@
-// Import Bulma variables first
-@import 'bulma/sass/utilities/_index.scss';
-// Import custom variables (can override Bulma)
-@import './variables';
+// Import Bulma first (contains @use statements that must come first)
+@import 'bulma';
 
-// Add a font family
-$family-primary: 'Source Sans Pro', sans-serif;
+// Local variable definitions 
 $radius: 4px;
+$family-primary: 'Source Sans Pro', sans-serif;
 
 // Link colors
 $link: $primary;
@@ -22,7 +20,7 @@ $background: $white-ter;
 $input-color: $grey-darker !default;
 $input-background-color: $white !default;
 $input-border-color: $white-ter !default;
-$input-height: $control-height !default;
+$input-height: 2.5rem !default;
 $input-shadow: inset 0 1px 2px rgba($black, 0.1) !default;
 $input-placeholder-color: rgba($input-color, 0.6) !default;
 
@@ -197,7 +195,7 @@ $menu-item-hover-color: $primary;
 $menu-item-hover-background-color: $white-ter;
 $menu-item-active-color: $link-invert;
 $menu-item-active-background-color: $white-ter;
-$menu-list-border-left: 1px solid $border;
+$menu-list-border-left: 1px solid $grey-lighter;
 $menu-label-color: $black;
 
 .router-link-active {
@@ -247,7 +245,7 @@ $column-gap: 0.75rem;
 //divider
 $divider-background-color: $primary;
 $divider-thickness: 0.075rem;
-$divider-font-size: $size-7;
+$divider-font-size: 0.75rem;
 $divider-color: $primary;
 
 .is-divider {
@@ -433,10 +431,14 @@ a.pagination-link.is-current {
   @include border-radius;
 }
 
-// Import Bulma and Oruga styles
-@import 'bulma';
+// Import remaining CSS frameworks
 @import 'bulma-utilities/css/bulma-utilities.css';
 @import '@oruga-ui/theme-bulma/dist/scss/bulma-build.scss';
+
+// Import custom variables after Bulma
+@import './variables';
+
+// (Variable definitions moved earlier to avoid ordering issues)
 
 @import './media-query';
 @import '../../../movici-flow-lib/src/assets/sass/helpers';
