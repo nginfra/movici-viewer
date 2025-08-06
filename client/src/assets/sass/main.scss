@@ -1,6 +1,7 @@
-// Import Bulma's core
+// Import Bulma variables first
+@import 'bulma/sass/utilities/_index.scss';
+// Import custom variables (can override Bulma)
 @import './variables';
-@import 'bulma/sass/utilities/_all.sass';
 
 // Add a font family
 $family-primary: 'Source Sans Pro', sans-serif;
@@ -432,13 +433,12 @@ a.pagination-link.is-current {
   @include border-radius;
 }
 
+// Import Bulma and Oruga styles
+@import 'bulma';
+@import 'bulma-utilities/css/bulma-utilities.css';
+@import '@oruga-ui/theme-bulma/dist/scss/bulma-build.scss';
+
 @import './media-query';
 @import '../../../movici-flow-lib/src/assets/sass/helpers';
 @import '../../../movici-flow-lib/src/assets/sass/style';
-
-
-// Import Bulma and Oruga styles
-@import 'bulma/bulma.sass';
-@import 'bulma-utilities/css/bulma-utilities.css';
-@import '@oruga-ui/theme-bulma/dist/scss/bulma';
 
