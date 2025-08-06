@@ -1,52 +1,207 @@
 [build-system]
-build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=1.0.0"]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
 
-[tool.poetry]
+[project]
 name = "movici-viewer"
 version = "1.0.1"
-description = "Movici Viewer"
-authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
-include = ["movici_viewer/ui/**/*"]
+description = "Modern web-based visualization platform for Movici geospatial simulations"
+readme = {text = "Modern web-based visualization platform for Movici geospatial simulations", content-type = "text/markdown"}
+license = {text = "Movici Public License"}
+authors = [
+    {name = "Pelle Koster", email = "pelle.koster@nginfra.nl"}
+]
+maintainers = [
+    {name = "NGinfra - Movici", email = "movici@nginfra.nl"}
+]
+requires-python = ">=3.8,<3.14"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: Free for non-commercial use",
+    "License :: Other/Proprietary License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+]
+keywords = ["geospatial", "visualization", "simulation", "fastapi", "vue", "gis"]
 
-[tool.poetry.scripts]
+# Core dependencies with latest versions
+dependencies = [
+    "click>=8.1.3",
+    "fastapi>=0.115.0",
+    "movici-simulation-core[models]>=2.10.6",
+    "numba>=0.58.0",
+    "orjson>=3.10.0",
+    "pydantic>=2.9.0",
+    "pydantic-settings>=2.6.0",
+    "uvicorn[standard]>=0.34.0",
+    "prometheus-client>=0.21.0",
+]
+
+# Optional dependencies
+[project.optional-dependencies]
+dev = [
+    # Testing
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=0.25.0",
+    "httpx>=0.28.0",
+    
+    # Code quality
+    "black>=24.0.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "bandit>=1.7.0",
+    
+    # Development tools
+    "pre-commit>=4.0.0",
+    "ruff>=0.8.0",
+]
+
+docs = [
+    "sphinx>=8.0.0",
+    "sphinx-rtd-theme>=3.0.0",
+    "myst-parser>=4.0.0",
+]
+
+all = [
+    # Include all optional dependencies
+    "pytest>=8.0.0",
+    "pytest-cov>=6.0.0",
+    "pytest-asyncio>=0.25.0",
+    "httpx>=0.28.0",
+    "black>=24.0.0",
+    "isort>=5.13.0",
+    "flake8>=7.0.0",
+    "mypy>=1.8.0",
+    "bandit>=1.7.0",
+    "pre-commit>=4.0.0",
+    "ruff>=0.8.0",
+    "sphinx>=8.0.0",
+    "sphinx-rtd-theme>=3.0.0",
+    "myst-parser>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://www.movici.nl/"
+Documentation = "https://docs.movici.nl/"
+Repository = "https://github.com/nginfra/movici-viewer/"
+"Bug Tracker" = "https://github.com/nginfra/movici-viewer/issues"
+
+[project.scripts]
 movici-viewer = "movici_viewer.main:main"
 
-[tool.poetry.dependencies]
-click = "^8.1.3"
-fastapi = "^0.110.0"
-movici-simulation-core = {version = ">=2.10.6", extras = ["models"]}
-numba = ">=0.58.0"
-orjson = "^3.9.1"
-pydantic = "^2.0.0"
-pydantic-settings = "^2.0.0"
-python = "^3.8,<3.14"
-uvicorn = {extras = ["standard"], version = "^0.22.0"}
-prometheus-client = "^0.20.0"
+[tool.setuptools]
+zip-safe = false
 
-pytest = {version = "^6.2.5", optional = true}
-httpx = {version = "^0.24.1", optional = true}
+[tool.setuptools.packages.find]
+where = ["."]
+exclude = ["tests*"]
 
-[tool.poetry.extras]
-dev = ["httpx", "pytest"]
+[tool.setuptools.package-data]
+"movici_viewer" = ["ui/**/*", "static/**/*"]
 
 [tool.black]
-exclude = '''(
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311', 'py312', 'py313']
+include = '\.pyi?$'
+extend-exclude = '''
 /(
-  | \.direnv
-  | \.eggs
+  # directories
+  \.eggs
   | \.git
   | \.hg
   | \.mypy_cache
   | \.tox
   | \.venv
-  | _build
-  | buck-out
   | build
   | dist
-  | venv
+  | node_modules
 )/
-)
 '''
-include = '\.pyi?$'
-line-length = 99
+
+[tool.isort]
+profile = "black"
+line_length = 100
+multi_line_output = 3
+include_trailing_comma = true
+force_grid_wrap = 0
+use_parentheses = true
+ensure_newline_before_comments = true
+known_first_party = ["movici_viewer", "movici_simulation_core"]
+
+[tool.pytest.ini_options]
+minversion = "8.0"
+addopts = "-ra -q --strict-markers"
+testpaths = ["tests"]
+markers = [
+    "slow: marks tests as slow (deselect with '-m \"not slow\"')",
+    "integration: marks tests as integration tests",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+ignore_missing_imports = true
+no_implicit_optional = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+
+[tool.coverage.run]
+source = ["movici_viewer"]
+omit = [
+    "*/tests/*",
+    "*/test_*",
+    "setup.py",
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self.debug:",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B101"]  # Skip assert_used
+
+[tool.ruff]
+target-version = "py38"
+line-length = 100
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "C",   # flake8-comprehensions
+    "B",   # flake8-bugbear
+    "UP",  # pyupgrade
+    "S",   # bandit
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+]
+
+[tool.ruff.per-file-ignores]
+"__init__.py" = ["F401"]
+"tests/**/*" = ["S101", "S106", "S107", "S311"]
