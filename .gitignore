@@ -23,6 +23,9 @@ yarn-error.log*
 __pycache__/
 .benchmarks
 
+# Python egg info
+*.egg-info/
+
 # Tets reports
 coverage
 .coverage
