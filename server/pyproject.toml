@@ -62,7 +62,7 @@ dev = [
     # Code quality
     "black>=24.0.0",
     "isort>=5.13.0",
-    "flake8>=7.0.0",
+    "ruff>=0.8.0",
     "mypy>=1.8.0",
     "bandit>=1.7.0",
     
@@ -85,11 +85,10 @@ all = [
     "httpx>=0.28.0",
     "black>=24.0.0",
     "isort>=5.13.0",
-    "flake8>=7.0.0",
+    "ruff>=0.8.0",
     "mypy>=1.8.0",
     "bandit>=1.7.0",
     "pre-commit>=4.0.0",
-    "ruff>=0.8.0",
     "sphinx>=8.0.0",
     "sphinx-rtd-theme>=3.0.0",
     "myst-parser>=4.0.0",
