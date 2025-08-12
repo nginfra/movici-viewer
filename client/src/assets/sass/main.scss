@@ -1,7 +1,7 @@
 // Import Bulma first (contains @use statements that must come first)
 @import 'bulma';
 
-// Local variable definitions 
+// Local variable definitions
 $radius: 4px;
 $family-primary: 'Source Sans Pro', sans-serif;
 
@@ -443,4 +443,3 @@ a.pagination-link.is-current {
 @import './media-query';
 @import '../../../movici-flow-lib/src/assets/sass/helpers';
 @import '../../../movici-flow-lib/src/assets/sass/style';
-

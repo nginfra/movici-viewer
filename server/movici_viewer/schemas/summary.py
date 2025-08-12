@@ -1,29 +1,27 @@
 from __future__ import annotations
 
-import typing as t
-
 from pydantic import BaseModel
 
 
 class DatasetSummary(BaseModel):
     count: int
-    entity_groups: t.List[EntityGroupSummary]
+    entity_groups: list[EntityGroupSummary]
 
 
 class EntityGroupSummary(BaseModel):
     count: int
     name: str
-    properties: t.List[PropertySummary]
+    properties: list[PropertySummary]
 
 
 class PropertySummary(BaseModel):
-    component: t.Optional[str] = ...
+    component: str | None = ...
     name: str
     data_type: str
     description: str
     unit: str
-    min_val: t.Optional[float] = ...
-    max_val: t.Optional[float] = ...
+    min_val: float | None = ...
+    max_val: float | None = ...
 
 
 EntityGroupSummary.update_forward_refs()

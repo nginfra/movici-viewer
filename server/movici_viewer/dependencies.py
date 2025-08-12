@@ -1,4 +1,3 @@
-import typing as t
 from functools import lru_cache
 
 from fastapi import Depends, HTTPException
@@ -8,7 +7,7 @@ from .model.model import Repository
 from .settings import Settings
 
 
-@lru_cache()
+@lru_cache
 def get_settings():
     return Settings()
 
@@ -25,7 +24,7 @@ def repository(
     )
 
 
-def dataset_uuid(dataset_name: t.Optional[str] = None, dataset_uuid: t.Optional[str] = None):
+def dataset_uuid(dataset_name: str | None = None, dataset_uuid: str | None = None):
     if not (bool(dataset_uuid) ^ bool(dataset_name)):
         raise HTTPException(400, "supply either dataset_uuid or dataset_name")
     return dataset_uuid or dataset_name

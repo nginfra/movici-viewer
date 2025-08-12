@@ -1,15 +1,13 @@
 from fastapi import APIRouter, Depends
 
+from .. import dependencies
 from ..exceptions import NotFound
 from ..model.model import Repository
 from ..schemas.dataset import DatasetWithData
-from ..schemas.scenario import ScenarioCollection, Scenario
-from .. import dependencies
+from ..schemas.scenario import Scenario, ScenarioCollection
 from ..schemas.summary import DatasetSummary
 from ..schemas.update import UpdateCollection
-import typing as t
-
-from ..schemas.view import ViewCollection, ViewCrudResponse, InView
+from ..schemas.view import InView, ViewCollection, ViewCrudResponse
 
 scenario_router = APIRouter(prefix="/scenarios")
 
@@ -27,7 +25,7 @@ def get_scenario(uuid: str, repository: Repository = Depends(dependencies.reposi
 @scenario_router.get("/{uuid}/state", response_model=DatasetWithData)
 def get_scenario_state(
     uuid: str,
-    timestamp: t.Optional[int] = None,
+    timestamp: int | None = None,
     dataset_uuid: str = Depends(dependencies.dataset_uuid),
     repository: Repository = Depends(dependencies.repository),
 ):
@@ -58,8 +56,6 @@ def list_views(uuid: str, repository: Repository = Depends(dependencies.reposito
 
 
 @scenario_router.post("/{uuid}/views", response_model=ViewCrudResponse)
-def add_view(
-    uuid: str, payload: InView, repository: Repository = Depends(dependencies.repository)
-):
+def add_view(uuid: str, payload: InView, repository: Repository = Depends(dependencies.repository)):
     uuid = repository.add_view(uuid, payload)
     return {"result": "ok", "message": "view created", "view_uuid": uuid}

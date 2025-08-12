@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import typing as t
-
 from pydantic import BaseModel
 
 
 class ScenarioCollection(BaseModel):
-    scenarios: t.List[Scenario]
+    scenarios: list[Scenario]
 
 
 class Scenario(BaseModel):
@@ -14,10 +12,10 @@ class Scenario(BaseModel):
     name: str
     display_name: str
     has_timeline: bool
-    status: t.Optional[str]
+    status: str | None
     simulation_info: SimulationInfo
-    models: t.List[ScenarioModel]
-    datasets: t.List[ScenarioDataset]
+    models: list[ScenarioModel]
+    datasets: list[ScenarioDataset]
 
 
 class ScenarioModel(BaseModel):
@@ -35,7 +33,7 @@ class ScenarioDataset(BaseModel):
 
 
 class SimulationInfo(BaseModel):
-    mode: t.Optional[str] = "time_oriented"
+    mode: str | None = "time_oriented"
     start_time: int
     reference_time: int
     duration: int

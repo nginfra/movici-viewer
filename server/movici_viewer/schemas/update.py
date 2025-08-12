@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import typing as t
-
 from pydantic import BaseModel
 
 
 class UpdateCollection(BaseModel):
-    updates: t.List[Update]
+    updates: list[Update]
 
 
 class Update(BaseModel):
@@ -16,7 +14,7 @@ class Update(BaseModel):
     scenario_uuid: str
     timestamp: int
     iteration: int
-    data: t.Optional[dict] = None
+    data: dict | None = None
 
 
 UpdateCollection.update_forward_refs()

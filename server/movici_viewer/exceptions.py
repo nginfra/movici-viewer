@@ -1,9 +1,7 @@
-import typing as t
-
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 
 class ServerError(Exception):
@@ -25,7 +23,7 @@ class NotFound(ServerError):
 class InvalidObject(ServerError):
     status_code = 400
 
-    def __init__(self, kind: str, name: str, exception: t.Optional[Exception]):
+    def __init__(self, kind: str, name: str, exception: Exception | None):
         self.kind = kind
         self.name = name
         self.exc = exception

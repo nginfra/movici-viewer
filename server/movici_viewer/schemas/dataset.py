@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import typing as t
-
 from pydantic import BaseModel
 
 
 class DatasetCollection(BaseModel):
-    datasets: t.List[Dataset]
+    datasets: list[Dataset]
 
 
 class Dataset(BaseModel):
@@ -19,8 +17,8 @@ class Dataset(BaseModel):
 
 
 class DatasetWithData(Dataset):
-    general: t.Optional[dict]
-    bounding_box: t.Optional[t.List[float]]
+    general: dict | None
+    bounding_box: list[float] | None
     data: dict
 
 

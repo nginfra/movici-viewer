@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends
 
 from .. import dependencies
 from ..model.model import Repository
-from ..schemas.view import View, InView, ViewCrudResponse
+from ..schemas.view import InView, View, ViewCrudResponse
 
 view_router = APIRouter(prefix="/views")
 

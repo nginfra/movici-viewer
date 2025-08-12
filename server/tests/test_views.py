@@ -105,9 +105,7 @@ class TestAddView:
             json=payload,
         )
         assert (
-            json.loads(
-                data_dir.joinpath("views/no_updates_scenario/another_view.json").read_text()
-            )
+            json.loads(data_dir.joinpath("views/no_updates_scenario/another_view.json").read_text())
             == payload
         )
 

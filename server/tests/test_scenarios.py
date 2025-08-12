@@ -3,7 +3,7 @@ import pytest
 
 def test_get_scenarios(get_with_status):
     response = get_with_status("/scenarios/", 200)
-    assert set(scen["name"] for scen in response.json()["scenarios"]) == {
+    assert {scen["name"] for scen in response.json()["scenarios"]} == {
         "test_scenario",
         "no_updates_scenario",
     }
@@ -53,9 +53,7 @@ def test_get_scenario_state(get_with_status, timestamp, expected):
 
 
 def test_scenario_summary(get_with_status):
-    response = get_with_status(
-        "/scenarios/test_scenario/summary?dataset_name=antennas", 200
-    ).json()
+    response = get_with_status("/scenarios/test_scenario/summary?dataset_name=antennas", 200).json()
     assert response == {
         "count": 2,
         "entity_groups": [

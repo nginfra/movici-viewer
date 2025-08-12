@@ -1,12 +1,10 @@
 from __future__ import annotations
 
-import typing as t
-
 from pydantic import BaseModel
 
 
 class ViewCollection(BaseModel):
-    views: t.List[View]
+    views: list[View]
 
 
 class InView(BaseModel):

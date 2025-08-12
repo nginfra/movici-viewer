@@ -1,15 +1,15 @@
+import json
 import logging
 import logging.config
 import sys
-import json
 from datetime import datetime
-from typing import Any, Dict
-from .settings import Settings, LogFormat
+
+from .settings import LogFormat, Settings
 
 
 class JSONFormatter(logging.Formatter):
     """Custom JSON formatter for structured logging."""
-    
+
     def format(self, record: logging.LogRecord) -> str:
         log_data = {
             "timestamp": datetime.utcnow().isoformat(),
@@ -20,26 +20,44 @@ class JSONFormatter(logging.Formatter):
             "function": record.funcName,
             "line": record.lineno,
         }
-        
+
         # Add exception info if present
         if record.exc_info:
             log_data["exception"] = self.formatException(record.exc_info)
-        
+
         # Add extra fields
         for key, value in record.__dict__.items():
-            if key not in {"name", "msg", "args", "levelname", "levelno", "pathname", 
-                          "filename", "module", "lineno", "funcName", "created", 
-                          "msecs", "relativeCreated", "thread", "threadName", 
-                          "processName", "process", "getMessage", "exc_info", "exc_text", 
-                          "stack_info"}:
+            if key not in {
+                "name",
+                "msg",
+                "args",
+                "levelname",
+                "levelno",
+                "pathname",
+                "filename",
+                "module",
+                "lineno",
+                "funcName",
+                "created",
+                "msecs",
+                "relativeCreated",
+                "thread",
+                "threadName",
+                "processName",
+                "process",
+                "getMessage",
+                "exc_info",
+                "exc_text",
+                "stack_info",
+            }:
                 log_data[key] = value
-        
+
         return json.dumps(log_data, default=str)
 
 
 def setup_logging(settings: Settings) -> None:
     """Configure application logging based on settings."""
-    
+
     # Determine formatter
     if settings.LOG_FORMAT == LogFormat.JSON:
         formatter_class = JSONFormatter
@@ -48,9 +66,9 @@ def setup_logging(settings: Settings) -> None:
         formatter_class = logging.Formatter
         formatter_config = {
             "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
-            "datefmt": "%Y-%m-%d %H:%M:%S"
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         }
-    
+
     # Configure handlers
     handlers = {
         "console": {
@@ -60,7 +78,7 @@ def setup_logging(settings: Settings) -> None:
             "level": settings.LOG_LEVEL.value,
         }
     }
-    
+
     # Add file handler if specified
     if settings.LOG_FILE:
         handlers["file"] = {
@@ -71,17 +89,12 @@ def setup_logging(settings: Settings) -> None:
             "formatter": "default",
             "level": settings.LOG_LEVEL.value,
         }
-    
+
     # Logging configuration
     config = {
         "version": 1,
         "disable_existing_loggers": False,
-        "formatters": {
-            "default": {
-                "()": formatter_class,
-                **formatter_config
-            }
-        },
+        "formatters": {"default": {"()": formatter_class, **formatter_config}},
         "handlers": handlers,
         "root": {
             "level": settings.LOG_LEVEL.value,
@@ -105,5 +118,5 @@ def setup_logging(settings: Settings) -> None:
             },
         },
     }
-    
+
     logging.config.dictConfig(config)

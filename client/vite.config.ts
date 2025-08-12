@@ -120,7 +120,7 @@ export default defineConfig({
   optimizeDeps: {
     include: [
       'vue',
-      'vue-router', 
+      'vue-router',
       'pinia',
       'axios',
       'lodash-es',
