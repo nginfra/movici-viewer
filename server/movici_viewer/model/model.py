@@ -3,7 +3,6 @@ from __future__ import annotations
 import dataclasses
 import itertools
 import re
-import typing as t
 from collections import defaultdict
 from json import JSONDecodeError
 from pathlib import Path
@@ -11,7 +10,7 @@ from pathlib import Path
 import numpy as np
 import orjson as json
 from movici_simulation_core import TrackedState
-from movici_simulation_core.core import Index, AttributeObject
+from movici_simulation_core.core import AttributeObject, Index
 from movici_simulation_core.core.attribute import attribute_max, attribute_min
 from movici_simulation_core.core.data_format import (
     EntityInitDataFormat,
@@ -32,9 +31,9 @@ def snake_case(text: str):
 
 
 class Repository:
-    result_datasets: t.Dict[str, ResultDataset]
-    active_scenario: t.Optional[str] = None
-    scenario_results: t.Optional[SimulationResults] = None
+    result_datasets: dict[str, ResultDataset]
+    active_scenario: str | None = None
+    scenario_results: SimulationResults | None = None
 
     def __init__(self, data_dir, attributes=None, use_global_plugins=True):
         self.schema = attributes or AttributeSchema()
@@ -59,8 +58,7 @@ class Repository:
     def get_dataset_data(self, uuid: str) -> Path:
         return self.source.get_dataset_path(uuid)
 
-    def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: t.Optional[int] = None):
-
+    def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: int | None = None):
         if self.active_scenario != scenario_uuid:
             self.set_active_scenario(scenario_uuid)
         if dataset_uuid not in self.result_datasets:
@@ -127,8 +125,8 @@ class DirectorySource:
     VIEWS = "views"
     UPDATE_PATTERN = r"t(?P<timestamp>\d+)_(?P<iteration>\d+)_(?P<dataset>\w+)"
 
-    updates: t.Dict[str, UpdateInfo] = {}
-    updates_by_scenario: t.Dict[str, t.Dict[str, UpdateInfo]] = defaultdict(dict)
+    updates: dict[str, UpdateInfo] = {}
+    updates_by_scenario: dict[str, dict[str, UpdateInfo]] = defaultdict(dict)
 
     def __init__(self, data_dir: Path, schema: AttributeSchema):
         self.dir = data_dir
@@ -205,7 +203,7 @@ class DirectorySource:
         self.get_scenario_path(scenario)
         return self.views_dir.joinpath(scenario)
 
-    def get_view_path(self, view_uuid) -> t.Optional[Path]:
+    def get_view_path(self, view_uuid) -> Path | None:
         if "__" not in view_uuid:
             return None
         scenario, view = view_uuid.split("__")
@@ -226,7 +224,7 @@ class DirectorySource:
         try:
             result = json.loads(path.read_bytes())
         except (JSONDecodeError, OSError) as e:
-            raise InvalidObject("scenario", scenario, exception=e)
+            raise InvalidObject("scenario", scenario, exception=e) from e
         for ds in result.get("datasets", []):
             ds["uuid"] = ds["name"]
         return {
@@ -251,7 +249,7 @@ class DirectorySource:
         try:
             result = json.loads(path.read_bytes())
         except (JSONDecodeError, OSError) as e:
-            raise InvalidObject("dataset", dataset_name, exception=e)
+            raise InvalidObject("dataset", dataset_name, exception=e) from e
 
         return {
             "uuid": dataset_name,
@@ -290,7 +288,7 @@ class DirectorySource:
             raise InvalidObject("update", update_uuid, e) from e
         return {**info.as_dict(), "data": data}
 
-    def get_update_info(self, path: Path) -> t.Optional[UpdateInfo]:
+    def get_update_info(self, path: Path) -> UpdateInfo | None:
         matcher = re.compile(self.UPDATE_PATTERN)
         if match := matcher.match(path.stem):
             return UpdateInfo(path=path, scenario=path.parent.name, **match.groupdict())
@@ -310,10 +308,10 @@ class DirectorySource:
     def get_scenario_summary(self, scenario: str, dataset: str):
         results = self.get_results(scenario).get_dataset(dataset)
         state = results.state
-        min_max: t.Dict[str, t.Dict[str, t.Tuple[float, float]]] = defaultdict(dict)
+        min_max: dict[str, dict[str, tuple[float, float]]] = defaultdict(dict)
         for timestamp in state.get_timestamps(dataset):
             state.move_to(timestamp)
-            for (dataset, entity_type, identifier, prop) in state.iter_attributes():
+            for _dataset, entity_type, identifier, prop in state.iter_attributes():
                 if identifier not in min_max[entity_type]:
                     min_max[entity_type][identifier] = (attribute_min(prop), attribute_max(prop))
                 else:
@@ -350,7 +348,7 @@ class DirectorySource:
                 "config": result["config"],
             }
         except (JSONDecodeError, OSError, KeyError) as e:
-            raise InvalidObject("view", view, exception=e)
+            raise InvalidObject("view", view, exception=e) from e
 
     def get_views(self, scenario):
         if not (path := self.get_views_path(scenario)).is_dir():
@@ -418,15 +416,13 @@ def dataset_format_from_type(dataset_type):
 
 def get_summary_from_state(
     state: TrackedState,
-    extreme_values: t.Optional[
-        t.Dict[str, t.Dict[str, t.Tuple[float, float]]]
-    ] = None,
+    extreme_values: dict[str, dict[str, tuple[float, float]]] | None = None,
 ):
     extreme_values = extreme_values or {}
     summary_per_entity = {}
     summary_dataset = None
     entity_counts = {}
-    for (dataset, entity_type, identifier, prop) in state.iter_attributes():
+    for dataset, entity_type, identifier, prop in state.iter_attributes():
         if summary_dataset is None:
             summary_dataset = dataset
         if dataset != summary_dataset:
@@ -466,7 +462,7 @@ def get_id_summary(index: Index):
 def get_property_summary(
     identifier: str,
     prop: AttributeObject,
-    extreme_values: t.Optional[t.Dict[str, t.Tuple[float, float]]] = None,
+    extreme_values: dict[str, tuple[float, float]] | None = None,
 ):
     if extreme_values and identifier in extreme_values:
         min_val, max_val = extreme_values[identifier]
