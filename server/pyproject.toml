@@ -5,21 +5,43 @@ requires = ["poetry-core>=1.0.0"]
 [tool.poetry]
 name = "movici-viewer"
 version = "1.0.1"
-description = "Movici Viewer"
+description = "Modern web-based visualization platform for Movici geospatial simulations"
 authors = ["Pelle Koster <pelle.koster@nginfra.nl>"]
+maintainers = ["NGinfra - Movici <movici@nginfra.nl>"]
+license = "Movici Public License"
 include = ["movici_viewer/ui/**/*"]
+keywords = ["geospatial", "visualization", "simulation", "fastapi", "vue", "gis"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "Intended Audience :: Developers",
+    "License :: Free for non-commercial use",
+    "License :: Other/Proprietary License",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3 :: Only",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Scientific/Engineering :: GIS",
+    "Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
+]
 
 [tool.poetry.scripts]
 movici-viewer = "movici_viewer.main:main"
 
 [tool.poetry.dependencies]
+python = "^3.8"
+setuptools = "*"
 click = "^8.1.3"
 fastapi = "^0.98.0"
 movici-simulation-core = {version = "2.10.4", extras = ["models"]}
 numba = "0.57.1"
 orjson = "^3.9.1"
 pydantic = "^1.10.9"
-python = "^3.8"
 uvicorn = {extras = ["standard"], version = "^0.22.0"}
 
 pytest = {version = "^6.2.5", optional = true}
@@ -48,3 +70,26 @@ exclude = '''(
 '''
 include = '\.pyi?$'
 line-length = 99
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = [
+    "--strict-markers",
+    "--strict-config",
+]
+
+[tool.coverage.run]
+source = ["movici_viewer"]
+omit = ["*/tests/*", "*/test_*"]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if __name__ == .__main__.:",
+]
