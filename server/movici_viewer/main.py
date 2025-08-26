@@ -10,7 +10,7 @@ from starlette.responses import RedirectResponse
 
 from .dependencies import get_settings
 from .exceptions import add_exception_handling
-from .routers import scenario_router, dataset_router, update_router, view_router
+from .routers import scenario_router, dataset_router, update_router, view_router, editor_router
 from .settings import Settings
 
 __UI_DIR__ = Path(__file__).parent / "ui"
@@ -24,6 +24,7 @@ def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_cors=Fal
     app.include_router(dataset_router)
     app.include_router(update_router)
     app.include_router(view_router)
+    app.include_router(editor_router)
     if mount_ui:
         add_ui(app)
     if allow_cors:

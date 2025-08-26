@@ -1,5 +1,6 @@
 import { createRouter, createWebHashHistory } from 'vue-router';
 import FlowWrapperView from './views/FlowWrapperView.vue';
+import DatasetEditorView from './views/DatasetEditorView.vue';
 
 const router = createRouter({
   history: createWebHashHistory(),
@@ -20,6 +21,11 @@ const router = createRouter({
             : undefined,
         };
       },
+    },
+    {
+      path: '/editor',
+      name: 'editor',
+      component: DatasetEditorView,
     },
 
   ]
