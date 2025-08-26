@@ -42,5 +42,21 @@ class SimulationInfo(BaseModel):
     time_scale: float
 
 
+class ScenarioConfigUpdate(BaseModel):
+    config: str
+
+    class Config:
+        schema_extra = {
+            "example": {
+                "config": '{"display_name": "My Scenario", "models": [], "datasets": []}'
+            }
+        }
+
+
+class ScenarioConfigResponse(BaseModel):
+    result: str
+    message: str
+
+
 ScenarioCollection.update_forward_refs()
 Scenario.update_forward_refs()
