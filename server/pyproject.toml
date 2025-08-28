@@ -26,7 +26,6 @@ classifiers = [
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3 :: Only",
     "Topic :: Scientific/Engineering :: GIS",
-    "Topic :: Internet :: WWW/HTTP :: ASGI :: Application",
 ]
 
 [tool.poetry.scripts]
