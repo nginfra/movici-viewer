@@ -41,7 +41,7 @@ orjson = "^3.9.1"
 pydantic = "^1.10.9"
 uvicorn = {extras = ["standard"], version = "^0.22.0"}
 
-pytest = {version = "^6.2.5", optional = true}
+pytest = {version = "^7", optional = true}
 httpx = {version = "^0.24.1", optional = true}
 
 [tool.poetry.extras]
@@ -69,11 +69,13 @@ include = '\.pyi?$'
 line-length = 99
 
 [tool.pytest.ini_options]
-testpaths = ["tests"]
+minversion = "7.0"
 addopts = [
+    "--tb=short",
     "--strict-markers",
     "--strict-config",
 ]
+testpaths = ["tests"]
 
 [tool.coverage.run]
 source = ["movici_viewer"]
