@@ -106,6 +106,7 @@
             :deletedSegments="deletedSegments"
             @segmentClick="toggleSegmentSelection"
             @segmentHover="onSegmentHover"
+            @featuresDeleted="onFeaturesDeleted"
           />
         </div>
       </div>
@@ -138,9 +139,10 @@ interface EditableDataset extends Dataset {
 interface Segment {
   id: string | number
   display_name?: string
-  geometry?: number[][]
+  geometry?: number[][] | number[]
   from_node?: string | number
   to_node?: string | number
+  _entityType?: string
 }
 
 const router = useRouter()
@@ -403,6 +405,107 @@ const getSegmentDisplayName = (segmentId: string) => {
 
 const onSegmentHover = (segmentId: string | null) => {
   hoveredSegment.value = segmentId
+}
+
+const onFeaturesDeleted = async (deletedIds: string[]) => {
+  console.log('Features deleted via editable layer:', deletedIds)
+  
+  if (deletedIds.length === 0 || !selectedDataset.value) return
+  
+  // Group deleted IDs by entity type to handle properly
+  const nodeIds: string[] = []
+  const edgeIds: string[] = []
+  
+  deletedIds.forEach(id => {
+    const segment = segments.value.find(s => String(s.id) === id)
+    if (segment) {
+      if (segment._entityType?.includes('node')) {
+        nodeIds.push(id)
+      } else {
+        edgeIds.push(id)
+      }
+    }
+  })
+  
+  // Process each entity type separately to ensure cascade deletion works
+  const processEntityDeletion = async (entityIds: string[], isNodeType: boolean) => {
+    if (entityIds.length === 0) return
+    
+    try {
+      loading.value = true
+      
+      // Determine the correct entity type
+      const segment = segments.value.find(s => entityIds.includes(String(s.id)))
+      const entityType = segment?._entityType || (isNodeType ? 'transport_node_entities' : 'road_segment_entities')
+      
+      console.log(`Deleting ${entityIds.length} entities of type ${entityType}:`, entityIds)
+      
+      const response = await fetch(`/editor/datasets/${selectedDataset.value?.uuid}/delete-entities`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          dataset_uuid: selectedDataset.value?.uuid,
+          entity_ids: entityIds,
+          entity_type: entityType
+        })
+      })
+      
+      const result = await response.json()
+      console.log('Server deletion result:', result)
+      
+      if (result.success) {
+        // Add to delete history for undo functionality
+        deleteHistory.value.push(entityIds)
+        
+        // Mark entities as deleted
+        entityIds.forEach(id => {
+          deletedSegments.value.add(id)
+          selectedSegments.value.delete(id)
+        })
+        
+        // Handle cascade deletions if nodes were deleted
+        if (result.cascade_deletions && result.cascade_deletions.deleted_edges.length > 0) {
+          console.log('Processing cascade deletions:', result.cascade_deletions)
+          
+          const currentSegmentIds = new Set(segments.value.map(s => String(s.id)))
+          let cascadeDeletedInView = 0
+          
+          result.cascade_deletions.deleted_edges.forEach((edgeId: string) => {
+            if (currentSegmentIds.has(edgeId)) {
+              deletedSegments.value.add(edgeId)
+              cascadeDeletedInView++
+            }
+          })
+          
+          console.log(`Cascade deleted ${cascadeDeletedInView} edges in current view (of ${result.cascade_deletions.deleted_edges.length} total)`)
+        }
+        
+        // Update dataset with modified data
+        if (result.modified_data) {
+          if (selectedDataset.value) selectedDataset.value.data = result.modified_data
+        }
+      }
+      
+    } catch (error) {
+      console.error('Error deleting entities via editable layer:', error)
+    } finally {
+      loading.value = false
+    }
+  }
+  
+  // Process nodes first (to get cascade deletions), then edges
+  if (nodeIds.length > 0) {
+    await processEntityDeletion(nodeIds, true)
+  }
+  if (edgeIds.length > 0) {
+    await processEntityDeletion(edgeIds, false)
+  }
+  
+  // Trigger reactivity
+  deletedSegments.value = new Set(deletedSegments.value)
+  selectedSegments.value = new Set(selectedSegments.value)
 }
 
 const exportDataset = async () => {
