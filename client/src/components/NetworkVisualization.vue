@@ -20,9 +20,6 @@
           <button @click="toggleSelectionMode" :class="['btn', 'btn-sm', selectionMode ? 'btn-primary' : 'btn-secondary']">
             {{ selectionMode ? 'Selection Mode: ON' : 'Selection Mode: OFF' }}
           </button>
-          <button @click="toggleDeleteMode" :class="['btn', 'btn-sm', deleteMode ? 'btn-danger' : 'btn-secondary']">
-            {{ deleteMode ? 'Delete Mode: ON' : 'Delete Mode: OFF' }}
-          </button>
           <div class="help-text">
             <small>
               <strong>Instructions:</strong><br>
@@ -142,7 +139,6 @@ const basemap = ref('mapbox://styles/mapbox/light-v10') // Use same default as D
 const deckLayers = ref<Layer<unknown>[]>([]) // Changed from computed to ref with proper type
 const editMode = ref<any>(new ViewMode())
 const selectedFeatureIndexes = ref<number[]>([])
-const isInitialLoad = ref(true)
 
 // Function to get segment color based on its state
 const getSegmentColor = (segmentId: string) => {
@@ -396,10 +392,9 @@ const updateLayers = () => {
   
   // Create EditableGeoJsonLayer for interactive editing  
   const editableLayer = new EditableGeoJsonLayer({
-    id: 'editable-geojson',
+    id: `editable-geojson-${Date.now()}`, // Force update with unique ID
     data: segmentsToGeoJson.value,
     mode: editMode.value,
-    selectedFeatureIndexes: selectedFeatureIndexes.value,
     
     // Styling
     getFillColor: (feature: any, info: any) => {
@@ -501,7 +496,7 @@ const updateLayers = () => {
       data: [props.segments, props.deletedSegments],
       selectedFeatureIndexes: selectedFeatureIndexes.value
     }
-  })
+  } as any)
   
   layers.push(editableLayer as any)
   
@@ -665,6 +660,7 @@ const toggleDeleteMode = () => {
 // Watch for segment changes
 watch(() => props.segments, (newSegments) => {
   console.log('Segments changed:', newSegments.length)
+  
   if (newSegments.length > 0) {
     const firstSegment = newSegments[0]
     console.log('First segment sample:', {
@@ -691,18 +687,18 @@ watch(() => props.segments, (newSegments) => {
     // Update layers when segments change
     updateLayers()
     
-    // Only auto-fit on initial load, not after deletions
-    if (isInitialLoad.value) {
-      setTimeout(() => zoomToFit(), 1000)
-      isInitialLoad.value = false
-    }
+    // Never auto-fit - let the user control the view
+  } else {
+    // Still update layers when empty to clear the map
+    updateLayers()
   }
 }, { immediate: true })
 
 // Watch for selection changes
 watch([() => props.selectedSegments, () => props.deletedSegments], () => {
+  console.log('Selection or deletion changed, updating layers')
   updateLayers()
-})
+}, { deep: true })
 
 // Watch for edit mode changes
 watch(editMode, () => {
@@ -922,5 +918,23 @@ onUnmounted(() => {
   margin-top: 0.5rem;
   border: 1px solid #ddd;
   max-width: 250px;
+}
+
+.legend {
+  background: white;
+  padding: 0.5rem;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  border: 1px solid #ddd;
+  font-size: 0.8rem;
+  pointer-events: auto;
+}
+
+.legend .legend-item {
+  margin-bottom: 0.25rem;
+}
+
+.legend .legend-item:last-child {
+  margin-bottom: 0;
 }
 </style>

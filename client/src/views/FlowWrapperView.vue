@@ -3,9 +3,6 @@
     <nav class="top-nav">
       <div class="nav-content">
         <h1 class="nav-title">Movici Viewer</h1>
-        <router-link to="/editor" class="nav-link btn-editor">
-          Dataset Editor
-        </router-link>
       </div>
     </nav>
     <div class="main-content">
@@ -78,20 +75,6 @@ function updateRoute(location: FlowLocation) {
   transition: color 0.2s;
 }
 
-.btn-editor {
-  background: #007bff;
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 6px;
-  border: 1px solid #007bff;
-  transition: all 0.2s;
-}
-
-.btn-editor:hover {
-  background: #0056b3;
-  border-color: #0056b3;
-  color: white;
-}
 
 .main-content {
   flex: 1;

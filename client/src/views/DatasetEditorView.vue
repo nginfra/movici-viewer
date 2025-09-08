@@ -16,25 +16,20 @@
     </header>
 
     <div class="editor-content">
-      <!-- Dataset Selection -->
-      <div v-if="!selectedDataset" class="dataset-selection">
-        <h2>Select Dataset to Edit</h2>
-        <div class="dataset-list">
-          <div 
-            v-for="dataset in availableDatasets" 
-            :key="dataset.uuid"
-            @click="selectDataset(dataset.uuid)"
-            class="dataset-card"
-          >
-            <h3>{{ dataset.display_name || dataset.name }}</h3>
-            <p>Type: {{ dataset.type }}</p>
-            <p>UUID: {{ dataset.uuid }}</p>
-          </div>
-        </div>
+      <!-- No Dataset ID Error -->
+      <div v-if="!route.query.datasetId" class="no-dataset-error">
+        <h2>No Dataset Selected</h2>
+        <p>Please navigate to a dataset from the main viewer and use the EDITOR tab to edit it.</p>
+        <button @click="goHome" class="btn btn-primary">← Back to Viewer</button>
+      </div>
+
+      <!-- Loading State -->
+      <div v-else-if="loading" class="loading-state">
+        <h2>Loading Dataset...</h2>
       </div>
 
       <!-- Editor Interface -->
-      <div v-if="selectedDataset" class="editor-interface">
+      <div v-else-if="selectedDataset" class="editor-interface">
         <div class="editor-sidebar">
           <h3>{{ selectedDataset.display_name || selectedDataset.name }}</h3>
           
@@ -121,17 +116,14 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRouter, useRoute } from 'vue-router'
 import NetworkVisualization from '../components/NetworkVisualization.vue'
 
-interface Dataset {
+interface EditableDataset {
   uuid: string
   name: string
   display_name?: string
   type: string
-}
-
-interface EditableDataset extends Dataset {
   data: any
   editable: boolean
 }
@@ -146,10 +138,10 @@ interface Segment {
 }
 
 const router = useRouter()
+const route = useRoute()
 
 // State
 const loading = ref(false)
-const availableDatasets = ref<Dataset[]>([])
 const selectedDataset = ref<EditableDataset | null>(null)
 const segments = ref<Segment[]>([])
 const selectedSegments = ref<Set<string>>(new Set())
@@ -182,18 +174,6 @@ const goHome = () => {
   router.push('/')
 }
 
-const loadDatasets = async () => {
-  loading.value = true
-  try {
-    const response = await fetch('/datasets/')
-    const data = await response.json()
-    availableDatasets.value = data.datasets || []
-  } catch (error) {
-    console.error('Error loading datasets:', error)
-  } finally {
-    loading.value = false
-  }
-}
 
 const selectDataset = async (uuid: string) => {
   loading.value = true
@@ -223,7 +203,17 @@ const selectDataset = async (uuid: string) => {
 }
 
 const loadSegmentsForEntityTypes = async () => {
-  if (!selectedDataset.value || selectedEntityTypes.value.size === 0) return
+  if (!selectedDataset.value) return
+  
+  // If no entity types selected, clear everything
+  if (selectedEntityTypes.value.size === 0) {
+    segments.value = []
+    selectedSegments.value.clear()
+    deletedSegments.value.clear()
+    deleteHistory.value = []
+    console.log('No entity types selected, cleared all segments')
+    return
+  }
   
   try {
     // Load entities for all selected types and combine them
@@ -247,8 +237,20 @@ const loadSegmentsForEntityTypes = async () => {
     segments.value = allEntities
     console.log('Loaded entities for types:', Array.from(selectedEntityTypes.value), segments.value.length)
     selectedSegments.value.clear()
-    deletedSegments.value.clear()
-    deleteHistory.value = []
+    
+    // Clear deletion tracking for entities that no longer exist in the dataset
+    // (they've been physically removed by cascade deletion)
+    const currentEntityIds = new Set(allEntities.map(entity => String(entity.id)))
+    const validDeletedSegments = new Set<string>()
+    
+    deletedSegments.value.forEach(deletedId => {
+      if (currentEntityIds.has(deletedId)) {
+        validDeletedSegments.add(deletedId)
+      }
+    })
+    
+    deletedSegments.value = validDeletedSegments
+    console.log('Cleaned up deletion tracking, valid deleted segments:', Array.from(validDeletedSegments))
     
   } catch (error) {
     console.error('Error loading segments for entity types:', error)
@@ -374,7 +376,8 @@ const deleteSelected = async () => {
       
       deletedSegments.value = new Set(deletedSegments.value)
       
-      // Update dataset with modified data
+      // Update dataset with modified data - don't reload segments here
+      // as it will clear the cascade deletions we just processed
       if (result.modified_data) {
         selectedDataset.value.data = result.modified_data
       }
@@ -439,6 +442,8 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
       const entityType = segment?._entityType || (isNodeType ? 'transport_node_entities' : 'road_segment_entities')
       
       console.log(`Deleting ${entityIds.length} entities of type ${entityType}:`, entityIds)
+      console.log('Segment found for entity type detection:', segment)
+      console.log('Is detected as node type:', isNodeType, 'Final entity type:', entityType)
       
       const response = await fetch(`/editor/datasets/${selectedDataset.value?.uuid}/delete-entities`, {
         method: 'POST',
@@ -453,7 +458,8 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
       })
       
       const result = await response.json()
-      console.log('Server deletion result:', result)
+      console.log('Server deletion result for entities:', entityIds)
+      console.log('Full server response:', JSON.stringify(result, null, 2))
       
       if (result.success) {
         // Add to delete history for undo functionality
@@ -482,9 +488,12 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
           console.log(`Cascade deleted ${cascadeDeletedInView} edges in current view (of ${result.cascade_deletions.deleted_edges.length} total)`)
         }
         
-        // Update dataset with modified data
+        // Update dataset with modified data - don't reload segments here
+        // as it will clear the cascade deletions we just processed  
         if (result.modified_data) {
-          if (selectedDataset.value) selectedDataset.value.data = result.modified_data
+          if (selectedDataset.value) {
+            selectedDataset.value.data = result.modified_data
+          }
         }
       }
       
@@ -506,6 +515,9 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
   // Trigger reactivity
   deletedSegments.value = new Set(deletedSegments.value)
   selectedSegments.value = new Set(selectedSegments.value)
+  
+  // Reload segments to sync with server state after cascade deletions
+  await loadSegmentsForEntityTypes()
 }
 
 const exportDataset = async () => {
@@ -546,8 +558,13 @@ const exportDataset = async () => {
 }
 
 // Lifecycle
-onMounted(() => {
-  loadDatasets()
+onMounted(async () => {
+  // Check if datasetId is provided in the query params
+  const datasetId = route.query.datasetId as string
+  if (datasetId) {
+    // Auto-load the specified dataset
+    await selectDataset(datasetId)
+  }
 })
 </script>
 
@@ -585,46 +602,32 @@ onMounted(() => {
   overflow: hidden;
 }
 
-.dataset-selection {
+.no-dataset-error,
+.loading-state {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   padding: 2rem;
-  overflow-y: auto;
+  text-align: center;
 }
 
-.dataset-selection h2 {
+.no-dataset-error h2,
+.loading-state h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.no-dataset-error p {
   margin-bottom: 2rem;
-  color: #333;
-}
-
-.dataset-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 1rem;
-}
-
-.dataset-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 8px;
-  border: 2px solid #ddd;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.dataset-card:hover {
-  border-color: #007bff;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.dataset-card h3 {
-  margin: 0 0 1rem 0;
-  color: #333;
-}
-
-.dataset-card p {
-  margin: 0.5rem 0;
   color: #666;
-  font-size: 0.9rem;
+  max-width: 500px;
+}
+
+.loading-spinner {
+  font-size: 1.2rem;
+  color: #007bff;
 }
 
 .editor-interface {
