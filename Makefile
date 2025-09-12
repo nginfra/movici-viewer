@@ -13,7 +13,7 @@ build: ui
 	cd server && poetry build
 
 pre-init:
-	cd client && npm install
+	cd client && npm install --legacy-peer-deps
 	mkdir -p server/movici_viewer/ui
 
 init: pre-init ui

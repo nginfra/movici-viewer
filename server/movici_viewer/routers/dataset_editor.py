@@ -193,17 +193,20 @@ def delete_network_entities(
         # Update dataset
         dataset_data["data"][entity_type] = filtered_entities
         
+        # If deleting nodes, also delete connected edges/segments/links
+        cascade_result = None
+        if "node_entities" in entity_type:
+            cascade_result = delete_connected_edges(dataset_data, entity_ids, entity_type)
+        
         result = {
             "success": True,
             "deleted_count": len(entity_ids),
             "remaining_count": len(indices_to_keep),
-            "modified_data": dataset_data,
+            "modified_data": dataset_data,  # Now includes cascade deletions
             "entity_type": entity_type
         }
         
-        # If deleting nodes, also delete connected edges/segments/links
-        if "node_entities" in entity_type:
-            cascade_result = delete_connected_edges(dataset_data, entity_ids, entity_type)
+        if cascade_result:
             result["cascade_deletions"] = cascade_result
         
         return result

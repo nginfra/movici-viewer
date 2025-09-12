@@ -324,9 +324,12 @@ const deleteSelected = async () => {
   try {
     loading.value = true
     
-    // For now, use the first selected entity type for deletion
-    // In a more advanced implementation, we could group by entity type
-    const entityType = Array.from(selectedEntityTypes.value)[0] || 'road_segment_entities'
+    // Determine the correct entity type based on the selected segments
+    let entityType = 'road_segment_entities'
+    const firstSegment = segments.value.find(s => entityIds.includes(String(s.id)))
+    if (firstSegment && firstSegment._entityType) {
+      entityType = firstSegment._entityType
+    }
     
     const response = await fetch(`/editor/datasets/${selectedDataset.value.uuid}/delete-entities`, {
       method: 'POST',
@@ -353,33 +356,27 @@ const deleteSelected = async () => {
       if (result.cascade_deletions && result.cascade_deletions.deleted_edges.length > 0) {
         console.log('Cascade deletions:', result.cascade_deletions)
         
-        // Only add cascade deleted edges to deletedSegments if they're in our current segments
-        // This handles the case where edges might be in different entity types we haven't loaded
-        const currentSegmentIds = new Set(segments.value.map(s => String(s.id)))
-        let cascadeDeletedInView = 0
-        
+        // Add ALL cascade deleted edges to our tracking, even if not currently visible
+        // This ensures they stay deleted even when switching entity types
         result.cascade_deletions.deleted_edges.forEach((edgeId: string) => {
-          if (currentSegmentIds.has(edgeId)) {
-            deletedSegments.value.add(edgeId)
-            cascadeDeletedInView++
-          }
+          deletedSegments.value.add(String(edgeId))
         })
         
-        console.log(`Cascade deleted ${cascadeDeletedInView} edges that were in current view (of ${result.cascade_deletions.deleted_edges.length} total)`)
-        
-        // If we have segment entity types loaded, we should see some cascade deletions
-        // If not, prompt user to also select segment entities to see full effect
-        if (cascadeDeletedInView === 0 && result.cascade_deletions.deleted_edges.length > 0) {
-          console.log('Note: Connected edges were deleted but are not visible. Select segment entity types to see edges.')
-        }
+        console.log(`Cascade deleted ${result.cascade_deletions.deleted_edges.length} edges`)
       }
       
       deletedSegments.value = new Set(deletedSegments.value)
       
-      // Update dataset with modified data - don't reload segments here
-      // as it will clear the cascade deletions we just processed
+      // Update dataset with modified data
       if (result.modified_data) {
         selectedDataset.value.data = result.modified_data
+        
+        // Since the server has already removed the cascade deleted edges,
+        // we need to remove them from our local segments array too
+        if (result.cascade_deletions && result.cascade_deletions.deleted_edges.length > 0) {
+          const cascadeDeletedSet = new Set(result.cascade_deletions.deleted_edges.map((id: any) => String(id)))
+          segments.value = segments.value.filter(s => !cascadeDeletedSet.has(String(s.id)))
+        }
       }
       
       // Clear selection
@@ -475,21 +472,19 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
         if (result.cascade_deletions && result.cascade_deletions.deleted_edges.length > 0) {
           console.log('Processing cascade deletions:', result.cascade_deletions)
           
-          const currentSegmentIds = new Set(segments.value.map(s => String(s.id)))
-          let cascadeDeletedInView = 0
-          
+          // Add ALL cascade deleted edges to our tracking
           result.cascade_deletions.deleted_edges.forEach((edgeId: string) => {
-            if (currentSegmentIds.has(edgeId)) {
-              deletedSegments.value.add(edgeId)
-              cascadeDeletedInView++
-            }
+            deletedSegments.value.add(String(edgeId))
           })
           
-          console.log(`Cascade deleted ${cascadeDeletedInView} edges in current view (of ${result.cascade_deletions.deleted_edges.length} total)`)
+          console.log(`Cascade deleted ${result.cascade_deletions.deleted_edges.length} edges`)
+          
+          // Remove cascade deleted edges from our local segments array
+          const cascadeDeletedSet = new Set(result.cascade_deletions.deleted_edges.map((id: any) => String(id)))
+          segments.value = segments.value.filter(s => !cascadeDeletedSet.has(String(s.id)))
         }
         
-        // Update dataset with modified data - don't reload segments here
-        // as it will clear the cascade deletions we just processed  
+        // Update dataset with modified data
         if (result.modified_data) {
           if (selectedDataset.value) {
             selectedDataset.value.data = result.modified_data
@@ -516,8 +511,8 @@ const onFeaturesDeleted = async (deletedIds: string[]) => {
   deletedSegments.value = new Set(deletedSegments.value)
   selectedSegments.value = new Set(selectedSegments.value)
   
-  // Reload segments to sync with server state after cascade deletions
-  await loadSegmentsForEntityTypes()
+  // Don't reload segments here - it would clear our tracking of cascade deletions
+  // The visualization will update based on the deletedSegments set
 }
 
 const exportDataset = async () => {
