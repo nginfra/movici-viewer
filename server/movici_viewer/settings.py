@@ -1,4 +1,5 @@
-from pydantic import BaseSettings, DirectoryPath
+from pydantic import DirectoryPath
+from pydantic_settings import BaseSettings
 import typing as t
 
 

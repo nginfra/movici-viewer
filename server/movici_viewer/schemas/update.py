@@ -16,7 +16,7 @@ class Update(BaseModel):
     scenario_uuid: str
     timestamp: int
     iteration: int
-    data: t.Optional[dict]
+    data: t.Optional[dict] = None
 
 
 UpdateCollection.update_forward_refs()

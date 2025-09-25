@@ -17,7 +17,7 @@ pre-init:
 	mkdir -p server/movici_viewer/ui
 
 init: pre-init ui
-	cd server && poetry install -E dev
+	cd server && poetry install --extras dev
 
 data_dir=tests/data
 export data_dir

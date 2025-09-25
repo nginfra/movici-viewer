@@ -14,10 +14,10 @@ class Scenario(BaseModel):
     name: str
     display_name: str
     has_timeline: bool
-    status: t.Optional[str]
     simulation_info: SimulationInfo
     models: t.List[ScenarioModel]
     datasets: t.List[ScenarioDataset]
+    status: t.Optional[str] = None
 
 
 class ScenarioModel(BaseModel):
