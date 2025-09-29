@@ -1,4 +1,4 @@
-import { GetScenario, GetScenarios } from '@/api/requests';
+import { GetScenario, GetScenarios, UpdateScenarioConfig } from '@/api/requests';
 import type { IClient, ScenarioService, UUID } from '@movici-flow-lib/types';
 
 export default class LocalScenarioService implements ScenarioService {
@@ -14,5 +14,9 @@ export default class LocalScenarioService implements ScenarioService {
 
   async list() {
     return this.client?.request(new GetScenarios());
+  }
+
+  async updateConfig(scenario_uuid: UUID, config: string) {
+    return this.client?.request(new UpdateScenarioConfig(scenario_uuid, config));
   }
 }

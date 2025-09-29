@@ -3,7 +3,7 @@ from fastapi import APIRouter, Depends
 from ..exceptions import NotFound
 from ..model.model import Repository
 from ..schemas.dataset import DatasetWithData
-from ..schemas.scenario import ScenarioCollection, Scenario
+from ..schemas.scenario import ScenarioCollection, Scenario, ScenarioConfigUpdate, ScenarioConfigResponse
 from .. import dependencies
 from ..schemas.summary import DatasetSummary
 from ..schemas.update import UpdateCollection
@@ -63,3 +63,19 @@ def add_view(
 ):
     uuid = repository.add_view(uuid, payload)
     return {"result": "ok", "message": "view created", "view_uuid": uuid}
+
+
+@scenario_router.put("/{uuid}/config", response_model=ScenarioConfigResponse)
+def update_scenario_config(
+    uuid: str, payload: ScenarioConfigUpdate, repository: Repository = Depends(dependencies.repository)
+):
+    import json
+    from fastapi import HTTPException
+    
+    try:
+        config_data = json.loads(payload.config)
+    except json.JSONDecodeError as e:
+        raise HTTPException(status_code=400, detail=f"Invalid JSON: {str(e)}")
+    
+    repository.update_scenario(uuid, config_data)
+    return {"result": "ok", "message": "scenario configuration updated"}

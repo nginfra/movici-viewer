@@ -50,6 +50,9 @@ class Repository:
     def get_scenario(self, uuid: str):
         return self.source.get_scenario(uuid)
 
+    def update_scenario(self, uuid: str, config_data: dict):
+        return self.source.update_scenario(uuid, config_data)
+
     def get_datasets(self):
         return list(self.source.get_datasets())
 
@@ -239,6 +242,25 @@ class DirectorySource:
     def get_scenarios(self):
         for name in self.iter_scenario_names():
             yield self.get_scenario(name)
+
+    def update_scenario(self, scenario: str, config_data: dict):
+        """Update scenario configuration file with new config data"""
+        import json
+        from ..exceptions import InvalidObject
+        
+        path = self.get_scenario_path(scenario)
+        
+        # Clear memoized cache for this scenario
+        if hasattr(self, '_memoize_cache'):
+            cache_key = f"get_scenario:{scenario}"
+            self._memoize_cache.pop(cache_key, None)
+        
+        try:
+            path.write_text(json.dumps(config_data, indent=2))
+        except (OSError, TypeError) as e:
+            raise InvalidObject("scenario config", scenario, exception=e)
+        
+        return config_data
 
     def get_datasets(self):
         for name in self.iter_dataset_names():
