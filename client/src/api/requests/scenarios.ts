@@ -38,11 +38,11 @@ export class GetScenario extends Request<Scenario> {
   }
 }
 
-export class UpdateScenarioConfig extends Request<{result: string; message: string}> {
+export class UpdateScenario extends Request<{result: string; message: string}> {
   scenarioUUID: UUID
-  config: string
+  config: Scenario
 
-  constructor(scenarioUUID: UUID, config: string) {
+  constructor(scenarioUUID: UUID, config: Scenario) {
     super()
     this.scenarioUUID = scenarioUUID
     this.config = config
@@ -51,13 +51,8 @@ export class UpdateScenarioConfig extends Request<{result: string; message: stri
   makeRequest(): AxiosRequestConfig {
     return {
       method: 'put',
-      url: `${uri.scenarios}/${this.scenarioUUID}/config`,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      data: {
-        config: this.config
-      }
+      url: `${uri.scenarios}/${this.scenarioUUID}`,
+      data: this.config
     }
   }
 

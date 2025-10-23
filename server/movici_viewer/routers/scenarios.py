@@ -1,9 +1,11 @@
-from fastapi import APIRouter, Depends
+import json
+
+from fastapi import APIRouter, Depends, HTTPException
 
 from ..exceptions import NotFound
 from ..model.model import Repository
 from ..schemas.dataset import DatasetWithData
-from ..schemas.scenario import ScenarioCollection, Scenario, ScenarioConfigUpdate, ScenarioConfigResponse
+from ..schemas.scenario import ScenarioCollection, Scenario, ScenarioConfigResponse
 from .. import dependencies
 from ..schemas.summary import DatasetSummary
 from ..schemas.update import UpdateCollection
@@ -65,12 +67,10 @@ def add_view(
     return {"result": "ok", "message": "view created", "view_uuid": uuid}
 
 
-@scenario_router.put("/{uuid}/config", response_model=ScenarioConfigResponse)
+@scenario_router.put("/{uuid}", response_model=ScenarioConfigResponse)
 def update_scenario_config(
-    uuid: str, payload: ScenarioConfigUpdate, repository: Repository = Depends(dependencies.repository)
+    uuid: str, payload: Scenario, repository: Repository = Depends(dependencies.repository)
 ):
-    import json
-    from fastapi import HTTPException
     
     try:
         config_data = json.loads(payload.config)

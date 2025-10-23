@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import itertools
+import json
 import re
 import typing as t
 from collections import defaultdict
@@ -245,19 +246,12 @@ class DirectorySource:
 
     def update_scenario(self, scenario: str, config_data: dict):
         """Update scenario configuration file with new config data"""
-        import json
-        from ..exceptions import InvalidObject
         
         path = self.get_scenario_path(scenario)
-        
-        # Clear memoized cache for this scenario
-        if hasattr(self, '_memoize_cache'):
-            cache_key = f"get_scenario:{scenario}"
-            self._memoize_cache.pop(cache_key, None)
-        
+               
         try:
             path.write_text(json.dumps(config_data, indent=2))
-        except (OSError, TypeError) as e:
+        except OSError as e:
             raise InvalidObject("scenario config", scenario, exception=e)
         
         return config_data
