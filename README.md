@@ -50,6 +50,9 @@ An example directory tree is as following:
 Development requires `poetry`, a tool for managing and building python packages. Install it using
 `pip` or `pipx`. 
 
+Movici Viewer requires Python 3.10 to be installed. Please make sure it is available on your PATH.
+Support for newer Python versions will be added in future versions of Movici Viewer
+
 Upon first checkout of this repository, run `make init`. This will
  - install node modules for the client
  - build/bundle the client 
@@ -70,10 +73,19 @@ make run-devel data_dir=/path/to/my/simulations
 
 ### Client development
 for client development, run the local api server and a Vue development server seperately, eg.:
+
 ```bash
 make run-devel
 ```
-and in a separate terminal
+
+Then, change the `"baseURL"` in `client/public/static/settings/settings.json` to the address of
+the local development server, eg: `"http://localhost:5000`. Be sure **NOT** to commit this change.
+
+Then, in a separate terminal run.
+
 ```
 npm run --prefix client serve
 ```
+
+In order to succesfully connect to the local api server, you may need to use and activate a CORS
+browser plugin.

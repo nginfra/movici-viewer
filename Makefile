@@ -17,7 +17,9 @@ pre-init:
 	mkdir -p server/movici_viewer/ui
 
 init: pre-init ui
-	cd server && poetry install --extras dev
+	cd server \
+	&& poetry env use python3.10 \
+	&& poetry install --extras dev
 
 data_dir=tests/data
 export data_dir
@@ -25,7 +27,7 @@ export data_dir
 run-devel:
 	cd server \
 	&& MOVICI_FLOW_DATA_DIR=$(data_dir) \
-	   uvicorn --factory movici_viewer.main:get_app --host localhost --port 5000 --reload
+	   poetry run uvicorn --factory movici_viewer.main:get_app --host localhost --port 5000 --reload
 
 run:
 	cd server && poetry run movici-viewer
