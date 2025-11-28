@@ -50,7 +50,7 @@ An example directory tree is as following:
 Development requires `poetry`, a tool for managing and building python packages. Install it using
 `pip` or `pipx`. 
 
-Movici Viewer requires Python 3.10 to be installed. Please make sure it is available on your PATH.
+Movici Viewer requires Python 3.10-3.13 to be installed. Please make sure it is available on your PATH.
 Support for newer Python versions will be added in future versions of Movici Viewer
 
 Upon first checkout of this repository, run `make init`. This will
