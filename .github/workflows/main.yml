@@ -9,6 +9,9 @@ on:
 
 jobs:
   test-all-platforms:
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
