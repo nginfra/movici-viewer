@@ -2982,4 +2982,4 @@ dev = ["httpx", "pytest"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.11,<3.14"
-content-hash = "1e0c642ce89474b29687d50052cbbe6ee7b3650e23dd9d8ace4bac762d8798f3"
+content-hash = "71c18d8bf3b78215a99a46f73a914d09f89e4625a0c3a28abc552af6e076a712"
