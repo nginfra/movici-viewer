@@ -9,22 +9,29 @@ description = "Modern web-based visualization platform for Movici geospatial sim
 authors = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
 maintainers = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
 license = "Movici Public License"
-keywords = ["geospatial", "visualization", "simulation", "fastapi", "vue", "gis"]
+keywords = [
+  "geospatial",
+  "visualization",
+  "simulation",
+  "fastapi",
+  "vue",
+  "gis",
+]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Intended Audience :: Science/Research",
-    "Intended Audience :: Developers",
-    "License :: Free for non-commercial use",
-    "License :: Other/Proprietary License",
-    "Operating System :: Microsoft :: Windows",
-    "Operating System :: POSIX :: Linux",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
-    "Programming Language :: Python :: 3 :: Only",
-    "Topic :: Scientific/Engineering :: GIS",
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "License :: Free for non-commercial use",
+  "License :: Other/Proprietary License",
+  "Operating System :: Microsoft :: Windows",
+  "Operating System :: POSIX :: Linux",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Scientific/Engineering :: GIS",
 ]
 dependencies = [
   "click>=8",
@@ -36,15 +43,13 @@ dependencies = [
   "uvicorn[standard]",
 ]
 [tool.poetry.dependencies]
-python = ">=3.10,<3.14"
+python = ">=3.11,<3.14"
 
 [project.optional-dependencies]
 dev = ["pytest", "httpx"]
 
 [tool.poetry]
-include = [
-  { path = "movici_viewer/ui/**/*", format=["sdist", "wheel"] }
-]
+include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
 
 [tool.poetry.scripts]
 movici-viewer = "movici_viewer.main:main"
@@ -72,11 +77,7 @@ line-length = 99
 
 [tool.pytest.ini_options]
 minversion = "7.0"
-addopts = [
-    "--tb=short",
-    "--strict-markers",
-    "--strict-config",
-]
+addopts = ["--tb=short", "--strict-markers", "--strict-config"]
 testpaths = ["tests"]
 
 [tool.coverage.run]
@@ -85,9 +86,9 @@ omit = ["*/tests/*", "*/test_*"]
 
 [tool.coverage.report]
 exclude_lines = [
-    "pragma: no cover",
-    "def __repr__",
-    "raise AssertionError",
-    "raise NotImplementedError",
-    "if __name__ == .__main__.:",
+  "pragma: no cover",
+  "def __repr__",
+  "raise AssertionError",
+  "raise NotImplementedError",
+  "if __name__ == .__main__.:",
 ]
