@@ -8,6 +8,9 @@ env:
 
 jobs:
   unit-tests:
+    defaults:
+      run:
+        shell: bash
     strategy:
       fail-fast: false
       matrix:
@@ -21,12 +24,18 @@ jobs:
       with:
         python-version: ${{ env.python-version }}
 
+    - name: Install Poetry
+      uses: snok/install-poetry@v1
+      with:
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+
     - name: Install dependencies
       working-directory: ./server
       run: |
-        pip install -e .[dev]
+        poetry install --extras dev
 
-    - name: Run tests with coverage
-      working-directory: ./server/tests
+    - name: Run tests
+      working-directory: ./server
       run: |
-        pytest .
+        poetry run pytest tests/
