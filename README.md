@@ -79,13 +79,11 @@ make run-devel
 ```
 
 Then, change the `"baseURL"` in `client/public/static/settings/settings.json` to the address of
-the local development server, eg: `"http://localhost:5000`. Be sure **NOT** to commit this change.
+the local development server, eg: `"http://localhost:5000/"`. Be sure **NOT** to commit this change.
 
-Then, in a separate terminal run.
+Then, in a separate terminal run the following command:
 
 ```
-npm run --prefix client serve
+npm run --prefix client dev
 ```
 
-In order to succesfully connect to the local api server, you may need to use and activate a CORS
-browser plugin.
