@@ -27,6 +27,7 @@ export data_dir
 run-devel:
 	cd server \
 	&& MOVICI_FLOW_DATA_DIR=$(data_dir) \
+	   MOVICI_FLOW_ALLOW_CORS=1 \
 	   poetry run uvicorn --factory movici_viewer.main:get_app --host localhost --port 5000 --reload
 
 run:

@@ -10,23 +10,25 @@ from starlette.responses import RedirectResponse
 
 from .dependencies import get_settings
 from .exceptions import add_exception_handling
-from .routers import scenario_router, dataset_router, update_router, view_router
+from .routers import dataset_router, scenario_router, update_router, view_router
 from .settings import Settings
 
 __UI_DIR__ = Path(__file__).parent / "ui"
 
 
-def get_app(settings: t.Optional[Settings] = None, mount_ui=True, allow_cors=False):
+def get_app(settings: t.Optional[Settings] = None, mount_ui=True):
     app = FastAPI()
     if settings is not None:
         app.dependency_overrides[get_settings] = lambda: settings
+    else:
+        settings = get_settings()
     app.include_router(scenario_router)
     app.include_router(dataset_router)
     app.include_router(update_router)
     app.include_router(view_router)
     if mount_ui:
         add_ui(app)
-    if allow_cors:
+    if settings.ALLOW_CORS:
         setup_cors(app)
     add_exception_handling(app)
     return app
@@ -55,6 +57,6 @@ def setup_cors(app: FastAPI):
 @click.option("--port", "-p", default=5000)
 @click.option("--allow-cors", is_flag=True, default=False)
 def main(directory, host, port, allow_cors):
-    settings = Settings(DATA_DIR=directory)
-    app = get_app(settings, allow_cors=allow_cors)
+    settings = Settings(DATA_DIR=directory, ALLOW_CORS=allow_cors)
+    app = get_app(settings)
     uvicorn.run(app, host=host, port=port, log_level="info")
