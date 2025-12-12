@@ -4,7 +4,7 @@ requires = ["poetry-core>=2.0.0"]
 
 [project]
 name = "movici-viewer"
-version = "1.0.1"
+version = "1.1.0"
 description = "Modern web-based visualization platform for Movici geospatial simulations"
 authors = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
 maintainers = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
