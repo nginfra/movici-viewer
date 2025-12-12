@@ -26,7 +26,7 @@ export const useSettingsStore = defineStore("settings", {
 
       try {
         return this.features.includes(feature);
-      } catch (e) {
+      } catch {
         return false;
       }
     },
