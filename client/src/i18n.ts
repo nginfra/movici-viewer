@@ -9,8 +9,8 @@ function loadLocaleMessages<Schema>(messagesArray: Array<LocaleMessages<Schema>>
     for (const key of Object.keys(curr)) {
       const matched = key.match(/([a-zA-Z_]+)\.json$/i);
       if (matched && matched.length > 1) {
-        const locale = matched[1];
-        agg[locale] = merge(agg[locale], curr[key]);
+        const locale = matched[1]!;
+        agg[locale] = merge(agg[locale], curr[key]!);
       }
     }
     return agg;
