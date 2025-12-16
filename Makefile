@@ -22,13 +22,19 @@ init: pre-init ui
 	&& poetry install --extras dev
 
 data_dir=tests/data
+port=5000
+
 export data_dir
+export port
 
 run-devel:
 	cd server \
 	&& MOVICI_FLOW_DATA_DIR=$(data_dir) \
 	   MOVICI_FLOW_ALLOW_CORS=1 \
-	   poetry run uvicorn --factory movici_viewer.main:get_app --host localhost --port 5000 --reload
+	   poetry run uvicorn --factory movici_viewer.main:get_app --host localhost --port $(port) --reload
 
+run-client:
+	cd client \
+	&& VITE_MOVICI_BASE_URL=http://localhost:$(port) npm run dev
 run:
 	cd server && poetry run movici-viewer

@@ -87,12 +87,9 @@ for client development, run the local api server and a Vue development server se
 make run-devel
 ```
 
-Then, change the `"baseURL"` in `client/public/static/settings/settings.json` to the address of
-the local development server, eg: `"http://localhost:5000/"`. Be sure **NOT** to commit this change.
-
 Then, in a separate terminal run the following command:
 
 ```
-npm run --prefix client dev
+make run-client
 ```
 

@@ -10,7 +10,7 @@ interface ApplicationSettings {
 
 const defaultSettings: ApplicationSettings = {
   locale: "en",
-  baseURL: "/",
+  baseURL: import.meta.env.VITE_MOVICI_BASE_URL || "/",
   features: [],
   projections: {},
 };
