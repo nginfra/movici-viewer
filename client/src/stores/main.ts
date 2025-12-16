@@ -1,4 +1,3 @@
-import { GetGlobalSettings } from "@/api/requests";
 import { defaultClient } from "@movici-flow-lib/api/client";
 import type { IClient } from "@movici-flow-lib/types";
 import { global } from "@/i18n";
@@ -23,21 +22,11 @@ export const useMainStore = defineStore("main", () => {
   const settingsStore = useSettingsStore();
   const { failMessage } = useSnackbar();
 
-  async function loadRemoteSettings() {
-    const remoteSettings = await client.value.request(new GetGlobalSettings());
-    if (!remoteSettings) {
-      console.warn("could not load remote settings");
-      return;
-    }
-    settingsStore.update(remoteSettings);
-  }
-
   return {
     initialized,
     client,
     async initializeApp() {
       settingsStore.loadLocal();
-      await loadRemoteSettings();
 
       global.locale.value = settingsStore.locale;
       client.value.baseURL = settingsStore.baseURL;
