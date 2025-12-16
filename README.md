@@ -59,6 +59,15 @@ Upon first checkout of this repository, run `make init`. This will
  - populate the server with the client bundle
  - install the server package
 
+### Pre-commit hooks
+
+To install the pre-commit hooks, please first install pre-commit using your favorite installer, eg: `pipx` or `uv tool`.
+Then install the precommit hooks by running
+
+```bash
+pre-commit install
+```
+
 ### Server development
 The development requirements should already be installed after running `make init`. A development
 server can be started using
