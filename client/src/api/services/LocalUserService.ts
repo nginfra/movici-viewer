@@ -1,4 +1,4 @@
-import type { IClient, UserService } from '@movici-flow-lib/types';
+import type { IClient, UserService } from "@movici-flow-lib/types";
 
 export default class DummyUserService implements UserService {
   client: IClient;

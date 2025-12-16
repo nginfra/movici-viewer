@@ -1,12 +1,12 @@
-import { createRouter, createWebHashHistory } from 'vue-router';
-import FlowWrapperView from './views/FlowWrapperView.vue';
+import { createRouter, createWebHashHistory } from "vue-router";
+import FlowWrapperView from "./views/FlowWrapperView.vue";
 
 const router = createRouter({
   history: createWebHashHistory(),
   routes: [
     {
-      path: '/:step?',
-      name: 'home',
+      path: "/:step?",
+      name: "home",
       component: FlowWrapperView,
       props: (route) => {
         return {
@@ -21,8 +21,7 @@ const router = createRouter({
         };
       },
     },
+  ],
+});
 
-  ]
-})
-
-export default router
+export default router;

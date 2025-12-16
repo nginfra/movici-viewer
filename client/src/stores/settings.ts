@@ -43,7 +43,7 @@ export const useSettingsStore = defineStore("settings", {
         assign(
           this,
           key as keyof ApplicationSettings,
-          localSettings[key as keyof ApplicationSettings]
+          localSettings[key as keyof ApplicationSettings],
         );
       }
     },
@@ -53,7 +53,7 @@ export const useSettingsStore = defineStore("settings", {
         localSettingsKeys.reduce((curr, key) => {
           assign(curr, key, this[key]);
           return curr;
-        }, {} as Partial<ApplicationSettings>)
+        }, {} as Partial<ApplicationSettings>),
       );
     },
 

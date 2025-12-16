@@ -1,9 +1,9 @@
 // Import Bulma's core
-@import './variables';
-@import 'bulma/sass/utilities/_all.sass';
+@import "./variables";
+@import "bulma/sass/utilities/_all.sass";
 
 // Add a font family
-$family-primary: 'Source Sans Pro', sans-serif;
+$family-primary: "Source Sans Pro", sans-serif;
 $radius: 4px;
 
 // Link colors
@@ -14,7 +14,6 @@ $link-focus-border: $primary;
 // Modal
 $modal-background-background-color: rgba($grey-light, 0.9);
 $modal-card-head-background-color: $white;
-
 
 // Forms colors
 $background: $white-ter;
@@ -71,11 +70,11 @@ h1.title {
   @include border-radius;
 }
 .logo {
-  background-image: url('../images/movici_logo.svg');
+  background-image: url("../images/movici_logo.svg");
   background-repeat: no-repeat;
 }
 .logo-symbol {
-  background-image: url('../images/movici_symbol.svg');
+  background-image: url("../images/movici_symbol.svg");
   background-repeat: no-repeat;
 }
 pre {
@@ -131,11 +130,11 @@ html {
 .breadcrumb li:after {
   padding: 0 10px;
   color: $black;
-  content: '/';
+  content: "/";
 }
 .breadcrumb li:last-child:after {
   padding: 0;
-  content: '';
+  content: "";
 }
 .breadcrumb .linked {
   color: $primary;
@@ -153,7 +152,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Firefox */
-input[type='number'] {
+input[type="number"] {
   -moz-appearance: textfield;
 }
 
@@ -166,7 +165,9 @@ input.is-small {
 $body-background-color: $white-ter;
 $control-border-width: 2px;
 $input-shadow: none;
-$card-shadow: 0 2px 3px rgba($black, 0.1), 0 0 0 0 rgba($black, 0.1) !default;
+$card-shadow:
+  0 2px 3px rgba($black, 0.1),
+  0 0 0 0 rgba($black, 0.1) !default;
 
 // Nav styles
 $navbar-box-shadow-color: rgba($black, 0.1);
@@ -419,13 +420,11 @@ a.pagination-link.is-current {
   @include border-radius;
 }
 
-@import './media-query';
-@import '../../../movici-flow-lib/src/assets/sass/helpers';
-@import '../../../movici-flow-lib/src/assets/sass/style';
-
+@import "./media-query";
+@import "../../../movici-flow-lib/src/assets/sass/helpers";
+@import "../../../movici-flow-lib/src/assets/sass/style";
 
 // Import Bulma and Oruga styles
-@import 'bulma/bulma.sass';
-@import 'bulma-utilities/css/bulma-utilities.css';
-@import '@oruga-ui/theme-bulma/dist/scss/bulma';
-
+@import "bulma/bulma.sass";
+@import "bulma-utilities/css/bulma-utilities.css";
+@import "@oruga-ui/theme-bulma/dist/scss/bulma";
