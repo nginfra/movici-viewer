@@ -1,14 +1,14 @@
-import type { CAPABILITIES } from '@movici-flow-lib/api';
-import type { Backend, IClient } from '@movici-flow-lib/types';
-import LocalDatasetService from './services/LocalDatasetService';
-import LocalGeocodeService from './services/LocalGeocodeService';
-import DummyProjectService from './services/LocalProjectService';
-import LocalScenarioService from './services/LocalScenarioService';
-import LocalSummaryService from './services/LocalSummaryService';
-import LocalUpdatesService from './services/LocalUpdatesService';
-import DummyUserService from './services/LocalUserService';
-import LocalViewService from './services/LocalViewService';
-import LocalFetchRequestService from './services/LocalFetchRequestService';
+import type { CAPABILITIES } from "@movici-flow-lib/api";
+import type { Backend, IClient } from "@movici-flow-lib/types";
+import LocalDatasetService from "./services/LocalDatasetService";
+import LocalGeocodeService from "./services/LocalGeocodeService";
+import DummyProjectService from "./services/LocalProjectService";
+import LocalScenarioService from "./services/LocalScenarioService";
+import LocalSummaryService from "./services/LocalSummaryService";
+import LocalUpdatesService from "./services/LocalUpdatesService";
+import DummyUserService from "./services/LocalUserService";
+import LocalViewService from "./services/LocalViewService";
+import LocalFetchRequestService from "./services/LocalFetchRequestService";
 export default class LocalBackend implements Backend {
   dataset: LocalDatasetService;
   project: DummyProjectService;

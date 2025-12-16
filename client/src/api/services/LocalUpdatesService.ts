@@ -1,6 +1,6 @@
-import { GetUpdates, GetUpdateWithData } from '@/api/requests';
-import type { IClient } from '@movici-flow-lib/types';
-import type { DataAttribute, UpdatesService, UUID } from '@movici-flow-lib/types';
+import { GetUpdates, GetUpdateWithData } from "@/api/requests";
+import type { IClient } from "@movici-flow-lib/types";
+import type { DataAttribute, UpdatesService, UUID } from "@movici-flow-lib/types";
 
 export default class LocalUpdatesService implements UpdatesService {
   client: IClient;

@@ -4,8 +4,8 @@
 </template>
 
 <script setup lang="ts">
-import { RouterView } from 'vue-router'
-import { useMainStore } from './stores/main'
-const store = useMainStore()
-store.initializeApp()
+import { RouterView } from "vue-router";
+import { useMainStore } from "./stores/main";
+const store = useMainStore();
+store.initializeApp();
 </script>

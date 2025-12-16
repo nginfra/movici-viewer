@@ -1,5 +1,5 @@
-import { GetScenario, GetScenarios } from '@/api/requests';
-import type { IClient, ScenarioService, UUID } from '@movici-flow-lib/types';
+import { GetScenario, GetScenarios } from "@/api/requests";
+import type { IClient, ScenarioService, UUID } from "@movici-flow-lib/types";
 
 export default class LocalScenarioService implements ScenarioService {
   client: IClient;

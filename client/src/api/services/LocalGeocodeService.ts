@@ -1,4 +1,4 @@
-import type { GeocodeService } from '@movici-flow-lib/types';
+import type { GeocodeService } from "@movici-flow-lib/types";
 
 export default class LocalGeocodeService implements GeocodeService {
   async upstreamEPSG() {
