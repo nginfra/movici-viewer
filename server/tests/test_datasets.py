@@ -19,7 +19,7 @@ def test_get_single_dataset(get_with_status):
     }
 
 
-def test_get_binary_dataset(get_with_status):
+def test_get_binary_dataset_data(get_with_status):
     response = get_with_status("/datasets/heightmap/data", 200)
     assert response.content == b"heightmap_info\n"
 

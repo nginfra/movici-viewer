@@ -9,7 +9,7 @@ class DatasetFormat(enum.Enum):
     BINARY = "binary"
 
 
-BINARY_DATASET_FILE_EXTENSIONS: dict[str | tuple[str, ...], str] = {
+BINARY_DATASET_FILE_EXTENSIONS: dict[str , str] = {
     ".nc": "flooding_tape",
     ".csv": "parameters",
     ".tiff": "heightmap",
@@ -18,9 +18,9 @@ BINARY_DATASET_FILE_EXTENSIONS: dict[str | tuple[str, ...], str] = {
 }
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True) # frozen so that we can use them as dict keys
 class InitDataInfo:
-    name: str
+    name: str # only name is a compare/hash field
     path: Path = dataclasses.field(compare=False)
     format: DatasetFormat | None = dataclasses.field(compare=False, default=None)
     type: str = dataclasses.field(compare=False, default="unknown")
@@ -30,6 +30,8 @@ class InitDataInfo:
         return cls(path.stem, path)
 
     def __post_init__(self):
+        # frozen dataclass does not support assignment (even in __post_init__), so we
+        # need to hack our way around it
         if self.path.suffix in BINARY_DATASET_FILE_EXTENSIONS:
             super().__setattr__("format", DatasetFormat.BINARY)
             if self.type == "unknown":

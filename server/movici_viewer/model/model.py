@@ -195,7 +195,7 @@ class DirectorySource:
 
     def get_dataset_path(self, dataset: str):
         for suffix in self.DATASET_FILE_EXTENSIONS:
-            path = self.dir / self.INIT_DATA / Path(dataset).with_suffix(suffix)
+            path = self.init_data_dir / Path(dataset).with_suffix(suffix)
             if path.is_file():
                 return path
 
