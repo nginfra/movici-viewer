@@ -11,16 +11,18 @@ from pathlib import Path
 import numpy as np
 import orjson as json
 from movici_simulation_core import TrackedState
-from movici_simulation_core.core import Index, AttributeObject
+from movici_simulation_core.core import AttributeObject, Index
 from movici_simulation_core.core.attribute import attribute_max, attribute_min
-from movici_simulation_core.core.data_format import (
-    EntityInitDataFormat,
-    FileType,
-    extract_dataset_data,
-)
+from movici_simulation_core.core.data_format import EntityInitDataFormat, extract_dataset_data
 from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.core.utils import configure_global_plugins
 from movici_simulation_core.postprocessing.results import ResultDataset, SimulationResults
+
+from movici_viewer.model.file_info import (
+    BINARY_DATASET_FILE_EXTENSIONS,
+    DatasetFormat,
+    InitDataInfo,
+)
 
 from ..caching import cache_clear, memoize
 from ..exceptions import Conflict, InvalidObject, NotFound
@@ -54,13 +56,12 @@ class Repository:
         return list(self.source.get_datasets())
 
     def get_dataset(self, uuid: str):
-        return self.source.get_dataset(uuid)
+        return self.source.get_dataset_by_name(uuid)
 
     def get_dataset_data(self, uuid: str) -> Path:
         return self.source.get_dataset_path(uuid)
 
     def get_state(self, scenario_uuid: str, dataset_uuid: str, timestamp: t.Optional[int] = None):
-
         if self.active_scenario != scenario_uuid:
             self.set_active_scenario(scenario_uuid)
         if dataset_uuid not in self.result_datasets:
@@ -125,6 +126,7 @@ class DirectorySource:
     SCENARIOS = "scenarios"
     VIEWS = "views"
     UPDATE_PATTERN = r"t(?P<timestamp>\d+)_(?P<iteration>\d+)_(?P<dataset>\w+)"
+    DATASET_FILE_EXTENSIONS = {".json", *BINARY_DATASET_FILE_EXTENSIONS}
 
     updates: t.Dict[str, UpdateInfo] = {}
     updates_by_scenario: t.Dict[str, t.Dict[str, UpdateInfo]] = defaultdict(dict)
@@ -160,9 +162,12 @@ class DirectorySource:
         for file in self.scenario_dir.glob("*.json"):
             yield file.stem
 
-    def iter_dataset_names(self):
-        for file in self.init_data_dir.glob("*.json"):
-            yield file.stem
+    def iter_dataset_infos(self) -> t.Iterable[InitDataInfo]:
+        for path in self.init_data_dir.iterdir():
+            if not path.is_file() or path.suffix not in self.DATASET_FILE_EXTENSIONS:
+                continue
+
+            yield InitDataInfo.from_path(path)
 
     def iter_updates(self, scenario):
         self.build_updates_index(scenario)
@@ -189,10 +194,12 @@ class DirectorySource:
         return path
 
     def get_dataset_path(self, dataset: str):
-        path = self.dir / self.INIT_DATA / f"{dataset}.json"
-        if not path.is_file():
-            raise NotFound("dataset", dataset)
-        return path
+        for suffix in self.DATASET_FILE_EXTENSIONS:
+            path = self.init_data_dir / Path(dataset).with_suffix(suffix)
+            if path.is_file():
+                return path
+
+        raise NotFound("dataset", dataset)
 
     def get_updates_path(self, scenario):
         updates_dir = self.scenario_dir / scenario
@@ -241,14 +248,27 @@ class DirectorySource:
             yield self.get_scenario(name)
 
     def get_datasets(self):
-        for name in self.iter_dataset_names():
-            yield self.get_dataset(name)
+        for info in self.iter_dataset_infos():
+            yield self.get_dataset(info)
+
+    def get_dataset_by_name(self, dataset_name):
+        path = self.get_dataset_path(dataset_name)
+        return self.get_dataset(InitDataInfo.from_path(path))
 
     @memoize
-    def get_dataset(self, dataset_name):
-        path = self.get_dataset_path(dataset_name)
+    def get_dataset(self, init_data_info: InitDataInfo):
+        dataset_name = init_data_info.name
+        if init_data_info.format == DatasetFormat.BINARY:
+            return {
+                "uuid": dataset_name,
+                "name": dataset_name,
+                "display_name": dataset_name,
+                "type": init_data_info.type,
+                "format": init_data_info.format,
+                "has_data": True,
+            }
         try:
-            result = json.loads(path.read_bytes())
+            result = json.loads(init_data_info.path.read_bytes())
         except (JSONDecodeError, OSError) as e:
             raise InvalidObject("dataset", dataset_name, exception=e)
 
@@ -298,12 +318,19 @@ class DirectorySource:
     @memoize
     def get_dataset_summary(self, dataset: str):
         path = self.get_dataset_path(dataset)
-        data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).loads(
-            path.read_bytes(), FileType.JSON
-        )
+        if not path.suffix == ".json":
+            return self._empty_summary()
+        content = json.loads(path.read_bytes())
+        if "type" not in content or dataset_format_from_type(content["type"]) == "unstructured":
+            return self._empty_summary()
+        data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).load_json(content)
         state = TrackedState(track_unknown=True)
         state.receive_update(data, is_initial=True)
         return get_summary_from_state(state)
+
+    @staticmethod
+    def _empty_summary():
+        return {"count": 0, "entity_groups": []}
 
     @memoize
     def get_scenario_summary(self, scenario: str, dataset: str):
