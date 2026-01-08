@@ -20,8 +20,8 @@ class Dataset(BaseModel):
 
 class DatasetWithData(Dataset):
     general: t.Optional[dict]
-    bounding_box: t.Optional[t.List[float]]
     data: dict
+    bounding_box: t.Optional[t.List[float]] = None
 
 
 DatasetCollection.update_forward_refs()

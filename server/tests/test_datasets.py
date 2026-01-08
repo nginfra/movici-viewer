@@ -3,6 +3,7 @@ def test_get_datasets(get_with_status):
     assert {ds["name"] for ds in response.json()["datasets"]} == {
         "road_network",
         "antennas",
+        "heightmap",
     }
 
 
@@ -16,6 +17,11 @@ def test_get_single_dataset(get_with_status):
         "format": "entity_based",
         "has_data": True,
     }
+
+
+def test_get_binary_dataset_data(get_with_status):
+    response = get_with_status("/datasets/heightmap/data", 200)
+    assert b"heightmap_info" in response.content
 
 
 def test_get_dataset_with_data(get_with_status):

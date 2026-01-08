@@ -50,11 +50,23 @@ An example directory tree is as following:
 Development requires `poetry`, a tool for managing and building python packages. Install it using
 `pip` or `pipx`. 
 
+Movici Viewer requires Python 3.11-3.13 to be installed. Please make sure it is available on your PATH.
+Support for newer Python versions will be added in future versions of Movici Viewer
+
 Upon first checkout of this repository, run `make init`. This will
  - install node modules for the client
  - build/bundle the client 
  - populate the server with the client bundle
  - install the server package
+
+### Pre-commit hooks
+
+To install the pre-commit hooks, please first install pre-commit using your favorite installer, eg: `pipx` or `uv tool`.
+Then install the precommit hooks by running
+
+```bash
+pre-commit install
+```
 
 ### Server development
 The development requirements should already be installed after running `make init`. A development
@@ -70,10 +82,14 @@ make run-devel data_dir=/path/to/my/simulations
 
 ### Client development
 for client development, run the local api server and a Vue development server seperately, eg.:
+
 ```bash
 make run-devel
 ```
-and in a separate terminal
+
+Then, in a separate terminal run the following command:
+
 ```
-npm run --prefix client serve
+make run-client
 ```
+

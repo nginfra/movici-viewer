@@ -17,15 +17,24 @@ pre-init:
 	mkdir -p server/movici_viewer/ui
 
 init: pre-init ui
-	cd server && poetry install -E dev
+	cd server \
+	&& poetry env use python3.10 \
+	&& poetry install --extras dev
 
 data_dir=tests/data
+port=5000
+
 export data_dir
+export port
 
 run-devel:
 	cd server \
 	&& MOVICI_FLOW_DATA_DIR=$(data_dir) \
-	   uvicorn --factory movici_viewer.main:get_app --host localhost --port 5000 --reload
+	   MOVICI_FLOW_ALLOW_CORS=1 \
+	   poetry run uvicorn --factory movici_viewer.main:get_app --host localhost --port $(port) --reload
 
+run-client:
+	cd client \
+	&& VITE_MOVICI_BASE_URL=http://localhost:$(port) npm run dev
 run:
 	cd server && poetry run movici-viewer

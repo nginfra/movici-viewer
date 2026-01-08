@@ -10,7 +10,7 @@ interface ApplicationSettings {
 
 const defaultSettings: ApplicationSettings = {
   locale: "en",
-  baseURL: "/",
+  baseURL: import.meta.env.VITE_MOVICI_BASE_URL || "/",
   features: [],
   projections: {},
 };
@@ -26,7 +26,7 @@ export const useSettingsStore = defineStore("settings", {
 
       try {
         return this.features.includes(feature);
-      } catch (e) {
+      } catch {
         return false;
       }
     },
@@ -43,7 +43,7 @@ export const useSettingsStore = defineStore("settings", {
         assign(
           this,
           key as keyof ApplicationSettings,
-          localSettings[key as keyof ApplicationSettings]
+          localSettings[key as keyof ApplicationSettings],
         );
       }
     },
@@ -53,7 +53,7 @@ export const useSettingsStore = defineStore("settings", {
         localSettingsKeys.reduce((curr, key) => {
           assign(curr, key, this[key]);
           return curr;
-        }, {} as Partial<ApplicationSettings>)
+        }, {} as Partial<ApplicationSettings>),
       );
     },
 

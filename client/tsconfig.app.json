@@ -1,5 +1,5 @@
 {
-  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "extends": "@vue/tsconfig/tsconfig.dom.json",
   "include": [
     "env.d.ts",
     "src/**/*",
@@ -14,6 +14,7 @@
     "./movici-flow-lib/src/**/__mocks__/*"
   ],
   "compilerOptions": {
+    "esModuleInterop": true,
     "allowJs": true,
     "composite": true,
     "baseUrl": ".",
