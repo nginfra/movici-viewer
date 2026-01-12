@@ -232,7 +232,7 @@ class DirectorySource:
         try:
             result = json.loads(path.read_bytes())
         except (JSONDecodeError, OSError) as e:
-            raise InvalidObject("scenario", scenario, exception=e)
+            raise InvalidObject("scenario", scenario, exception=e) from e
         for ds in result.get("datasets", []):
             ds["uuid"] = ds["name"]
         return {
@@ -270,7 +270,7 @@ class DirectorySource:
         try:
             result = json.loads(init_data_info.path.read_bytes())
         except (JSONDecodeError, OSError) as e:
-            raise InvalidObject("dataset", dataset_name, exception=e)
+            raise InvalidObject("dataset", dataset_name, exception=e) from e
 
         return {
             "uuid": dataset_name,
@@ -339,7 +339,7 @@ class DirectorySource:
         min_max: t.Dict[str, t.Dict[str, t.Tuple[float, float]]] = defaultdict(dict)
         for timestamp in state.get_timestamps(dataset):
             state.move_to(timestamp)
-            for (dataset, entity_type, identifier, prop) in state.iter_attributes():
+            for _dataset, entity_type, identifier, prop in state.iter_attributes():
                 if identifier not in min_max[entity_type]:
                     min_max[entity_type][identifier] = (attribute_min(prop), attribute_max(prop))
                 else:
@@ -376,7 +376,7 @@ class DirectorySource:
                 "config": result["config"],
             }
         except (JSONDecodeError, OSError, KeyError) as e:
-            raise InvalidObject("view", view, exception=e)
+            raise InvalidObject("view", view, exception=e) from e
 
     def get_views(self, scenario):
         if not (path := self.get_views_path(scenario)).is_dir():
@@ -444,15 +444,13 @@ def dataset_format_from_type(dataset_type):
 
 def get_summary_from_state(
     state: TrackedState,
-    extreme_values: t.Optional[
-        t.Dict[str, t.Dict[str, t.Tuple[float, float]]]
-    ] = None,
+    extreme_values: t.Optional[t.Dict[str, t.Dict[str, t.Tuple[float, float]]]] = None,
 ):
     extreme_values = extreme_values or {}
     summary_per_entity = {}
     summary_dataset = None
     entity_counts = {}
-    for (dataset, entity_type, identifier, prop) in state.iter_attributes():
+    for dataset, entity_type, identifier, prop in state.iter_attributes():
         if summary_dataset is None:
             summary_dataset = dataset
         if dataset != summary_dataset:

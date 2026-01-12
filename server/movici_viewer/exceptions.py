@@ -1,9 +1,9 @@
 import typing as t
 
-from fastapi import FastAPI, Request, HTTPException
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 
 class ServerError(Exception):
