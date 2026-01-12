@@ -20,21 +20,11 @@ updates:
       development:
         patterns:
           - "pytest*"
-          - "black*"
-          - "flake8*"
-          - "isort*"
-          - "mypy*"
-          - "pre-commit*"
-          - "coverage*"
+          - "httpx*"
       production:
         exclude-patterns:
           - "pytest*"
-          - "black*"
-          - "flake8*"
-          - "isort*"
-          - "mypy*"
-          - "pre-commit*"
-          - "coverage*"
+          - "httpx*"
 
   # Frontend dependencies  
   - package-ecosystem: "npm"
@@ -60,7 +50,6 @@ updates:
           - "prettier*"
           - "vite*"
           - "vitest*"
-          - "cypress*"
       production:
         exclude-patterns:
           - "@types/*"
@@ -68,7 +57,6 @@ updates:
           - "prettier*"
           - "vite*"
           - "vitest*"
-          - "cypress*"
 
   # Enable version updates for GitHub Actions
   - package-ecosystem: "github-actions"
