@@ -21,10 +21,14 @@ updates:
         patterns:
           - "pytest*"
           - "httpx*"
+          - "ruff*"
+          - "taplo*"
       production:
         exclude-patterns:
           - "pytest*"
           - "httpx*"
+          - "ruff*"
+          - "taplo*"
 
   # Frontend dependencies  
   - package-ecosystem: "npm"
