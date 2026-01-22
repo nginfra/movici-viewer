@@ -46,7 +46,7 @@ dependencies = [
 python = ">=3.11,<3.14"
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx"]
+dev = ["pytest", "httpx", "ruff", "taplo"]
 
 [tool.poetry]
 include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
@@ -54,26 +54,56 @@ include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
 [tool.poetry.scripts]
 movici-viewer = "movici_viewer.main:main"
 
-[tool.black]
-exclude = '''(
-/(
-  | \.direnv
-  | \.eggs
-  | \.git
-  | \.hg
-  | \.mypy_cache
-  | \.tox
-  | \.venv
-  | _build
-  | buck-out
-  | build
-  | dist
-  | venv
-)/
-)
-'''
-include = '\.pyi?$'
+[tool.ruff]
 line-length = 99
+target-version = "py311"
+
+[tool.ruff.lint]
+# Ideally we'd have the following rules enabled. However, that is currently not feasible,
+# so some of them are still disabled, we should work on enabling and fixing them:
+
+select = [
+  # "ARG", # check for unused arguments -- there are too many false positives with overriding methods -> maybe typing.override will help?
+  "B", # (bugbear) catches certain common programming bugs
+  # "C4", # comprehension linting
+  "E", # common codestyle errors
+  "F", # pyflakes rules
+  # "FA", # check for correct usage of from __future__ import annotations
+  "FURB", # refactor opportunities
+  "I",    # isort
+  "LOG",  # check for logging best practices and bugs
+  # "N", # pep8 naming
+  "NPY", # numpy checks
+  "PD",  # pandas checks
+  "PLE", # pylint errors
+  # "PLR", # pylint refactor opportunities
+  # "PLW", # pyling warnings
+  # "PT", # pytest style checks
+  # "PTH", # prefer pathlib over os.path
+  # "RSE", # return statement rules
+  # "RUF", # ruff specific rules
+  "S", # security (bandit) checks
+  # "SIM", # suggest code simplifications
+  "T10", # check for breakpoint() statements
+  "T20", # check for print statements
+  "W",   # common codestyle warnings
+  "YTT", # check sys.version errors (not used extensively but nice to have)
+]
+ignore = [
+  "B008", # function call in default argument (false positive for FastAPI Depends)
+  "B027", # empty method in abstract base class
+  "B028", # warnings explicit `stack_level` kwarg
+  "B905", # zip explicit `strict` kwarg
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["S"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["movici_viewer"]
+
+[tool.ruff.format]
+docstring-code-format = true
 
 [tool.pytest.ini_options]
 minversion = "7.0"

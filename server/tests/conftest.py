@@ -1,14 +1,14 @@
 import functools
 from pathlib import Path
-from movici_simulation_core import AttributeSchema, AttributeSpec
 
 import pytest as pytest
 from fastapi.testclient import TestClient
+from movici_simulation_core import AttributeSchema, AttributeSpec
 
+from movici_viewer import dependencies
 from movici_viewer.caching import cache_clear
 from movici_viewer.main import get_app
 from movici_viewer.settings import Settings
-from movici_viewer import dependencies
 
 
 @pytest.fixture

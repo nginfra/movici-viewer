@@ -1,15 +1,15 @@
+import typing as t
+
 from fastapi import APIRouter, Depends
 
+from .. import dependencies
 from ..exceptions import NotFound
 from ..model.model import Repository
 from ..schemas.dataset import DatasetWithData
-from ..schemas.scenario import ScenarioCollection, Scenario
-from .. import dependencies
+from ..schemas.scenario import Scenario, ScenarioCollection
 from ..schemas.summary import DatasetSummary
 from ..schemas.update import UpdateCollection
-import typing as t
-
-from ..schemas.view import ViewCollection, ViewCrudResponse, InView
+from ..schemas.view import InView, ViewCollection, ViewCrudResponse
 
 scenario_router = APIRouter(prefix="/scenarios")
 
