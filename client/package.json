@@ -40,13 +40,13 @@
   "devDependencies": {
     "@tsconfig/node22": "^22.0.2",
     "@types/jsdom": "^27.0.0",
-    "@types/lodash": "^4.17.21",
-    "@types/node": "^24.10.1",
+    "@types/lodash": "^4.17.23",
+    "@types/node": "^25.0.6",
     "@vitejs/plugin-vue": "^6.0.2",
     "@vue/eslint-config-prettier": "^10.2.0",
     "@vue/eslint-config-typescript": "^14.6.0",
     "@vue/tsconfig": "^0.8.1",
-    "eslint": "^9.37.0",
+    "eslint": "^9.39.2",
     "eslint-plugin-vue": "^10.5.0",
     "jiti": "^2.6.1",
     "jsdom": "^22.1.0",
@@ -54,7 +54,7 @@
     "prettier": "^3.6.2",
     "sass-embedded": "^1.93.3",
     "typescript": "~5.9.3",
-    "vite": "^7.2.6",
+    "vite": "^7.3.1",
     "vite-plugin-vue-devtools": "^8.0.5",
     "vue-tsc": "^3.1.7"
   }
