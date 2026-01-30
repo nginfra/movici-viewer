@@ -16,6 +16,8 @@ class Dataset(BaseModel):
     type: str
     format: str
     has_data: bool
+    general: dict | None = None
+    epsg_code: int | None = None
 
 
 class DatasetWithData(Dataset):

@@ -279,6 +279,8 @@ class DirectorySource:
             "type": result.get("type"),
             "format": dataset_format_from_type(result.get("type")),
             "has_data": "data" in result,
+            "epsg_code": result.get("epsg_code"),
+            "general": result.get("general", {}),
         }
 
     @memoize
