@@ -16,6 +16,8 @@ def test_get_single_dataset(get_with_status):
         "type": "transport_network",
         "format": "entity_based",
         "has_data": True,
+        "general": {"enum": {"label": ["highway", "regular"]}},
+        "epsg_code": 28992,
     }
 
 
