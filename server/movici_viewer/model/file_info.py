@@ -9,7 +9,7 @@ class DatasetFormat(enum.Enum):
     BINARY = "binary"
 
 
-BINARY_DATASET_FILE_EXTENSIONS: dict[str , str] = {
+BINARY_DATASET_FILE_EXTENSIONS: dict[str, str] = {
     ".nc": "flooding_tape",
     ".csv": "parameters",
     ".tiff": "heightmap",
@@ -18,9 +18,9 @@ BINARY_DATASET_FILE_EXTENSIONS: dict[str , str] = {
 }
 
 
-@dataclasses.dataclass(frozen=True) # frozen so that we can use them as dict keys
+@dataclasses.dataclass(frozen=True)  # frozen so that we can use them as dict keys
 class InitDataInfo:
-    name: str # only name is a compare/hash field
+    name: str  # only name is a compare/hash field
     path: Path = dataclasses.field(compare=False)
     format: DatasetFormat | None = dataclasses.field(compare=False, default=None)
     type: str = dataclasses.field(compare=False, default="unknown")

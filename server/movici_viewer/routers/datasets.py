@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends
 from fastapi.responses import FileResponse
-from ..model.model import Repository
-from ..schemas.dataset import DatasetCollection, Dataset
+
 from .. import dependencies
+from ..model.model import Repository
+from ..schemas.dataset import Dataset, DatasetCollection
 from ..schemas.summary import DatasetSummary
 
 dataset_router = APIRouter(prefix="/datasets")
