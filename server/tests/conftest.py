@@ -6,8 +6,8 @@ from fastapi.testclient import TestClient
 from movici_simulation_core import AttributeSchema, AttributeSpec
 
 from movici_viewer import dependencies
+from movici_viewer.__main__ import get_app
 from movici_viewer.caching import cache_clear
-from movici_viewer.main import get_app
 from movici_viewer.settings import Settings
 
 

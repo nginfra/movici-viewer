@@ -52,7 +52,7 @@ dev = ["pytest", "httpx", "ruff", "taplo"]
 include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
 
 [tool.poetry.scripts]
-movici-viewer = "movici_viewer.main:main"
+movici-viewer = "movici_viewer.__main__:main"
 
 [tool.ruff]
 line-length = 99
