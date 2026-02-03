@@ -53,6 +53,7 @@ def test_dataset_summary(get_with_status):
     response = get_with_status("/datasets/antennas/summary", 200)
     assert response.json() == {
         "count": 2,
+        "general": {"enum": {"power_source": ["electricity_net", "battery", "no_power"]}},
         "entity_groups": [
             {
                 "name": "antenna_entities",
@@ -63,6 +64,7 @@ def test_dataset_summary(get_with_status):
                         "name": "id",
                         "data_type": "INT",
                         "description": "",
+                        "enum_name": None,
                         "unit": "",
                         "min_val": 0,
                         "max_val": 1,
@@ -72,6 +74,7 @@ def test_dataset_summary(get_with_status):
                         "name": "geometry.x",
                         "data_type": "DOUBLE",
                         "description": "",
+                        "enum_name": None,
                         "unit": "",
                         "min_val": 81017.0,
                         "max_val": 81758.0,
@@ -81,6 +84,7 @@ def test_dataset_summary(get_with_status):
                         "name": "geometry.y",
                         "data_type": "DOUBLE",
                         "description": "",
+                        "enum_name": None,
                         "unit": "",
                         "min_val": 454993.0,
                         "max_val": 455843.0,
@@ -90,6 +94,7 @@ def test_dataset_summary(get_with_status):
                         "name": "operational.power_source",
                         "data_type": "INT",
                         "description": "",
+                        "enum_name": "power_source",
                         "unit": "",
                         "min_val": 0.0,
                         "max_val": 1.0,

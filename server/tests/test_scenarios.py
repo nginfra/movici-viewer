@@ -58,6 +58,7 @@ def test_scenario_summary(get_with_status):
     ).json()
     assert response == {
         "count": 2,
+        "general": {"enum": {"power_source": ["electricity_net", "battery", "no_power"]}},
         "entity_groups": [
             {
                 "name": "antenna_entities",
@@ -69,6 +70,7 @@ def test_scenario_summary(get_with_status):
                         "data_type": "INT",
                         "description": "",
                         "unit": "",
+                        "enum_name": None,
                         "min_val": 0,
                         "max_val": 1,
                     },
@@ -78,6 +80,7 @@ def test_scenario_summary(get_with_status):
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",
+                        "enum_name": None,
                         "min_val": 81017.0,
                         "max_val": 81758.0,
                     },
@@ -87,6 +90,7 @@ def test_scenario_summary(get_with_status):
                         "data_type": "DOUBLE",
                         "description": "",
                         "unit": "",
+                        "enum_name": None,
                         "min_val": 454993.0,
                         "max_val": 455843.0,
                     },
@@ -96,6 +100,7 @@ def test_scenario_summary(get_with_status):
                         "data_type": "INT",
                         "description": "",
                         "unit": "",
+                        "enum_name": "power_source",
                         "min_val": 0,
                         "max_val": 1,
                     },
@@ -105,6 +110,7 @@ def test_scenario_summary(get_with_status):
                         "data_type": "BOOLEAN",
                         "description": "",
                         "unit": "",
+                        "enum_name": None,
                         "min_val": 0,
                         "max_val": 1,
                     },

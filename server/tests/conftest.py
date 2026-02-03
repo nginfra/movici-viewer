@@ -31,7 +31,6 @@ def settings(data_dir):
 @pytest.fixture
 def override_attributes():
     return [
-        AttributeSpec("operational.power_source", data_type=int),
         AttributeSpec("operational.has_power", data_type=bool),
     ]
 
