@@ -46,7 +46,7 @@ dependencies = [
 python = ">=3.11,<3.14"
 
 [project.optional-dependencies]
-dev = ["pytest==9.0.2", "httpx=0.28.1", "ruff==0.15.8", "taplo==0.9.3"]
+dev = ["pytest==9.0.2", "httpx==0.28.1", "ruff==0.15.8", "taplo==0.9.3"]
 
 [tool.poetry]
 include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
