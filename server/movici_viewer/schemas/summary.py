@@ -8,6 +8,7 @@ from pydantic import BaseModel
 class DatasetSummary(BaseModel):
     count: int
     entity_groups: t.List[EntityGroupSummary]
+    general: dict
 
 
 class EntityGroupSummary(BaseModel):
@@ -21,6 +22,7 @@ class PropertySummary(BaseModel):
     name: str
     data_type: str
     description: str
+    enum_name: str | None
     unit: str
     min_val: t.Optional[float] = ...
     max_val: t.Optional[float] = ...

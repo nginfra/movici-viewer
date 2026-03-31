@@ -17,6 +17,7 @@ from movici_simulation_core.core.data_format import EntityInitDataFormat, extrac
 from movici_simulation_core.core.schema import AttributeSchema, DataType
 from movici_simulation_core.core.utils import configure_global_plugins
 from movici_simulation_core.postprocessing.results import ResultDataset, SimulationResults
+from movici_simulation_core.utils.attribute_loader import load_attributes
 
 from movici_viewer.model.file_info import (
     BINARY_DATASET_FILE_EXTENSIONS,
@@ -127,6 +128,7 @@ class DirectorySource:
     VIEWS = "views"
     UPDATE_PATTERN = r"t(?P<timestamp>\d+)_(?P<iteration>\d+)_(?P<dataset>\w+)"
     DATASET_FILE_EXTENSIONS = {".json", *BINARY_DATASET_FILE_EXTENSIONS}
+    ATTRIBUTES = "attributes.json"
 
     updates: t.Dict[str, UpdateInfo] = {}
     updates_by_scenario: t.Dict[str, t.Dict[str, UpdateInfo]] = defaultdict(dict)
@@ -135,6 +137,7 @@ class DirectorySource:
         self.dir = data_dir
         self.schema = schema
         self.cache_clear()
+        self.populate_attribute_schema()
 
     def cache_clear(self):
         self.updates = {}
@@ -145,6 +148,18 @@ class DirectorySource:
         for path in required_dirs:
             if not self.dir.joinpath(path).is_dir():
                 raise OSError(f"{path} must be a valid subdirectory in {str(self.dir)}")
+
+    def populate_attribute_schema(self):
+        path = self.dir / self.ATTRIBUTES
+        if not path.is_file():
+            return
+        try:
+            attributes = load_attributes(path)
+        except FileNotFoundError:
+            attributes = None
+
+        if attributes is not None:
+            self.schema.add_attributes(attributes)
 
     @property
     def init_data_dir(self):
@@ -279,6 +294,8 @@ class DirectorySource:
             "type": result.get("type"),
             "format": dataset_format_from_type(result.get("type")),
             "has_data": "data" in result,
+            "epsg_code": result.get("epsg_code"),
+            "general": result.get("general", {}),
         }
 
     @memoize
@@ -324,7 +341,7 @@ class DirectorySource:
         if "type" not in content or dataset_format_from_type(content["type"]) == "unstructured":
             return self._empty_summary()
         data = EntityInitDataFormat(self.schema, cache_inferred_attributes=True).load_json(content)
-        state = TrackedState(track_unknown=True)
+        state = TrackedState(schema=self.schema, track_unknown=True)
         state.receive_update(data, is_initial=True)
         return get_summary_from_state(state)
 
@@ -450,6 +467,7 @@ def get_summary_from_state(
     summary_per_entity = {}
     summary_dataset = None
     entity_counts = {}
+    enums = {}
     for dataset, entity_type, identifier, prop in state.iter_attributes():
         if summary_dataset is None:
             summary_dataset = dataset
@@ -459,9 +477,13 @@ def get_summary_from_state(
             index = state.index[dataset][entity_type]
             summary_per_entity[entity_type] = [get_id_summary(index)]
             entity_counts[entity_type] = len(index)
+        if (enum_name := prop.options.enum_name) is not None and enum_name not in enums:
+            enums[enum_name] = prop.options.enum_values
+
         summary_per_entity[entity_type].append(
             get_property_summary(identifier, prop, extreme_values.get(entity_type, {}))
         )
+
     return {
         "count": sum(entity_counts.values()),
         "entity_groups": [
@@ -472,6 +494,7 @@ def get_summary_from_state(
             }
             for entity_type, properties in summary_per_entity.items()
         ],
+        "general": {"enum": enums},
     }
 
 
@@ -482,6 +505,7 @@ def get_id_summary(index: Index):
         "data_type": "INT",
         "description": "",
         "unit": "",
+        "enum_name": None,
         "min_val": float(np.min(index.ids)),
         "max_val": float(np.max(index.ids)),
     }
@@ -503,6 +527,7 @@ def get_property_summary(
         "data_type": get_datatype_string(prop.data_type),
         "description": "",
         "unit": "",
+        "enum_name": prop.options.enum_name,
         "min_val": float(min_val) if min_val is not None else None,
         "max_val": float(max_val) if max_val is not None else None,
     }

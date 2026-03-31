@@ -4,7 +4,7 @@ requires = ["poetry-core>=2.0.0"]
 
 [project]
 name = "movici-viewer"
-version = "1.1.0"
+version = "1.1.1"
 description = "Modern web-based visualization platform for Movici geospatial simulations"
 authors = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
 maintainers = [{ name = "NGinfra Movici", email = "movici@nginfra.nl" }]
@@ -36,7 +36,7 @@ requires-python = ">=3.11"
 dependencies = [
   "click>=8",
   "fastapi",
-  "movici-simulation-core[models]>=2.11",
+  "movici-simulation-core[models]>=2.12",
   "orjson",
   "pydantic",
   "pydantic_settings",
@@ -52,7 +52,7 @@ dev = ["pytest", "httpx", "ruff", "taplo"]
 include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
 
 [tool.poetry.scripts]
-movici-viewer = "movici_viewer.main:main"
+movici-viewer = "movici_viewer.__main__:main"
 
 [tool.ruff]
 line-length = 99

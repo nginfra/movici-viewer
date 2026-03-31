@@ -1,0 +1,7 @@
+[
+    {
+        "name": "operational.power_source",
+        "data_type": "int",
+        "enum_name": "power_source"
+    }
+]

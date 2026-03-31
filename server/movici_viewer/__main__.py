@@ -1,3 +1,4 @@
+import sys
 import typing as t
 from pathlib import Path
 
@@ -60,3 +61,7 @@ def main(directory, host, port, allow_cors):
     settings = Settings(DATA_DIR=directory, ALLOW_CORS=allow_cors)
     app = get_app(settings)
     uvicorn.run(app, host=host, port=port, log_level="info")
+
+
+if __name__ == "__main__":
+    sys.exit(main())
