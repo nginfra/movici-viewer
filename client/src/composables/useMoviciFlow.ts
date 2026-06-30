@@ -1,6 +1,6 @@
 import LocalBackend from "@/api/LocalBackend";
 import { useMainStore } from "@/stores/main";
-import { useFlowStore } from "@movici-flow-lib/stores/flow";
+import { useFlowStore } from "@nginfra/movici-flow-lib/stores/flow";
 
 export function useMoviciFlow() {
   function setupMoviciFlow() {

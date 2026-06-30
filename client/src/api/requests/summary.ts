@@ -1,6 +1,6 @@
-import { Request } from "@movici-flow-lib/api/requests/base";
+import { Request } from "@nginfra/movici-flow-lib/api/requests/base";
 import uri from "./uri";
-import type { DatasetSummary, UUID } from "@movici-flow-lib/types";
+import type { DatasetSummary, UUID } from "@nginfra/movici-flow-lib/types";
 import type { AxiosRequestConfig } from "axios";
 
 export class GetDatasetSummary extends Request<DatasetSummary> {

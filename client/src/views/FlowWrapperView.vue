@@ -3,8 +3,8 @@
 </template>
 <script setup lang="ts">
 import { useMoviciFlow } from "@/composables/useMoviciFlow";
-import type { FlowLocation } from "@movici-flow-lib/types";
-import FlowMainView from "@movici-flow-lib/views/FlowMainView.vue";
+import type { FlowLocation } from "@nginfra/movici-flow-lib/types";
+import FlowMainView from "@nginfra/movici-flow-lib/views/FlowMainView.vue";
 import { useRoute, useRouter } from "vue-router";
 
 useMoviciFlow().setupMoviciFlow();

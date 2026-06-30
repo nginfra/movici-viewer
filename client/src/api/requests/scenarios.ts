@@ -1,7 +1,7 @@
-import type { Scenario, ShortScenario, UUID } from "@movici-flow-lib/types";
+import type { Scenario, ShortScenario, UUID } from "@nginfra/movici-flow-lib/types";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 import uri from "./uri";
-import { Request } from "@movici-flow-lib/api/requests//base";
+import { Request } from "@nginfra/movici-flow-lib/api/requests/base";
 
 export class GetScenarios extends Request<ShortScenario[]> {
   makeRequest(): AxiosRequestConfig {

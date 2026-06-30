@@ -1,4 +1,4 @@
 // Single source of truth for SCSS variables/mixins lives in movici-flow-lib.
 // Re-exported here so the existing `@/assets/sass/variables.scss` path (used by
 // vite `additionalData` and `main.scss`) keeps working without a duplicated copy.
-@forward "../../../movici-flow-lib/src/assets/sass/variables";
+@forward "@nginfra/movici-flow-lib/scss/variables";

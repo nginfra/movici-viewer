@@ -1,7 +1,7 @@
 import { createI18n, type I18nOptions } from "vue-i18n";
 import type { LocaleMessages } from "vue-i18n";
 import { messages } from "@/locales";
-import { messages as commonMessages } from "@movici-flow-lib/locales";
+import { messages as commonMessages } from "@nginfra/movici-flow-lib/locales";
 import merge from "lodash/merge";
 
 function loadLocaleMessages<Schema>(messagesArray: Array<LocaleMessages<Schema>>) {

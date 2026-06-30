@@ -453,5 +453,6 @@ a.pagination-link.is-current {
 }
 
 @import "./media-query";
-@import "../../../movici-flow-lib/src/assets/sass/helpers";
-@import "../../../movici-flow-lib/src/assets/sass/style";
+// flow-lib's global styles (.flow {} + helpers) now ship from the package entry
+// (imported in @nginfra/movici-flow-lib's index.ts), so they are no longer
+// reached into from here.
