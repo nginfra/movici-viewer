@@ -11,7 +11,10 @@
 //    in Bulma 1.0 are passed here; everything that became a `--bulma-*` CSS
 //    custom property is handled by the theme include / literal CSS below.
 @forward "bulma/sass/utilities" with (
-  $family-primary: ("Source Sans Pro", sans-serif),
+  $family-primary: (
+    "Source Sans Pro",
+    sans-serif,
+  ),
 
   // Brand colours (scalars — drive derived values such as $link and focus rings)
   $primary: $green,
@@ -24,16 +27,43 @@
   // Colour map: (colour, invert) tuples preserve the hand-picked invert colours
   // and add the project's custom colour names. Merged into Bulma's base $colors.
   $custom-colors: (
-    "primary": ($green, $green-light),
-    "info": ($blue, $light-blue),
-    "success": ($green, $white),
-    "warning": ($orange, $light-orange),
-    "danger": ($red, $light-pink),
-    "light": ($white-ter, $white),
-    "dark": ($grey-darker, $white),
-    "white-green": ($white, $green),
-    "danger-invert": ($light-pink, $danger),
-  ),
+      "primary": (
+        $green,
+        $green-light,
+      ),
+      "info": (
+        $blue,
+        $light-blue,
+      ),
+      "success": (
+        $green,
+        $white,
+      ),
+      "warning": (
+        $orange,
+        $light-orange,
+      ),
+      "danger": (
+        $red,
+        $light-pink,
+      ),
+      "light": (
+        $white-ter,
+        $white,
+      ),
+      "dark": (
+        $grey-darker,
+        $white,
+      ),
+      "white-green": (
+        $white,
+        $green,
+      ),
+      "danger-invert": (
+        $light-pink,
+        $danger,
+      ),
+    ),
 
   // Utilities-level theming (only these reach Bulma through the utilities forward;
   // everything component-level became a --bulma-* CSS custom property, see :root)
