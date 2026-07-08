@@ -1,6 +1,6 @@
 [build-system]
 build-backend = "poetry.core.masonry.api"
-requires = ["poetry-core>=2.0.0"]
+requires = ["poetry-core==2.3.2"]
 
 [project]
 name = "movici-viewer"
@@ -34,19 +34,19 @@ classifiers = [
 ]
 requires-python = ">=3.11"
 dependencies = [
-  "click>=8",
-  "fastapi",
+  "click==8.3.1",
+  "fastapi==0.135.2",
   "movici-simulation-core[models]>=2.12",
-  "orjson",
-  "pydantic",
-  "pydantic_settings",
-  "uvicorn[standard]",
+  "orjson==3.11.7",
+  "pydantic==2.12.5",
+  "pydantic-settings==2.13.1",
+  "uvicorn[standard]==0.42.0",
 ]
 [tool.poetry.dependencies]
 python = ">=3.11,<3.14"
 
 [project.optional-dependencies]
-dev = ["pytest", "httpx", "ruff", "taplo"]
+dev = ["pytest==9.0.2", "httpx==0.28.1", "ruff==0.15.8", "taplo==0.9.3"]
 
 [tool.poetry]
 include = [{ path = "movici_viewer/ui/**/*", format = ["sdist", "wheel"] }]
