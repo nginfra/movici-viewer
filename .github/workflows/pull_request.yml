@@ -11,18 +11,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v6
+      with:
+        submodules: recursive
 
     - uses: actions/setup-node@v6
       with:
         node-version: 22
 
+    # Use the client's pinned prettier (via the workspace install) instead of a
+    # floating `npx prettier`, so formatting checks are reproducible.
     - name: Install Dependencies
-      run: |
-        npm install
+      working-directory: ./client
+      run: npm install
 
     - name: Check formatting
-      run: |
-        npx prettier --check client/src/
+      working-directory: ./client
+      run: npm run lint:format
+
+  build-client:
+    # Phase 3 gate: build flow-lib (via the client's `prebuild`) then type-check
+    # and build the client against the package's dist — catches dev(src) vs
+    # prod(dist) drift and broken declaration/CSS emission.
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v6
+      with:
+        submodules: recursive
+
+    - uses: actions/setup-node@v6
+      with:
+        node-version: 22
+
+    - name: Install (npm workspace)
+      working-directory: ./client
+      run: npm install
+
+    - name: Build client (prebuild builds flow-lib; type-check + build use dist)
+      working-directory: ./client
+      run: npm run build
 
   unit-tests:
     defaults:

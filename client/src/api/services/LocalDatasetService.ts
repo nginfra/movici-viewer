@@ -5,7 +5,7 @@ import type {
   DatasetWithData,
   IClient,
   UUID,
-} from "@movici-flow-lib/types";
+} from "@nginfra/movici-flow-lib/types";
 import { GetDataset, GetDatasetData, GetDatasets, GetScenarioState } from "@/api/requests/datasets";
 
 type getDataParams = {

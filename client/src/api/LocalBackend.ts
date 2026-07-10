@@ -1,5 +1,5 @@
-import type { CAPABILITIES } from "@movici-flow-lib/api";
-import type { Backend, IClient } from "@movici-flow-lib/types";
+import type { CAPABILITIES } from "@nginfra/movici-flow-lib/api";
+import type { Backend, IClient } from "@nginfra/movici-flow-lib/types";
 import LocalDatasetService from "./services/LocalDatasetService";
 import LocalGeocodeService from "./services/LocalGeocodeService";
 import DummyProjectService from "./services/LocalProjectService";

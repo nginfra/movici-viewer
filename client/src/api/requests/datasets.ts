@@ -1,6 +1,6 @@
-import { Request } from "@movici-flow-lib/api/requests/base";
+import { Request } from "@nginfra/movici-flow-lib/api/requests/base";
 import uri from "./uri";
-import type { DataAttribute, Dataset, DatasetWithData, UUID } from "@movici-flow-lib/types";
+import type { DataAttribute, Dataset, DatasetWithData, UUID } from "@nginfra/movici-flow-lib/types";
 import type { AxiosRequestConfig, AxiosResponse } from "axios";
 
 export interface DatasetFilter {

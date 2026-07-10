@@ -1,5 +1,5 @@
-import type { IClient } from "@movici-flow-lib/types";
-import type { UUID, View, ViewService } from "@movici-flow-lib/types";
+import type { IClient } from "@nginfra/movici-flow-lib/types";
+import type { UUID, View, ViewService } from "@nginfra/movici-flow-lib/types";
 import { AddView, DeleteView, GetView, GetViews, UpdateView } from "../requests";
 
 export default class LocalViewService implements ViewService {

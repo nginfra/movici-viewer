@@ -6,15 +6,12 @@ import { createApp } from "vue";
 import i18n from "./i18n";
 import router from "./router";
 
-import Oruga from "@oruga-ui/oruga-next";
-import { bulmaConfig } from "@oruga-ui/theme-bulma";
-import merge from "lodash/merge";
-
 import App from "./App.vue";
-import Flow, { orugaConfig } from "@movici-flow-lib";
+import Flow from "@nginfra/movici-flow-lib";
 
+// Oruga (config + component plugins + programmatic API) is installed by the Flow
+// plugin now, so the host only needs `app.use(Flow, …)`.
 createApp(App)
-  .use(Oruga, merge(bulmaConfig, orugaConfig))
   .use(createPinia())
   .use(router)
   .use(i18n)
@@ -22,5 +19,6 @@ createApp(App)
     homeRoute: {
       name: "home",
     },
+    mapboxToken: import.meta.env.VITE_MAPBOX_TOKEN,
   })
   .mount("#app");

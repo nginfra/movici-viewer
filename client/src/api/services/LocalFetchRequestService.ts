@@ -1,5 +1,9 @@
-import type { BaseRequest } from "@movici-flow-lib/api";
-import type { FetchRequestOptions, FetchRequestService, IClient } from "@movici-flow-lib/types";
+import type { BaseRequest } from "@nginfra/movici-flow-lib/api";
+import type {
+  FetchRequestOptions,
+  FetchRequestService,
+  IClient,
+} from "@nginfra/movici-flow-lib/types";
 import { GetDatasetDataAsBlob, GetScenario } from "../requests";
 
 export default class LocalFetchRequestService implements FetchRequestService {

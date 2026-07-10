@@ -1,47 +1,135 @@
-// Import Bulma's core
-@import "./variables";
-@import "bulma/sass/utilities/_all.sass";
+// =====================================================================
+// Bulma 1.0 + Oruga theme-bulma 0.9 — Sass module setup
+//
+// `variables.scss` is injected globally as `@use … as *` via vite
+// `additionalData`, so the brand colours / mixins below are already in scope.
+// We configure & emit Bulma ourselves (separated build) and layer the Oruga
+// theme on top. Light theme only — no dark scheme (issue #33 decision).
+// =====================================================================
 
-// Add a font family
-$family-primary: "Source Sans Pro", sans-serif;
-$radius: 4px;
+// 1. Configure & emit Bulma. Only variables that still exist as Sass `!default`
+//    in Bulma 1.0 are passed here; everything that became a `--bulma-*` CSS
+//    custom property is handled by the theme include / literal CSS below.
+@forward "bulma/sass/utilities" with (
+  $family-primary: (
+    "Source Sans Pro",
+    sans-serif,
+  ),
 
-// Link colors
-$link: $primary;
-$link-invert: $primary-invert;
-$link-focus-border: $primary;
+  // Brand colours (scalars — drive derived values such as $link and focus rings)
+  $primary: $green,
+  $link: $green,
+  $info: $blue,
+  $success: $green,
+  $warning: $orange,
+  $danger: $red,
 
-// Modal
-$modal-background-background-color: rgba($grey-light, 0.9);
-$modal-card-head-background-color: $white;
+  // Colour map: (colour, invert) tuples preserve the hand-picked invert colours
+  // and add the project's custom colour names. Merged into Bulma's base $colors.
+  $custom-colors: (
+      "primary": (
+        $green,
+        $green-light,
+      ),
+      "info": (
+        $blue,
+        $light-blue,
+      ),
+      "success": (
+        $green,
+        $white,
+      ),
+      "warning": (
+        $orange,
+        $light-orange,
+      ),
+      "danger": (
+        $red,
+        $light-pink,
+      ),
+      "light": (
+        $white-ter,
+        $white,
+      ),
+      "dark": (
+        $grey-darker,
+        $white,
+      ),
+      "white-green": (
+        $white,
+        $green,
+      ),
+      "danger-invert": (
+        $light-pink,
+        $danger,
+      ),
+    ),
 
-// Forms colors
-$background: $white-ter;
-$input-color: $grey-darker !default;
-$input-background-color: $white !default;
-$input-border-color: $white-ter !default;
-$input-height: $control-height !default;
-$input-shadow: inset 0 1px 2px rgba($black, 0.1) !default;
-$input-placeholder-color: rgba($input-color, 0.6) !default;
+  // Utilities-level theming (only these reach Bulma through the utilities forward;
+  // everything component-level became a --bulma-* CSS custom property, see :root)
+  $background: $white-ter,
+  $control-border-width: 2px
+);
 
-$input-hover-color: $grey-darker !default;
-$input-hover-border-color: $grey-light !default;
+@forward "bulma/sass/base";
+@forward "bulma/sass/elements";
+@forward "bulma/sass/form";
+@forward "bulma/sass/components";
+@forward "bulma/sass/grid";
+@forward "bulma/sass/layout";
+@forward "bulma/sass/base/skeleton";
+@forward "bulma/sass/helpers";
 
-$input-focus-color: $grey-darker !default;
-$input-focus-border-color: $link !default;
-$input-focus-box-shadow-size: 0 0 0 0.125em !default;
-$input-focus-box-shadow-color: rgba($link, 0.25) !default;
+// 2. Oruga theme-bulma component styles (Bulma already configured above).
+@forward "@oruga-ui/theme-bulma/scss/components-build.scss";
 
-$input-disabled-color: rgba($grey-dark, 0.9) !default;
-$input-disabled-background-color: rgba($background, 0.8) !default;
-$input-disabled-border-color: $grey-lightest !default;
-$input-disabled-placeholder-color: $input-disabled-color !default;
+// 3. Emit only the light theme's CSS custom properties (no dark scheme).
+@use "bulma/sass/themes/light" as bulmaLightTheme;
+@use "bulma/sass/themes/setup" as bulmaThemeSetup;
 
-$input-arrow: $link !default;
-$input-icon-color: $grey-lighter !default;
-$input-icon-active-color: $grey !default;
+:root {
+  @include bulmaLightTheme.light-theme;
+  @include bulmaThemeSetup.setup-theme;
 
-$input-radius: $radius !default;
+  // Component theming that became CSS custom properties in Bulma 1.0
+  --bulma-body-background-color: #{$white-ter};
+  --bulma-card-shadow: 0 2px 3px #{rgba($black, 0.1)}, 0 0 0 0 #{rgba($black, 0.1)};
+
+  // Inputs
+  --bulma-input-border-color: #{$white-ter};
+  --bulma-input-height: #{$control-height};
+  --bulma-input-shadow: none;
+  --bulma-input-placeholder-color: #{rgba($grey-darker, 0.6)};
+  --bulma-input-disabled-color: #{rgba($grey-dark, 0.9)};
+  --bulma-input-disabled-background-color: #{rgba($white-ter, 0.8)};
+  --bulma-input-disabled-border-color: #{$grey-lightest};
+  --bulma-input-disabled-placeholder-color: #{rgba($grey-dark, 0.9)};
+  --bulma-input-arrow: #{$green};
+  --bulma-input-icon-color: #{$grey-lighter};
+
+  // Modal
+  --bulma-modal-background-background-color: #{rgba($grey-light, 0.9)};
+  --bulma-modal-card-head-background-color: #{$white};
+
+  // Navbar
+  --bulma-navbar-box-shadow-color: #{rgba($black, 0.1)};
+  --bulma-navbar-box-shadow-size: 0 0 8px;
+  --bulma-navbar-item-img-max-height: 2.2rem;
+
+  // Menu
+  --bulma-menu-item-radius: 0.2em;
+  --bulma-menu-list-border-left: 1px solid #{$border};
+  --bulma-menu-label-color: #{$black};
+}
+
+// =====================================================================
+// Application styles
+// =====================================================================
+
+// Link colours that are no longer Bulma Sass vars in v1
+a:focus {
+  border-color: $primary;
+}
 
 // General
 .app-main {
@@ -161,31 +249,10 @@ input.is-small {
   @include border-radius;
 }
 
-// Update some of Bulma's component variables
-$body-background-color: $white-ter;
-$control-border-width: 2px;
-$input-shadow: none;
-$card-shadow:
-  0 2px 3px rgba($black, 0.1),
-  0 0 0 0 rgba($black, 0.1) !default;
-
-// Nav styles
-$navbar-box-shadow-color: rgba($black, 0.1);
-$navbar-box-shadow-size: 0 0 8px !default;
-$navbar-item-img-max-height: 2.2rem !default;
 .sidebar,
 .login {
   background: $white;
 }
-$navbar-item-hover-background-color: $white-ter !important;
-$menu-item-color: $black;
-$menu-item-radius: 0.2em;
-$menu-item-hover-color: $primary;
-$menu-item-hover-background-color: $white-ter;
-$menu-item-active-color: $link-invert;
-$menu-item-active-background-color: $white-ter;
-$menu-list-border-left: 1px solid $border;
-$menu-label-color: $black;
 
 .router-link-active {
   background: $white-ter;
@@ -195,7 +262,7 @@ $menu-label-color: $black;
   font-weight: bold;
 }
 
-.b-tooltip {
+.tooltip {
   .tooltip-content {
     padding: 0.35rem !important;
   }
@@ -226,12 +293,7 @@ $menu-label-color: $black;
   }
 }
 
-// Responsiveness
-// The container horizontal gap, which acts as the offset for breakpoints
-$gap: 0;
-$column-gap: 0.75rem;
-
-//divider
+//divider (project-local component, not from Bulma)
 $divider-background-color: $primary;
 $divider-thickness: 0.075rem;
 $divider-font-size: $size-7;
@@ -268,7 +330,7 @@ $divider-color: $primary;
 }
 
 // tables
-.b-table .table tr.detail {
+.table-wrapper .table tr.detail {
   background: $white-bis !important;
   .table {
     background: $white-bis !important;
@@ -421,10 +483,6 @@ a.pagination-link.is-current {
 }
 
 @import "./media-query";
-@import "../../../movici-flow-lib/src/assets/sass/helpers";
-@import "../../../movici-flow-lib/src/assets/sass/style";
-
-// Import Bulma and Oruga styles
-@import "bulma/bulma.sass";
-@import "bulma-utilities/css/bulma-utilities.css";
-@import "@oruga-ui/theme-bulma/dist/scss/bulma";
+// flow-lib's global styles (.flow {} + helpers) now ship from the package entry
+// (imported in @nginfra/movici-flow-lib's index.ts), so they are no longer
+// reached into from here.
