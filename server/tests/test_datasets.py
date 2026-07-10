@@ -4,6 +4,7 @@ def test_get_datasets(get_with_status):
         "road_network",
         "antennas",
         "heightmap",
+        "zones",
     }
 
 
@@ -35,8 +36,6 @@ def test_get_dataset_with_data(get_with_status):
         "format",
         "bounding_box",
         "epsg_code",
-        "created_on",
-        "last_modified",
         "version",
         "general",
         "data",
